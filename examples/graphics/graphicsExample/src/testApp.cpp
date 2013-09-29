@@ -28,12 +28,8 @@ void testApp::setup(){
 	{
 		FILE *in;
 		char *inf = "/Users/scottdraves/live.flam3";
-		
 		in = fopen(inf, "rb");
-		
 		cps = flam3_parse_from_file(in, inf, flam3_defaults_on, &ncps);
-		// 
-		
 		for (int i = 0; i < ncps; i++) {
 			cps[i].time = (double) i;
 		}
@@ -44,9 +40,7 @@ void testApp::setup(){
 	{
 		FILE *in;
 		char *inf = "/Users/scottdraves/genebank2.flam3";
-		
 		in = fopen(inf, "rb");
-		
 		genebank = flam3_parse_from_file(in, inf, flam3_defaults_on, &ngenebank);
 	}
 	memset(&cp, 0, sizeof(flam3_genome));
@@ -92,6 +86,8 @@ void testApp::draw(){
     if (0) {
         // vDSP_create_fftsetup
         // ~/cinder_0.8.4_mac/src/cinder/audio/FftProcessorImplAccelerate.cpp
+        // http://forum.openframeworks.cc/index.php?topic=8998.0
+        // https://github.com/micknoise/Maximilian
     }
 	
 	ofEnableAlphaBlending();		
