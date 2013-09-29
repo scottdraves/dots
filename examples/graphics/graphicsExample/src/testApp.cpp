@@ -277,8 +277,8 @@ void testApp::draw(){
 		mpx = mmpx;
 		mpy = mmpy;
 	}
-    mpx *= speed*4;
-    mpy *= speed*4;
+	//mpx *= speed*4;
+	//mpy *= speed*4;
     
     track(0, mpx);
     track(1, mpy);
