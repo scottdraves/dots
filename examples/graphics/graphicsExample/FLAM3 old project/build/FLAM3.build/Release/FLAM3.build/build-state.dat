@@ -1,1509 +1,0 @@
-TFLAM3
-v7
-r0
-t315610822.510585
-cCheck dependencies
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/variations.o /Users/spot/Documents/FLAM3/flam3/src/variations.c normal x86_64 c com.apple.compilers.gcc.4_2
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/png.o /Users/spot/Documents/FLAM3/flam3/src/png.c normal x86_64 c com.apple.compilers.gcc.4_2
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/parser.o /Users/spot/Documents/FLAM3/flam3/src/parser.c normal x86_64 c com.apple.compilers.gcc.4_2
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/palettes.o /Users/spot/Documents/FLAM3/flam3/src/palettes.c normal x86_64 c com.apple.compilers.gcc.4_2
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/isaac.o /Users/spot/Documents/FLAM3/flam3/src/isaac.c normal x86_64 c com.apple.compilers.gcc.4_2
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/interpolation.o /Users/spot/Documents/FLAM3/flam3/src/interpolation.c normal x86_64 c com.apple.compilers.gcc.4_2
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/flam3.o /Users/spot/Documents/FLAM3/flam3/src/flam3.c normal x86_64 c com.apple.compilers.gcc.4_2
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/filters.o /Users/spot/Documents/FLAM3/flam3/src/filters.c normal x86_64 c com.apple.compilers.gcc.4_2
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/docstring.o /Users/spot/Documents/FLAM3/flam3/src/docstring.c normal x86_64 c com.apple.compilers.gcc.4_2
-cLibtool /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/libflam3.a normal x86_64
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/i386/variations.o /Users/spot/Documents/FLAM3/flam3/src/variations.c normal i386 c com.apple.compilers.gcc.4_2
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/i386/png.o /Users/spot/Documents/FLAM3/flam3/src/png.c normal i386 c com.apple.compilers.gcc.4_2
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/i386/parser.o /Users/spot/Documents/FLAM3/flam3/src/parser.c normal i386 c com.apple.compilers.gcc.4_2
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/i386/palettes.o /Users/spot/Documents/FLAM3/flam3/src/palettes.c normal i386 c com.apple.compilers.gcc.4_2
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/i386/isaac.o /Users/spot/Documents/FLAM3/flam3/src/isaac.c normal i386 c com.apple.compilers.gcc.4_2
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/i386/interpolation.o /Users/spot/Documents/FLAM3/flam3/src/interpolation.c normal i386 c com.apple.compilers.gcc.4_2
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/i386/flam3.o /Users/spot/Documents/FLAM3/flam3/src/flam3.c normal i386 c com.apple.compilers.gcc.4_2
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/i386/filters.o /Users/spot/Documents/FLAM3/flam3/src/filters.c normal i386 c com.apple.compilers.gcc.4_2
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/i386/docstring.o /Users/spot/Documents/FLAM3/flam3/src/docstring.c normal i386 c com.apple.compilers.gcc.4_2
-cLibtool /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/i386/libflam3.a normal i386
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/variations.o /Users/spot/Documents/FLAM3/flam3/src/variations.c normal ppc c com.apple.compilers.gcc.4_2
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/png.o /Users/spot/Documents/FLAM3/flam3/src/png.c normal ppc c com.apple.compilers.gcc.4_2
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/parser.o /Users/spot/Documents/FLAM3/flam3/src/parser.c normal ppc c com.apple.compilers.gcc.4_2
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/palettes.o /Users/spot/Documents/FLAM3/flam3/src/palettes.c normal ppc c com.apple.compilers.gcc.4_2
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/isaac.o /Users/spot/Documents/FLAM3/flam3/src/isaac.c normal ppc c com.apple.compilers.gcc.4_2
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/interpolation.o /Users/spot/Documents/FLAM3/flam3/src/interpolation.c normal ppc c com.apple.compilers.gcc.4_2
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/flam3.o /Users/spot/Documents/FLAM3/flam3/src/flam3.c normal ppc c com.apple.compilers.gcc.4_2
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/filters.o /Users/spot/Documents/FLAM3/flam3/src/filters.c normal ppc c com.apple.compilers.gcc.4_2
-cCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/docstring.o /Users/spot/Documents/FLAM3/flam3/src/docstring.c normal ppc c com.apple.compilers.gcc.4_2
-cLibtool /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/libflam3.a normal ppc
-cCreateUniversalBinary /Users/spot/Documents/FLAM3/build/Release/libflam3.a normal "x86_64 i386 ppc"
-
-N/Developer/SDKs/MacOSX10.6.sdk
-c000000004C5342BA00000000000000EE
-t1280524986
-s238
-
-N/Developer/SDKs/MacOSX10.6.sdk/usr/include/arpa/inet.h
-c000000004AC598620000000000001533
-t1254463586
-s5427
-
-N/Developer/SDKs/MacOSX10.6.sdk/usr/include/ctype.h
-c000000004AC59C810000000000002C18
-t1254464641
-s11288
-
-N/Developer/SDKs/MacOSX10.6.sdk/usr/include/errno.h
-c000000004AC59C8100000000000003EB
-t1254464641
-s1003
-
-N/Developer/SDKs/MacOSX10.6.sdk/usr/include/iconv.h
-c000000004C4DCCBD0000000000001FBE
-t1280167101
-s8126
-
-N/Developer/SDKs/MacOSX10.6.sdk/usr/include/libgen.h
-c000000004AC59C810000000000000790
-t1254464641
-s1936
-
-N/Developer/SDKs/MacOSX10.6.sdk/usr/include/locale.h
-c000000004AC59C8100000000000008F0
-t1254464641
-s2288
-
-N/Developer/SDKs/MacOSX10.6.sdk/usr/include/mach/mach.h
-c000000004AFD6AD20000000000001057
-t1258121938
-s4183
-
-N/Developer/SDKs/MacOSX10.6.sdk/usr/include/mach/mach_error.h
-c000000004AFD6AD20000000000000BE3
-t1258121938
-s3043
-
-N/Developer/SDKs/MacOSX10.6.sdk/usr/include/math.h
-c000000004AC599B500000000000004F1
-t1254463925
-s1265
-
-N/Developer/SDKs/MacOSX10.6.sdk/usr/include/pthread.h
-c000000004AC59C8100000000000038F0
-t1254464641
-s14576
-
-N/Developer/SDKs/MacOSX10.6.sdk/usr/include/setjmp.h
-c000000004AC59C810000000000000438
-t1254464641
-s1080
-
-N/Developer/SDKs/MacOSX10.6.sdk/usr/include/stdio.h
-c000000004AC59C820000000000004174
-t1254464642
-s16756
-
-N/Developer/SDKs/MacOSX10.6.sdk/usr/include/stdlib.h
-c000000004AC59C820000000000002DF5
-t1254464642
-s11765
-
-N/Developer/SDKs/MacOSX10.6.sdk/usr/include/string.h
-c000000004AC59C820000000000001731
-t1254464642
-s5937
-
-N/Developer/SDKs/MacOSX10.6.sdk/usr/include/strings.h
-c000000004AC59C810000000000000DA4
-t1254464641
-s3492
-
-N/Developer/SDKs/MacOSX10.6.sdk/usr/include/sys/sysctl.h
-c000000004C4DE4B40000000000007974
-t1280173236
-s31092
-
-N/Developer/SDKs/MacOSX10.6.sdk/usr/include/sys/types.h
-c000000004C4DE4B40000000000002905
-t1280173236
-s10501
-
-N/Developer/SDKs/MacOSX10.6.sdk/usr/include/time.h
-c000000004AC59C82000000000000178E
-t1254464642
-s6030
-
-N/Developer/SDKs/MacOSX10.6.sdk/usr/include/unistd.h
-c000000004AC59C82000000000000563E
-t1254464642
-s22078
-
-N/Developer/SDKs/MacOSX10.6.sdk/usr/include/zlib.h
-c000000004C4DF21300000000000102A5
-t1280176659
-s66213
-
-N/Developer/SDKs/MacOSX10.6.sdk/usr/lib/gcc/i686-apple-darwin10/4.2.1/include/limits.h
-c000000004AC59DB70000000000000C7E
-t1254464951
-s3198
-
-N/Developer/SDKs/MacOSX10.6.sdk/usr/lib/gcc/i686-apple-darwin10/4.2.1/include/stdarg.h
-c000000004AC59DB700000000000010DD
-t1254464951
-s4317
-
-N/Developer/SDKs/MacOSX10.6.sdk/usr/lib/gcc/i686-apple-darwin10/4.2.1/include/stdint.h
-c000000004AC59DB7000000000000190C
-t1254464951
-s6412
-
-N/Users/spot/Documents/FLAM3/../../client_generic/libpng/include/png.h
-c000000004A995DD80000000000025A78
-t1251565016
-s154232
-i"zlib.h"
-i"pngconf.h"
-i<crtdbg.h>
-
-N/Users/spot/Documents/FLAM3/../../client_generic/libpng/osx/lib/libpng.a
-c000000004A995DD800000000000C8E74
-t1251565016
-s822900
-
-N/Users/spot/Documents/FLAM3/../../client_generic/libxml/lib/libxml2.a
-c00000000499A2D880000000000700AF0
-t1234840968
-s7342832
-
-N/Users/spot/Documents/FLAM3/../../client_generic/libxml/lib/libxml2.dll.a
-c00000000499A2D8800000000001003F4
-t1234840968
-s1049588
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/FLAM3
-t1293828528
-s474080
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/FLAM3.LinkFileList
-c000000004D1E3EB200000000000003C8
-t1293827762
-s968
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/docstring.o
-t1293828423
-s13428
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/filters.o
-t1293828423
-s31652
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/flam3-render.o
-t1293828422
-s26992
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/flam3.o
-t1293828426
-s317936
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/interpolation.o
-t1293828423
-s48452
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/isaac.o
-t1293828422
-s6336
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/palettes.o
-t1293828422
-s28964
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/parser.o
-t1293828422
-s56892
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/png.o
-t1293828422
-s18936
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/variations.o
-t1293828422
-s97900
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/FLAM3
-t1293828528
-s478292
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/FLAM3.LinkFileList
-c000000004D1E3EB200000000000003BE
-t1293827762
-s958
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/docstring.o
-t1293828425
-s13608
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/filters.o
-t1293828425
-s35744
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/flam3-render.o
-t1293828425
-s29980
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/flam3.o
-t1293828428
-s359172
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/interpolation.o
-t1293828425
-s52140
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/isaac.o
-t1293828424
-s6148
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/palettes.o
-t1293828424
-s31508
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/parser.o
-t1293828424
-s63288
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/png.o
-t1293828423
-s19624
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/variations.o
-t1293828423
-s102392
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/FLAM3
-t1293828528
-s480736
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/FLAM3.LinkFileList
-c000000004D1E3EB200000000000003DC
-t1293827762
-s988
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/docstring.o
-t1293828421
-s13952
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/filters.o
-t1293828421
-s37704
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/flam3-render.o
-t1293828421
-s30604
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/flam3.o
-t1293828425
-s350600
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/interpolation.o
-t1293828422
-s51976
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/isaac.o
-t1293828421
-s8232
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/palettes.o
-t1293828421
-s33664
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/parser.o
-t1293828421
-s66364
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/png.o
-t1293828421
-s21072
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/variations.o
-t1293828421
-s131680
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/i386/docstring.o
-t1293917660
-s13428
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/i386/filters.o
-t1293917660
-s31652
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/i386/flam3-render.o
-t1293828422
-s26992
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/i386/flam3.LinkFileList
-c000000004D1F9F460000000000000363
-t1293918022
-s867
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/i386/flam3.o
-t1293917663
-s317968
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/i386/interpolation.o
-t1293917660
-s48452
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/i386/isaac.o
-t1293828422
-s6336
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/i386/libflam3.a
-t1293918022
-s626800
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/i386/palettes.o
-t1293917659
-s28964
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/i386/parser.o
-t1293917659
-s56892
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/i386/png.o
-t1293917658
-s18936
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/i386/variations.o
-t1293917659
-s97900
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/docstring.o
-t1293917662
-s13608
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/filters.o
-t1293917662
-s35744
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/flam3-render.o
-t1293828425
-s29980
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/flam3.LinkFileList
-c000000004D1F9F46000000000000035A
-t1293918022
-s858
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/flam3.o
-t1293917665
-s359172
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/interpolation.o
-t1293917662
-s52140
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/isaac.o
-t1293828424
-s6148
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/libflam3.a
-t1293918022
-s689880
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/palettes.o
-t1293917661
-s31500
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/parser.o
-t1293917661
-s63288
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/png.o
-t1293917660
-s19624
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/variations.o
-t1293917661
-s102392
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/docstring.o
-t1293917658
-s13952
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/filters.o
-t1293917658
-s37704
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/flam3-render.o
-t1293828421
-s30604
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/flam3.LinkFileList
-c000000004D1F9F460000000000000375
-t1293918022
-s885
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/flam3.o
-t1293917662
-s350600
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/interpolation.o
-t1293917658
-s51976
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/isaac.o
-t1293828421
-s8232
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/libflam3.a
-t1293918022
-s721496
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/palettes.o
-t1293917658
-s33664
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/parser.o
-t1293917658
-s66364
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/png.o
-t1293917658
-s21072
-
-N/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/variations.o
-t1293917658
-s131680
-
-N/Users/spot/Documents/FLAM3/build/Release/FLAM3
-t1293828528
-s1440852
-
-N/Users/spot/Documents/FLAM3/build/Release/FLAM3.dSYM
-t1293828528
-s102
-
-N/Users/spot/Documents/FLAM3/build/Release/libflam3.a
-t1293918022
-s2038244
-
-N/Users/spot/Documents/FLAM3/flam3/src/config.h
-c000000004D1D02D70000000000000A4F
-t1293746903
-s2639
-
-N/Users/spot/Documents/FLAM3/flam3/src/docstring.c
-c000000004D1D02D70000000000002C4D
-t1293746903
-s11341
-i"config.h"
-i"flam3.h"
-
-N/Users/spot/Documents/FLAM3/flam3/src/filters.c
-c000000004D1D02D70000000000003697
-t1293746903
-s13975
-i"filters.h"
-
-N/Users/spot/Documents/FLAM3/flam3/src/filters.h
-c000000004D1D02D70000000000000825
-t1293746903
-s2085
-i"private.h"
-
-N/Users/spot/Documents/FLAM3/flam3/src/flam3-render.c
-c000000004D1D6FC900000000000035B2
-t1293774793
-s13746
-i<windows.h>
-i<sys/sysctl.h>
-i<limits.h>
-i"private.h"
-i"img.h"
-i"isaacs.h"
-
-N/Users/spot/Documents/FLAM3/flam3/src/flam3.c
-c000000004D1D02D7000000000001DD45
-t1293746903
-s122181
-i"private.h"
-i"img.h"
-i"config.h"
-i"variations.h"
-i"interpolation.h"
-i"parser.h"
-i"filters.h"
-i"palettes.h"
-i<limits.h>
-i<locale.h>
-i<math.h>
-i<stdint.h>
-i<errno.h>
-i<pthread.h>
-i<mach/mach.h>
-i<mach/mach_error.h>
-i<windows.h>
-i"rect.c"
-i"rect.c"
-i"rect.c"
-i"rect.c"
-i"rect.c"
-i"rect.c"
-
-N/Users/spot/Documents/FLAM3/flam3/src/flam3.h
-c000000004D1F9DD70000000000004A01
-t1293917655
-s18945
-i<stdio.h>
-i<libxml/parser.h>
-i"isaac.h"
-i<windows.h>
-
-N/Users/spot/Documents/FLAM3/flam3/src/img.h
-c000000004D1D02D70000000000000544
-t1293746903
-s1348
-i<stdio.h>
-i"flam3.h"
-
-N/Users/spot/Documents/FLAM3/flam3/src/interpolation.c
-c000000004D1D02D70000000000007AC0
-t1293746903
-s31424
-i"interpolation.h"
-i"palettes.h"
-
-N/Users/spot/Documents/FLAM3/flam3/src/interpolation.h
-c000000004D1D02D700000000000009AB
-t1293746903
-s2475
-i"private.h"
-
-N/Users/spot/Documents/FLAM3/flam3/src/isaac.c
-c000000004D1D02D70000000000000C8B
-t1293746903
-s3211
-i"isaacs.h"
-i"isaac.h"
-
-N/Users/spot/Documents/FLAM3/flam3/src/isaac.h
-c000000004D1D02D70000000000000654
-t1293746903
-s1620
-i"isaacs.h"
-
-N/Users/spot/Documents/FLAM3/flam3/src/isaacs.h
-c000000004D1D02D70000000000000332
-t1293746903
-s818
-
-N/Users/spot/Documents/FLAM3/flam3/src/palettes.c
-c000000004D1D114F00000000000034D4
-t1293750607
-s13524
-i"private.h"
-i"palettes.h"
-
-N/Users/spot/Documents/FLAM3/flam3/src/palettes.h
-c000000004D1D02D70000000000000486
-t1293746903
-s1158
-
-N/Users/spot/Documents/FLAM3/flam3/src/parser.c
-c000000004D1D02D7000000000000D712
-t1293746903
-s55058
-i"parser.h"
-i"interpolation.h"
-i"filters.h"
-i<errno.h>
-
-N/Users/spot/Documents/FLAM3/flam3/src/parser.h
-c000000004D1D02D700000000000005C9
-t1293746903
-s1481
-i"private.h"
-
-N/Users/spot/Documents/FLAM3/flam3/src/png.c
-c000000004D1D02D700000000000017A1
-t1293746903
-s6049
-i<stdio.h>
-i<stdlib.h>
-i<png.h>
-i<setjmp.h>
-i"config.h"
-i"img.h"
-i"flam3.h"
-i"private.h"
-i<winsock.h>
-i<arpa/inet.h>
-
-N/Users/spot/Documents/FLAM3/flam3/src/private.h
-c000000004D1D02D7000000000000111E
-t1293746903
-s4382
-i"flam3.h"
-i"config.h"
-i<stdlib.h>
-i<ctype.h>
-i<time.h>
-i<string.h>
-i<libxml/parser.h>
-i<unistd.h>
-i<libgen.h>
-i<math.h>
-i<pthread.h>
-
-N/Users/spot/Documents/FLAM3/flam3/src/rect.c
-c000000004D1D535D000000000000A876
-t1293767517
-s43126
-
-N/Users/spot/Documents/FLAM3/flam3/src/variations.c
-c000000004D1D02D70000000000011499
-t1293746903
-s70809
-i"variations.h"
-i"interpolation.h"
-
-N/Users/spot/Documents/FLAM3/flam3/src/variations.h
-c000000004D1D02D70000000000001898
-t1293746903
-s6296
-i"private.h"
-
-N/Users/spot/client_generic/libpng/include/pngconf.h
-c000000004A995DD8000000000000B1DF
-t1251565016
-s45535
-i"pngusr.h"
-i"config.h"
-i<windows.h>
-i<stdio.h>
-i<stdio.h>
-i<sys/types.h>
-i<setjmp.h>
-i<strings.h>
-i<string.h>
-i<stdlib.h>
-i<fp.h>
-i<math.h>
-i<m68881.h>
-i<mem.h>
-i<alloc.h>
-i<malloc.h>
-i<time.h>
-i<dos.h>
-
-N/Users/spot/client_generic/libxml/include/libxml2/libxml/SAX.h
-c00000000499A2D78000000000000113C
-t1234840952
-s4412
-i<stdio.h>
-i<stdlib.h>
-i<libxml/xmlversion.h>
-i<libxml/parser.h>
-i<libxml/xlink.h>
-
-N/Users/spot/client_generic/libxml/include/libxml2/libxml/SAX2.h
-c00000000499A2D780000000000001350
-t1234840952
-s4944
-i<stdio.h>
-i<stdlib.h>
-i<libxml/xmlversion.h>
-i<libxml/parser.h>
-i<libxml/xlink.h>
-
-N/Users/spot/client_generic/libxml/include/libxml2/libxml/dict.h
-c00000000499A2D78000000000000062E
-t1234840952
-s1582
-i<libxml/xmlversion.h>
-i<libxml/tree.h>
-
-N/Users/spot/client_generic/libxml/include/libxml2/libxml/encoding.h
-c00000000499A2D780000000000001EFB
-t1234840952
-s7931
-i<libxml/xmlversion.h>
-i<iconv.h>
-i<libxml/tree.h>
-
-N/Users/spot/client_generic/libxml/include/libxml2/libxml/entities.h
-c00000000499A2D780000000000001139
-t1234840952
-s4409
-i<libxml/xmlversion.h>
-i<libxml/tree.h>
-
-N/Users/spot/client_generic/libxml/include/libxml2/libxml/globals.h
-c00000000499A2D780000000000003492
-t1234840952
-s13458
-i<libxml/xmlversion.h>
-i<libxml/parser.h>
-i<libxml/xmlerror.h>
-i<libxml/SAX.h>
-i<libxml/SAX2.h>
-i<libxml/xmlmemory.h>
-i<libxml/threads.h>
-
-N/Users/spot/client_generic/libxml/include/libxml2/libxml/hash.h
-c00000000499A2D7800000000000019A7
-t1234840952
-s6567
-i<libxml/xmlversion.h>
-i<libxml/parser.h>
-i<libxml/dict.h>
-
-N/Users/spot/client_generic/libxml/include/libxml2/libxml/list.h
-c00000000499A2D780000000000000D5E
-t1234840952
-s3422
-i<libxml/xmlversion.h>
-
-N/Users/spot/client_generic/libxml/include/libxml2/libxml/parser.h
-c00000000499A2D780000000000009692
-t1234840952
-s38546
-i<stdarg.h>
-i<libxml/xmlversion.h>
-i<libxml/tree.h>
-i<libxml/dict.h>
-i<libxml/hash.h>
-i<libxml/valid.h>
-i<libxml/entities.h>
-i<libxml/xmlerror.h>
-i<libxml/xmlstring.h>
-i<libxml/encoding.h>
-i<libxml/xmlIO.h>
-i<libxml/globals.h>
-
-N/Users/spot/client_generic/libxml/include/libxml2/libxml/threads.h
-c00000000499A2D780000000000000765
-t1234840952
-s1893
-i<libxml/xmlversion.h>
-i<libxml/globals.h>
-
-N/Users/spot/client_generic/libxml/include/libxml2/libxml/tree.h
-c00000000499A2D780000000000008807
-t1234840952
-s34823
-i<stdio.h>
-i<libxml/xmlversion.h>
-i<libxml/xmlstring.h>
-i<libxml/xmlregexp.h>
-i<libxml/xmlmemory.h>
-
-N/Users/spot/client_generic/libxml/include/libxml2/libxml/valid.h
-c00000000499A2D7800000000000035CA
-t1234840952
-s13770
-i<libxml/xmlversion.h>
-i<libxml/xmlerror.h>
-i<libxml/tree.h>
-i<libxml/list.h>
-i<libxml/xmlautomata.h>
-i<libxml/xmlregexp.h>
-
-N/Users/spot/client_generic/libxml/include/libxml2/libxml/xlink.h
-c00000000499A2D7800000000000013BB
-t1234840952
-s5051
-i<libxml/xmlversion.h>
-i<libxml/tree.h>
-
-N/Users/spot/client_generic/libxml/include/libxml2/libxml/xmlIO.h
-c00000000499A2D7800000000000028D0
-t1234840952
-s10448
-i<stdio.h>
-i<libxml/xmlversion.h>
-i<libxml/globals.h>
-i<libxml/tree.h>
-i<libxml/parser.h>
-i<libxml/encoding.h>
-
-N/Users/spot/client_generic/libxml/include/libxml2/libxml/xmlautomata.h
-c00000000499A2D780000000000000F98
-t1234840952
-s3992
-i<libxml/xmlversion.h>
-i<libxml/tree.h>
-i<libxml/xmlregexp.h>
-
-N/Users/spot/client_generic/libxml/include/libxml2/libxml/xmlerror.h
-c00000000499A2D780000000000008DB3
-t1234840952
-s36275
-i<libxml/parser.h>
-
-N/Users/spot/client_generic/libxml/include/libxml2/libxml/xmlexports.h
-c00000000499A2D780000000000000E77
-t1234840952
-s3703
-
-N/Users/spot/client_generic/libxml/include/libxml2/libxml/xmlmemory.h
-c00000000499A2D7800000000000016E2
-t1234840952
-s5858
-i<stdio.h>
-i<libxml/xmlversion.h>
-i<libxml/threads.h>
-i<libxml/globals.h>
-
-N/Users/spot/client_generic/libxml/include/libxml2/libxml/xmlregexp.h
-c00000000499A2D7800000000000014E2
-t1234840952
-s5346
-i<libxml/xmlversion.h>
-i<libxml/tree.h>
-i<libxml/dict.h>
-
-N/Users/spot/client_generic/libxml/include/libxml2/libxml/xmlstring.h
-c00000000499A2D78000000000000155A
-t1234840952
-s5466
-i<stdarg.h>
-i<libxml/xmlversion.h>
-
-N/Users/spot/client_generic/libxml/include/libxml2/libxml/xmlversion.h
-c00000000499A2D780000000000001955
-t1234840952
-s6485
-i<libxml/xmlexports.h>
-i<ansidecl.h>
-
-CCheck dependencies
-r0
-lSLF07#2@18"Check dependencies315610822#315610822#0(0"0(0#1#0"8638048000#0"0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/docstring.o /Users/spot/Documents/FLAM3/flam3/src/docstring.c normal i386 c com.apple.compilers.gcc.4_2
-s315521223.083818
-e315521223.135995
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/docstring.o
-x/Users/spot/Documents/FLAM3/flam3/src/docstring.c
-xnormal
-xi386
-xc
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@57"Compile /Users/spot/Documents/FLAM3/flam3/src/docstring.c315521223#315521223#0(0"0(0#0#49"/Users/spot/Documents/FLAM3/flam3/src/docstring.c8629435136#1420"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch i386 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/i386 -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/docstring.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/docstring.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/filters.o /Users/spot/Documents/FLAM3/flam3/src/filters.c normal i386 c com.apple.compilers.gcc.4_2
-s315521222.946953
-e315521223.149249
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/filters.o
-x/Users/spot/Documents/FLAM3/flam3/src/filters.c
-xnormal
-xi386
-xc
-xcom.apple.compilers.gcc.4_2
-o/Users/spot/Documents/FLAM3/flam3/src/filters.c: In function 'flam3_spatial_filter':
-o/Users/spot/Documents/FLAM3/flam3/src/filters.c:202: warning: control reaches end of non-void function
-lSLF07#2@55"Compile /Users/spot/Documents/FLAM3/flam3/src/filters.c315521222#315521223#0(188"/Users/spot/Documents/FLAM3/flam3/src/filters.c: In function 'flam3_spatial_filter':/Users/spot/Documents/FLAM3/flam3/src/filters.c:202: warning: control reaches end of non-void function1(22@40"Control reaches end of non-void function315521222#85#103#0(6@47"/Users/spot/Documents/FLAM3/flam3/src/filters.c315439703#202#0#202#0#40"control reaches end of non-void function0(0#0#47"/Users/spot/Documents/FLAM3/flam3/src/filters.c8630039840#1416"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch i386 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/i386 -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/filters.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/filters.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/flam3-render.o /Users/spot/Documents/FLAM3/flam3/src/flam3-render.c normal i386 c com.apple.compilers.gcc.4_2
-s315521222.759743
-e315521222.946875
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/flam3-render.o
-x/Users/spot/Documents/FLAM3/flam3/src/flam3-render.c
-xnormal
-xi386
-xc
-xcom.apple.compilers.gcc.4_2
-o/Users/spot/Documents/FLAM3/flam3/src/flam3-render.c: In function 'main':
-o/Users/spot/Documents/FLAM3/flam3/src/flam3-render.c:365: warning: implicit declaration of function 'prepare_precalc_flags'
-lSLF07#2@60"Compile /Users/spot/Documents/FLAM3/flam3/src/flam3-render.c315521222#315521222#0(198"/Users/spot/Documents/FLAM3/flam3/src/flam3-render.c: In function 'main':/Users/spot/Documents/FLAM3/flam3/src/flam3-render.c:365: warning: implicit declaration of function 'prepare_precalc_flags'1(22@56"Implicit declaration of function 'prepare_precalc_flags'315521222#74#124#0(6@52"/Users/spot/Documents/FLAM3/flam3/src/flam3-render.c315467593#365#0#365#0#36"implicit declaration of function '*'0(0#0#52"/Users/spot/Documents/FLAM3/flam3/src/flam3-render.c8630100896#1426"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch i386 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/i386 -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/flam3-render.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/flam3-render.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/flam3.o /Users/spot/Documents/FLAM3/flam3/src/flam3.c normal i386 c com.apple.compilers.gcc.4_2
-s315521222.640412
-e315521226.375692
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/flam3.o
-x/Users/spot/Documents/FLAM3/flam3/src/flam3.c
-xnormal
-xi386
-xc
-xcom.apple.compilers.gcc.4_2
-o/Users/spot/Documents/FLAM3/flam3/src/flam3.c: In function 'flam3_cross':
-o/Users/spot/Documents/FLAM3/flam3/src/flam3.c:2534: warning: unused variable 'i1'
-o/Users/spot/Documents/FLAM3/flam3/src/flam3.c:2534: warning: unused variable 'i0'
-o/Users/spot/Documents/FLAM3/flam3/src/flam3.c: In function 'flam3_random':
-o/Users/spot/Documents/FLAM3/flam3/src/flam3.c:2943: warning: unused variable 'j'
-lSLF07#2@53"Compile /Users/spot/Documents/FLAM3/flam3/src/flam3.c315521222#315521226#0(394"/Users/spot/Documents/FLAM3/flam3/src/flam3.c: In function 'flam3_cross':/Users/spot/Documents/FLAM3/flam3/src/flam3.c:2534: warning: unused variable 'i1'/Users/spot/Documents/FLAM3/flam3/src/flam3.c:2534: warning: unused variable 'i0'/Users/spot/Documents/FLAM3/flam3/src/flam3.c: In function 'flam3_random':/Users/spot/Documents/FLAM3/flam3/src/flam3.c:2943: warning: unused variable 'j'3(22@20"Unused variable 'i1'315521222#74#82#0(6@45"/Users/spot/Documents/FLAM3/flam3/src/flam3.c315439703#2534#0#2534#0#19"unused variable '*'0(22@20"Unused variable 'i0'315521222#156#82#0(6@45"/Users/spot/Documents/FLAM3/flam3/src/flam3.c315439703#2534#0#2534#0#19"unused variable '*'0(22@19"Unused variable 'j'315521222#313#81#0(6@45"/Users/spot/Documents/FLAM3/flam3/src/flam3.c315439703#2943#0#2943#0#19"unused variable '*'0(0#0#45"/Users/spot/Documents/FLAM3/flam3/src/flam3.c8630539680#1412"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch i386 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/i386 -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/flam3.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/flam3.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/interpolation.o /Users/spot/Documents/FLAM3/flam3/src/interpolation.c normal i386 c com.apple.compilers.gcc.4_2
-s315521222.308790
-e315521223.083746
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/interpolation.o
-x/Users/spot/Documents/FLAM3/flam3/src/interpolation.c
-xnormal
-xi386
-xc
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@61"Compile /Users/spot/Documents/FLAM3/flam3/src/interpolation.c315521222#315521223#0(0"0(0#0#53"/Users/spot/Documents/FLAM3/flam3/src/interpolation.c8630315488#1428"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch i386 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/i386 -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/interpolation.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/interpolation.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/isaac.o /Users/spot/Documents/FLAM3/flam3/src/isaac.c normal i386 c com.apple.compilers.gcc.4_2
-s315521222.230990
-e315521222.308714
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/isaac.o
-x/Users/spot/Documents/FLAM3/flam3/src/isaac.c
-xnormal
-xi386
-xc
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@53"Compile /Users/spot/Documents/FLAM3/flam3/src/isaac.c315521222#315521222#0(0"0(0#0#45"/Users/spot/Documents/FLAM3/flam3/src/isaac.c8631074400#1412"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch i386 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/i386 -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/isaac.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/isaac.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/palettes.o /Users/spot/Documents/FLAM3/flam3/src/palettes.c normal i386 c com.apple.compilers.gcc.4_2
-s315521222.050045
-e315521222.230913
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/palettes.o
-x/Users/spot/Documents/FLAM3/flam3/src/palettes.c
-xnormal
-xi386
-xc
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@56"Compile /Users/spot/Documents/FLAM3/flam3/src/palettes.c315521222#315521222#0(0"0(0#0#48"/Users/spot/Documents/FLAM3/flam3/src/palettes.c8630460672#1418"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch i386 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/i386 -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/palettes.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/palettes.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/parser.o /Users/spot/Documents/FLAM3/flam3/src/parser.c normal i386 c com.apple.compilers.gcc.4_2
-s315521222.048866
-e315521222.759666
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/parser.o
-x/Users/spot/Documents/FLAM3/flam3/src/parser.c
-xnormal
-xi386
-xc
-xcom.apple.compilers.gcc.4_2
-o/Users/spot/Documents/FLAM3/flam3/src/parser.c: In function 'parse_flame_element':
-o/Users/spot/Documents/FLAM3/flam3/src/parser.c:293: warning: unused variable 'j'
-lSLF07#2@54"Compile /Users/spot/Documents/FLAM3/flam3/src/parser.c315521222#315521222#0(164"/Users/spot/Documents/FLAM3/flam3/src/parser.c: In function 'parse_flame_element':/Users/spot/Documents/FLAM3/flam3/src/parser.c:293: warning: unused variable 'j'1(22@19"Unused variable 'j'315521222#83#81#0(6@46"/Users/spot/Documents/FLAM3/flam3/src/parser.c315439703#293#0#293#0#19"unused variable '*'0(0#0#46"/Users/spot/Documents/FLAM3/flam3/src/parser.c8630591616#1414"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch i386 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/i386 -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/parser.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/parser.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/png.o /Users/spot/Documents/FLAM3/flam3/src/png.c normal i386 c com.apple.compilers.gcc.4_2
-s315521221.941895
-e315521222.049989
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/png.o
-x/Users/spot/Documents/FLAM3/flam3/src/png.c
-xnormal
-xi386
-xc
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@51"Compile /Users/spot/Documents/FLAM3/flam3/src/png.c315521221#315521222#0(0"0(0#0#43"/Users/spot/Documents/FLAM3/flam3/src/png.c8626908672#1408"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch i386 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/i386 -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/png.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/png.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/variations.o /Users/spot/Documents/FLAM3/flam3/src/variations.c normal i386 c com.apple.compilers.gcc.4_2
-s315521221.883070
-e315521222.640249
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/variations.o
-x/Users/spot/Documents/FLAM3/flam3/src/variations.c
-xnormal
-xi386
-xc
-xcom.apple.compilers.gcc.4_2
-o/Users/spot/Documents/FLAM3/flam3/src/variations.c: In function 'var97_flux':
-o/Users/spot/Documents/FLAM3/flam3/src/variations.c:1919: warning: unused variable 'c'
-o/Users/spot/Documents/FLAM3/flam3/src/variations.c:1918: warning: unused variable 's'
-o/Users/spot/Documents/FLAM3/flam3/src/variations.c: In function 'apply_xform':
-o/Users/spot/Documents/FLAM3/flam3/src/variations.c:2118: warning: unused variable 's'
-o/Users/spot/Documents/FLAM3/flam3/src/variations.c:2118: warning: unused variable 'next_color'
-lSLF07#2@58"Compile /Users/spot/Documents/FLAM3/flam3/src/variations.c315521221#315521222#0(510"/Users/spot/Documents/FLAM3/flam3/src/variations.c: In function 'var97_flux':/Users/spot/Documents/FLAM3/flam3/src/variations.c:1919: warning: unused variable 'c'/Users/spot/Documents/FLAM3/flam3/src/variations.c:1918: warning: unused variable 's'/Users/spot/Documents/FLAM3/flam3/src/variations.c: In function 'apply_xform':/Users/spot/Documents/FLAM3/flam3/src/variations.c:2118: warning: unused variable 's'/Users/spot/Documents/FLAM3/flam3/src/variations.c:2118: warning: unused variable 'next_color'4(22@19"Unused variable 'c'315521221#78#86#0(6@50"/Users/spot/Documents/FLAM3/flam3/src/variations.c315439703#1919#0#1919#0#19"unused variable '*'0(22@19"Unused variable 's'315521221#164#86#0(6@50"/Users/spot/Documents/FLAM3/flam3/src/variations.c315439703#1918#0#1918#0#19"unused variable '*'0(22@19"Unused variable 's'315521221#329#86#0(6@50"/Users/spot/Documents/FLAM3/flam3/src/variations.c315439703#2118#0#2118#0#19"unused variable '*'0(22@28"Unused variable 'next_color'315521221#415#95#0(6@50"/Users/spot/Documents/FLAM3/flam3/src/variations.c315439703#2118#0#2118#0#19"unused variable '*'0(0#0#50"/Users/spot/Documents/FLAM3/flam3/src/variations.c8630805024#1422"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch i386 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/i386 -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/variations.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/variations.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/docstring.o /Users/spot/Documents/FLAM3/flam3/src/docstring.c normal ppc c com.apple.compilers.gcc.4_2
-s315521225.457922
-e315521225.512647
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/docstring.o
-x/Users/spot/Documents/FLAM3/flam3/src/docstring.c
-xnormal
-xppc
-xc
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@57"Compile /Users/spot/Documents/FLAM3/flam3/src/docstring.c315521225#315521225#0(0"0(0#0#49"/Users/spot/Documents/FLAM3/flam3/src/docstring.c8630093248#1427"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch ppc -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -mtune=G5 -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/ppc -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/docstring.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/docstring.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/filters.o /Users/spot/Documents/FLAM3/flam3/src/filters.c normal ppc c com.apple.compilers.gcc.4_2
-s315521225.234449
-e315521225.457845
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/filters.o
-x/Users/spot/Documents/FLAM3/flam3/src/filters.c
-xnormal
-xppc
-xc
-xcom.apple.compilers.gcc.4_2
-o/Users/spot/Documents/FLAM3/flam3/src/filters.c: In function 'flam3_spatial_filter':
-o/Users/spot/Documents/FLAM3/flam3/src/filters.c:202: warning: control reaches end of non-void function
-lSLF07#2@55"Compile /Users/spot/Documents/FLAM3/flam3/src/filters.c315521225#315521225#0(188"/Users/spot/Documents/FLAM3/flam3/src/filters.c: In function 'flam3_spatial_filter':/Users/spot/Documents/FLAM3/flam3/src/filters.c:202: warning: control reaches end of non-void function1(22@40"Control reaches end of non-void function315521225#85#103#0(6@47"/Users/spot/Documents/FLAM3/flam3/src/filters.c315439703#202#0#202#0#40"control reaches end of non-void function0(0#0#47"/Users/spot/Documents/FLAM3/flam3/src/filters.c8630526944#1423"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch ppc -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -mtune=G5 -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/ppc -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/filters.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/filters.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/flam3-render.o /Users/spot/Documents/FLAM3/flam3/src/flam3-render.c normal ppc c com.apple.compilers.gcc.4_2
-s315521225.023220
-e315521225.234369
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/flam3-render.o
-x/Users/spot/Documents/FLAM3/flam3/src/flam3-render.c
-xnormal
-xppc
-xc
-xcom.apple.compilers.gcc.4_2
-o/Users/spot/Documents/FLAM3/flam3/src/flam3-render.c: In function 'main':
-o/Users/spot/Documents/FLAM3/flam3/src/flam3-render.c:365: warning: implicit declaration of function 'prepare_precalc_flags'
-lSLF07#2@60"Compile /Users/spot/Documents/FLAM3/flam3/src/flam3-render.c315521225#315521225#0(198"/Users/spot/Documents/FLAM3/flam3/src/flam3-render.c: In function 'main':/Users/spot/Documents/FLAM3/flam3/src/flam3-render.c:365: warning: implicit declaration of function 'prepare_precalc_flags'1(22@56"Implicit declaration of function 'prepare_precalc_flags'315521225#74#124#0(6@52"/Users/spot/Documents/FLAM3/flam3/src/flam3-render.c315467593#365#0#365#0#36"implicit declaration of function '*'0(0#0#52"/Users/spot/Documents/FLAM3/flam3/src/flam3-render.c8629677632#1433"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch ppc -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -mtune=G5 -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/ppc -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/flam3-render.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/flam3-render.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/flam3.o /Users/spot/Documents/FLAM3/flam3/src/flam3.c normal ppc c com.apple.compilers.gcc.4_2
-s315521224.103173
-e315521228.248890
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/flam3.o
-x/Users/spot/Documents/FLAM3/flam3/src/flam3.c
-xnormal
-xppc
-xc
-xcom.apple.compilers.gcc.4_2
-o/Users/spot/Documents/FLAM3/flam3/src/flam3.c: In function 'flam3_cross':
-o/Users/spot/Documents/FLAM3/flam3/src/flam3.c:2534: warning: unused variable 'i1'
-o/Users/spot/Documents/FLAM3/flam3/src/flam3.c:2534: warning: unused variable 'i0'
-o/Users/spot/Documents/FLAM3/flam3/src/flam3.c: In function 'flam3_random':
-o/Users/spot/Documents/FLAM3/flam3/src/flam3.c:2943: warning: unused variable 'j'
-lSLF07#2@53"Compile /Users/spot/Documents/FLAM3/flam3/src/flam3.c315521224#315521228#0(394"/Users/spot/Documents/FLAM3/flam3/src/flam3.c: In function 'flam3_cross':/Users/spot/Documents/FLAM3/flam3/src/flam3.c:2534: warning: unused variable 'i1'/Users/spot/Documents/FLAM3/flam3/src/flam3.c:2534: warning: unused variable 'i0'/Users/spot/Documents/FLAM3/flam3/src/flam3.c: In function 'flam3_random':/Users/spot/Documents/FLAM3/flam3/src/flam3.c:2943: warning: unused variable 'j'3(22@20"Unused variable 'i1'315521224#74#82#0(6@45"/Users/spot/Documents/FLAM3/flam3/src/flam3.c315439703#2534#0#2534#0#19"unused variable '*'0(22@20"Unused variable 'i0'315521224#156#82#0(6@45"/Users/spot/Documents/FLAM3/flam3/src/flam3.c315439703#2534#0#2534#0#19"unused variable '*'0(22@19"Unused variable 'j'315521224#313#81#0(6@45"/Users/spot/Documents/FLAM3/flam3/src/flam3.c315439703#2943#0#2943#0#19"unused variable '*'0(0#0#45"/Users/spot/Documents/FLAM3/flam3/src/flam3.c8630097792#1419"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch ppc -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -mtune=G5 -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/ppc -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/flam3.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/flam3.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/interpolation.o /Users/spot/Documents/FLAM3/flam3/src/interpolation.c normal ppc c com.apple.compilers.gcc.4_2
-s315521224.083472
-e315521225.023036
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/interpolation.o
-x/Users/spot/Documents/FLAM3/flam3/src/interpolation.c
-xnormal
-xppc
-xc
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@61"Compile /Users/spot/Documents/FLAM3/flam3/src/interpolation.c315521224#315521225#0(0"0(0#0#53"/Users/spot/Documents/FLAM3/flam3/src/interpolation.c8631156832#1435"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch ppc -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -mtune=G5 -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/ppc -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/interpolation.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/interpolation.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/isaac.o /Users/spot/Documents/FLAM3/flam3/src/isaac.c normal ppc c com.apple.compilers.gcc.4_2
-s315521224.034444
-e315521224.103100
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/isaac.o
-x/Users/spot/Documents/FLAM3/flam3/src/isaac.c
-xnormal
-xppc
-xc
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@53"Compile /Users/spot/Documents/FLAM3/flam3/src/isaac.c315521224#315521224#0(0"0(0#0#45"/Users/spot/Documents/FLAM3/flam3/src/isaac.c8629522240#1419"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch ppc -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -mtune=G5 -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/ppc -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/isaac.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/isaac.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/palettes.o /Users/spot/Documents/FLAM3/flam3/src/palettes.c normal ppc c com.apple.compilers.gcc.4_2
-s315521223.848054
-e315521224.034369
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/palettes.o
-x/Users/spot/Documents/FLAM3/flam3/src/palettes.c
-xnormal
-xppc
-xc
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@56"Compile /Users/spot/Documents/FLAM3/flam3/src/palettes.c315521223#315521224#0(0"0(0#0#48"/Users/spot/Documents/FLAM3/flam3/src/palettes.c8629322336#1425"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch ppc -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -mtune=G5 -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/ppc -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/palettes.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/palettes.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/parser.o /Users/spot/Documents/FLAM3/flam3/src/parser.c normal ppc c com.apple.compilers.gcc.4_2
-s315521223.283012
-e315521224.083399
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/parser.o
-x/Users/spot/Documents/FLAM3/flam3/src/parser.c
-xnormal
-xppc
-xc
-xcom.apple.compilers.gcc.4_2
-o/Users/spot/Documents/FLAM3/flam3/src/parser.c: In function 'parse_flame_element':
-o/Users/spot/Documents/FLAM3/flam3/src/parser.c:293: warning: unused variable 'j'
-lSLF07#2@54"Compile /Users/spot/Documents/FLAM3/flam3/src/parser.c315521223#315521224#0(164"/Users/spot/Documents/FLAM3/flam3/src/parser.c: In function 'parse_flame_element':/Users/spot/Documents/FLAM3/flam3/src/parser.c:293: warning: unused variable 'j'1(22@19"Unused variable 'j'315521223#83#81#0(6@46"/Users/spot/Documents/FLAM3/flam3/src/parser.c315439703#293#0#293#0#19"unused variable '*'0(0#0#46"/Users/spot/Documents/FLAM3/flam3/src/parser.c8631388576#1421"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch ppc -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -mtune=G5 -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/ppc -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/parser.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/parser.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/png.o /Users/spot/Documents/FLAM3/flam3/src/png.c normal ppc c com.apple.compilers.gcc.4_2
-s315521223.149324
-e315521223.282940
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/png.o
-x/Users/spot/Documents/FLAM3/flam3/src/png.c
-xnormal
-xppc
-xc
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@51"Compile /Users/spot/Documents/FLAM3/flam3/src/png.c315521223#315521223#0(0"0(0#0#43"/Users/spot/Documents/FLAM3/flam3/src/png.c8630516352#1415"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch ppc -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -mtune=G5 -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/ppc -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/png.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/png.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/variations.o /Users/spot/Documents/FLAM3/flam3/src/variations.c normal ppc c com.apple.compilers.gcc.4_2
-s315521223.136073
-e315521223.847978
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/variations.o
-x/Users/spot/Documents/FLAM3/flam3/src/variations.c
-xnormal
-xppc
-xc
-xcom.apple.compilers.gcc.4_2
-o/Users/spot/Documents/FLAM3/flam3/src/variations.c: In function 'var97_flux':
-o/Users/spot/Documents/FLAM3/flam3/src/variations.c:1919: warning: unused variable 'c'
-o/Users/spot/Documents/FLAM3/flam3/src/variations.c:1918: warning: unused variable 's'
-o/Users/spot/Documents/FLAM3/flam3/src/variations.c: In function 'apply_xform':
-o/Users/spot/Documents/FLAM3/flam3/src/variations.c:2118: warning: unused variable 's'
-o/Users/spot/Documents/FLAM3/flam3/src/variations.c:2118: warning: unused variable 'next_color'
-lSLF07#2@58"Compile /Users/spot/Documents/FLAM3/flam3/src/variations.c315521223#315521223#0(510"/Users/spot/Documents/FLAM3/flam3/src/variations.c: In function 'var97_flux':/Users/spot/Documents/FLAM3/flam3/src/variations.c:1919: warning: unused variable 'c'/Users/spot/Documents/FLAM3/flam3/src/variations.c:1918: warning: unused variable 's'/Users/spot/Documents/FLAM3/flam3/src/variations.c: In function 'apply_xform':/Users/spot/Documents/FLAM3/flam3/src/variations.c:2118: warning: unused variable 's'/Users/spot/Documents/FLAM3/flam3/src/variations.c:2118: warning: unused variable 'next_color'4(22@19"Unused variable 'c'315521223#78#86#0(6@50"/Users/spot/Documents/FLAM3/flam3/src/variations.c315439703#1919#0#1919#0#19"unused variable '*'0(22@19"Unused variable 's'315521223#164#86#0(6@50"/Users/spot/Documents/FLAM3/flam3/src/variations.c315439703#1918#0#1918#0#19"unused variable '*'0(22@19"Unused variable 's'315521223#329#86#0(6@50"/Users/spot/Documents/FLAM3/flam3/src/variations.c315439703#2118#0#2118#0#19"unused variable '*'0(22@28"Unused variable 'next_color'315521223#415#95#0(6@50"/Users/spot/Documents/FLAM3/flam3/src/variations.c315439703#2118#0#2118#0#19"unused variable '*'0(0#0#50"/Users/spot/Documents/FLAM3/flam3/src/variations.c8631391264#1429"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch ppc -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -mtune=G5 -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/ppc -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/variations.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/variations.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/docstring.o /Users/spot/Documents/FLAM3/flam3/src/docstring.c normal x86_64 c com.apple.compilers.gcc.4_2
-s315521221.837109
-e315521221.882995
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/docstring.o
-x/Users/spot/Documents/FLAM3/flam3/src/docstring.c
-xnormal
-xx86_64
-xc
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@57"Compile /Users/spot/Documents/FLAM3/flam3/src/docstring.c315521221#315521221#0(0"0(0#0#49"/Users/spot/Documents/FLAM3/flam3/src/docstring.c8631665440#1426"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/x86_64 -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/docstring.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/docstring.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/filters.o /Users/spot/Documents/FLAM3/flam3/src/filters.c normal x86_64 c com.apple.compilers.gcc.4_2
-s315521221.758005
-e315521221.941819
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/filters.o
-x/Users/spot/Documents/FLAM3/flam3/src/filters.c
-xnormal
-xx86_64
-xc
-xcom.apple.compilers.gcc.4_2
-o/Users/spot/Documents/FLAM3/flam3/src/filters.c: In function 'flam3_spatial_filter':
-o/Users/spot/Documents/FLAM3/flam3/src/filters.c:202: warning: control reaches end of non-void function
-lSLF07#2@55"Compile /Users/spot/Documents/FLAM3/flam3/src/filters.c315521221#315521221#0(188"/Users/spot/Documents/FLAM3/flam3/src/filters.c: In function 'flam3_spatial_filter':/Users/spot/Documents/FLAM3/flam3/src/filters.c:202: warning: control reaches end of non-void function1(22@40"Control reaches end of non-void function315521221#85#103#0(6@47"/Users/spot/Documents/FLAM3/flam3/src/filters.c315439703#202#0#202#0#40"control reaches end of non-void function0(0#0#47"/Users/spot/Documents/FLAM3/flam3/src/filters.c8616609984#1422"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/x86_64 -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/filters.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/filters.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/flam3-render.o /Users/spot/Documents/FLAM3/flam3/src/flam3-render.c normal x86_64 c com.apple.compilers.gcc.4_2
-s315521221.661455
-e315521221.837032
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/flam3-render.o
-x/Users/spot/Documents/FLAM3/flam3/src/flam3-render.c
-xnormal
-xx86_64
-xc
-xcom.apple.compilers.gcc.4_2
-o/Users/spot/Documents/FLAM3/flam3/src/flam3-render.c: In function 'main':
-o/Users/spot/Documents/FLAM3/flam3/src/flam3-render.c:365: warning: implicit declaration of function 'prepare_precalc_flags'
-lSLF07#2@60"Compile /Users/spot/Documents/FLAM3/flam3/src/flam3-render.c315521221#315521221#0(198"/Users/spot/Documents/FLAM3/flam3/src/flam3-render.c: In function 'main':/Users/spot/Documents/FLAM3/flam3/src/flam3-render.c:365: warning: implicit declaration of function 'prepare_precalc_flags'1(22@56"Implicit declaration of function 'prepare_precalc_flags'315521221#74#124#0(6@52"/Users/spot/Documents/FLAM3/flam3/src/flam3-render.c315467593#365#0#365#0#36"implicit declaration of function '*'0(0#0#52"/Users/spot/Documents/FLAM3/flam3/src/flam3-render.c8630148576#1432"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/x86_64 -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/flam3-render.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/flam3-render.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/flam3.o /Users/spot/Documents/FLAM3/flam3/src/flam3.c normal x86_64 c com.apple.compilers.gcc.4_2
-s315521221.238250
-e315521225.153203
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/flam3.o
-x/Users/spot/Documents/FLAM3/flam3/src/flam3.c
-xnormal
-xx86_64
-xc
-xcom.apple.compilers.gcc.4_2
-o/Users/spot/Documents/FLAM3/flam3/src/flam3.c: In function 'flam3_cross':
-o/Users/spot/Documents/FLAM3/flam3/src/flam3.c:2534: warning: unused variable 'i1'
-o/Users/spot/Documents/FLAM3/flam3/src/flam3.c:2534: warning: unused variable 'i0'
-o/Users/spot/Documents/FLAM3/flam3/src/flam3.c: In function 'flam3_random':
-o/Users/spot/Documents/FLAM3/flam3/src/flam3.c:2943: warning: unused variable 'j'
-lSLF07#2@53"Compile /Users/spot/Documents/FLAM3/flam3/src/flam3.c315521221#315521225#0(394"/Users/spot/Documents/FLAM3/flam3/src/flam3.c: In function 'flam3_cross':/Users/spot/Documents/FLAM3/flam3/src/flam3.c:2534: warning: unused variable 'i1'/Users/spot/Documents/FLAM3/flam3/src/flam3.c:2534: warning: unused variable 'i0'/Users/spot/Documents/FLAM3/flam3/src/flam3.c: In function 'flam3_random':/Users/spot/Documents/FLAM3/flam3/src/flam3.c:2943: warning: unused variable 'j'3(22@20"Unused variable 'i1'315521221#74#82#0(6@45"/Users/spot/Documents/FLAM3/flam3/src/flam3.c315439703#2534#0#2534#0#19"unused variable '*'0(22@20"Unused variable 'i0'315521221#156#82#0(6@45"/Users/spot/Documents/FLAM3/flam3/src/flam3.c315439703#2534#0#2534#0#19"unused variable '*'0(22@19"Unused variable 'j'315521221#313#81#0(6@45"/Users/spot/Documents/FLAM3/flam3/src/flam3.c315439703#2943#0#2943#0#19"unused variable '*'0(0#0#45"/Users/spot/Documents/FLAM3/flam3/src/flam3.c8630184800#1418"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/x86_64 -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/flam3.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/flam3.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/interpolation.o /Users/spot/Documents/FLAM3/flam3/src/interpolation.c normal x86_64 c com.apple.compilers.gcc.4_2
-s315521221.213214
-e315521222.048793
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/interpolation.o
-x/Users/spot/Documents/FLAM3/flam3/src/interpolation.c
-xnormal
-xx86_64
-xc
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@61"Compile /Users/spot/Documents/FLAM3/flam3/src/interpolation.c315521221#315521222#0(0"0(0#0#53"/Users/spot/Documents/FLAM3/flam3/src/interpolation.c8630440768#1434"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/x86_64 -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/interpolation.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/interpolation.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/isaac.o /Users/spot/Documents/FLAM3/flam3/src/isaac.c normal x86_64 c com.apple.compilers.gcc.4_2
-s315521221.162144
-e315521221.238175
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/isaac.o
-x/Users/spot/Documents/FLAM3/flam3/src/isaac.c
-xnormal
-xx86_64
-xc
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@53"Compile /Users/spot/Documents/FLAM3/flam3/src/isaac.c315521221#315521221#0(0"0(0#0#45"/Users/spot/Documents/FLAM3/flam3/src/isaac.c8630925568#1418"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/x86_64 -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/isaac.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/isaac.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/palettes.o /Users/spot/Documents/FLAM3/flam3/src/palettes.c normal x86_64 c com.apple.compilers.gcc.4_2
-s315521221.040867
-e315521221.213138
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/palettes.o
-x/Users/spot/Documents/FLAM3/flam3/src/palettes.c
-xnormal
-xx86_64
-xc
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@56"Compile /Users/spot/Documents/FLAM3/flam3/src/palettes.c315521221#315521221#0(0"0(0#0#48"/Users/spot/Documents/FLAM3/flam3/src/palettes.c8630202400#1424"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/x86_64 -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/palettes.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/palettes.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/parser.o /Users/spot/Documents/FLAM3/flam3/src/parser.c normal x86_64 c com.apple.compilers.gcc.4_2
-s315521221.040245
-e315521221.661379
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/parser.o
-x/Users/spot/Documents/FLAM3/flam3/src/parser.c
-xnormal
-xx86_64
-xc
-xcom.apple.compilers.gcc.4_2
-o/Users/spot/Documents/FLAM3/flam3/src/parser.c: In function 'parse_flame_element':
-o/Users/spot/Documents/FLAM3/flam3/src/parser.c:293: warning: unused variable 'j'
-lSLF07#2@54"Compile /Users/spot/Documents/FLAM3/flam3/src/parser.c315521221#315521221#0(164"/Users/spot/Documents/FLAM3/flam3/src/parser.c: In function 'parse_flame_element':/Users/spot/Documents/FLAM3/flam3/src/parser.c:293: warning: unused variable 'j'1(22@19"Unused variable 'j'315521221#83#81#0(6@46"/Users/spot/Documents/FLAM3/flam3/src/parser.c315439703#293#0#293#0#19"unused variable '*'0(0#0#46"/Users/spot/Documents/FLAM3/flam3/src/parser.c8630236384#1420"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/x86_64 -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/parser.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/parser.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/png.o /Users/spot/Documents/FLAM3/flam3/src/png.c normal x86_64 c com.apple.compilers.gcc.4_2
-s315521221.039632
-e315521221.162067
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/png.o
-x/Users/spot/Documents/FLAM3/flam3/src/png.c
-xnormal
-xx86_64
-xc
-xcom.apple.compilers.gcc.4_2
-lSLF07#2@51"Compile /Users/spot/Documents/FLAM3/flam3/src/png.c315521221#315521221#0(0"0(0#0#43"/Users/spot/Documents/FLAM3/flam3/src/png.c8632047360#1414"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/x86_64 -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/png.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/png.o0#
-
-CCompileC build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/variations.o /Users/spot/Documents/FLAM3/flam3/src/variations.c normal x86_64 c com.apple.compilers.gcc.4_2
-s315521221.039000
-e315521221.757928
-r1
-xCompileC
-xbuild/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/variations.o
-x/Users/spot/Documents/FLAM3/flam3/src/variations.c
-xnormal
-xx86_64
-xc
-xcom.apple.compilers.gcc.4_2
-o/Users/spot/Documents/FLAM3/flam3/src/variations.c: In function 'var97_flux':
-o/Users/spot/Documents/FLAM3/flam3/src/variations.c:1919: warning: unused variable 'c'
-o/Users/spot/Documents/FLAM3/flam3/src/variations.c:1918: warning: unused variable 's'
-o/Users/spot/Documents/FLAM3/flam3/src/variations.c: In function 'apply_xform':
-o/Users/spot/Documents/FLAM3/flam3/src/variations.c:2118: warning: unused variable 's'
-o/Users/spot/Documents/FLAM3/flam3/src/variations.c:2118: warning: unused variable 'next_color'
-lSLF07#2@58"Compile /Users/spot/Documents/FLAM3/flam3/src/variations.c315521221#315521221#0(510"/Users/spot/Documents/FLAM3/flam3/src/variations.c: In function 'var97_flux':/Users/spot/Documents/FLAM3/flam3/src/variations.c:1919: warning: unused variable 'c'/Users/spot/Documents/FLAM3/flam3/src/variations.c:1918: warning: unused variable 's'/Users/spot/Documents/FLAM3/flam3/src/variations.c: In function 'apply_xform':/Users/spot/Documents/FLAM3/flam3/src/variations.c:2118: warning: unused variable 's'/Users/spot/Documents/FLAM3/flam3/src/variations.c:2118: warning: unused variable 'next_color'4(22@19"Unused variable 'c'315521221#78#86#0(6@50"/Users/spot/Documents/FLAM3/flam3/src/variations.c315439703#1919#0#1919#0#19"unused variable '*'0(22@19"Unused variable 's'315521221#164#86#0(6@50"/Users/spot/Documents/FLAM3/flam3/src/variations.c315439703#1918#0#1918#0#19"unused variable '*'0(22@19"Unused variable 's'315521221#329#86#0(6@50"/Users/spot/Documents/FLAM3/flam3/src/variations.c315439703#2118#0#2118#0#19"unused variable '*'0(22@28"Unused variable 'next_color'315521221#415#95#0(6@50"/Users/spot/Documents/FLAM3/flam3/src/variations.c315439703#2118#0#2118#0#19"unused variable '*'0(0#0#50"/Users/spot/Documents/FLAM3/flam3/src/variations.c8627955808#1428"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -Os -mdynamic-no-pic -Wreturn-type -Wunused-variable -DPACKAGE_DATA_DIR="/Users/spot/Documents/FLAM3/flam3/src" -DSVN_REV="3.0.1" -isysroot /Developer/SDKs/MacOSX10.6.sdk -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Release -I/Users/spot/Documents/FLAM3/build/Release/include -I/Users/spot/Documents/FLAM3/../../client_generic/libpng/include -I/Users/spot/Documents/FLAM3/../../client_generic/libxml/include/libxml2 -I/Users/spot/Documents/FLAM3/flam3/src -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources/x86_64 -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/variations.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/variations.o0#
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/i386/docstring.o /Users/spot/Documents/FLAM3/flam3/src/docstring.c normal i386 c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/i386/filters.o /Users/spot/Documents/FLAM3/flam3/src/filters.c normal i386 c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/i386/flam3-render.o /Users/spot/Documents/FLAM3/flam3/src/flam3-render.c normal i386 c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/i386/flam3.o /Users/spot/Documents/FLAM3/flam3/src/flam3.c normal i386 c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/i386/interpolation.o /Users/spot/Documents/FLAM3/flam3/src/interpolation.c normal i386 c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/i386/isaac.o /Users/spot/Documents/FLAM3/flam3/src/isaac.c normal i386 c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/i386/palettes.o /Users/spot/Documents/FLAM3/flam3/src/palettes.c normal i386 c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/i386/parser.o /Users/spot/Documents/FLAM3/flam3/src/parser.c normal i386 c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/i386/png.o /Users/spot/Documents/FLAM3/flam3/src/png.c normal i386 c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/i386/variations.o /Users/spot/Documents/FLAM3/flam3/src/variations.c normal i386 c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/docstring.o /Users/spot/Documents/FLAM3/flam3/src/docstring.c normal ppc c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/filters.o /Users/spot/Documents/FLAM3/flam3/src/filters.c normal ppc c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/flam3-render.o /Users/spot/Documents/FLAM3/flam3/src/flam3-render.c normal ppc c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/flam3.o /Users/spot/Documents/FLAM3/flam3/src/flam3.c normal ppc c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/interpolation.o /Users/spot/Documents/FLAM3/flam3/src/interpolation.c normal ppc c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/isaac.o /Users/spot/Documents/FLAM3/flam3/src/isaac.c normal ppc c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/palettes.o /Users/spot/Documents/FLAM3/flam3/src/palettes.c normal ppc c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/parser.o /Users/spot/Documents/FLAM3/flam3/src/parser.c normal ppc c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/png.o /Users/spot/Documents/FLAM3/flam3/src/png.c normal ppc c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/variations.o /Users/spot/Documents/FLAM3/flam3/src/variations.c normal ppc c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/docstring.o /Users/spot/Documents/FLAM3/flam3/src/docstring.c normal x86_64 c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/filters.o /Users/spot/Documents/FLAM3/flam3/src/filters.c normal x86_64 c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/flam3-render.o /Users/spot/Documents/FLAM3/flam3/src/flam3-render.c normal x86_64 c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/flam3.o /Users/spot/Documents/FLAM3/flam3/src/flam3.c normal x86_64 c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/interpolation.o /Users/spot/Documents/FLAM3/flam3/src/interpolation.c normal x86_64 c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/isaac.o /Users/spot/Documents/FLAM3/flam3/src/isaac.c normal x86_64 c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/palettes.o /Users/spot/Documents/FLAM3/flam3/src/palettes.c normal x86_64 c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/parser.o /Users/spot/Documents/FLAM3/flam3/src/parser.c normal x86_64 c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/png.o /Users/spot/Documents/FLAM3/flam3/src/png.c normal x86_64 c com.apple.compilers.gcc.4_2
-r0
-
-CCompileC build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/variations.o /Users/spot/Documents/FLAM3/flam3/src/variations.c normal x86_64 c com.apple.compilers.gcc.4_2
-r0
-
-CCreateUniversalBinary /Users/spot/Documents/FLAM3/build/Release/FLAM3 normal "x86_64 i386 ppc"
-s315521328.424384
-e315521328.456484
-r1
-xCreateUniversalBinary
-x/Users/spot/Documents/FLAM3/build/Release/FLAM3
-xnormal
-xx86_64 i386 ppc
-lSLF07#2@66"CreateUniversalBinary build/Release/FLAM3 normal "x86_64 i386 ppc"315521328#315521328#0(0"0(0#0#43"/Users/spot/Documents/FLAM3/x86_64 i386 ppc8630640992#394"    cd /Users/spot/Documents/FLAM3    /usr/bin/lipo -create /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/FLAM3 /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/FLAM3 /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/FLAM3 -output /Users/spot/Documents/FLAM3/build/Release/FLAM30#
-
-CCreateUniversalBinary /Users/spot/Documents/FLAM3/build/Release/libflam3.a normal "x86_64 i386 ppc"
-s315610822.290542
-e315610822.510556
-r1
-xCreateUniversalBinary
-x/Users/spot/Documents/FLAM3/build/Release/libflam3.a
-xnormal
-xx86_64 i386 ppc
-lSLF07#2@71"CreateUniversalBinary build/Release/libflam3.a normal "x86_64 i386 ppc"315610822#315610822#0(0"0(0#0#43"/Users/spot/Documents/FLAM3/x86_64 i386 ppc8639688608#422"    cd /Users/spot/Documents/FLAM3    /Developer/usr/bin/libtool -static /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/libflam3.a /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/i386/libflam3.a /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/libflam3.a -o /Users/spot/Documents/FLAM3/build/Release/libflam3.a0#
-
-CGenerateDSYMFile /Users/spot/Documents/FLAM3/build/Release/FLAM3.dSYM /Users/spot/Documents/FLAM3/build/Release/FLAM3
-s315521328.456542
-e315521328.710170
-r1
-xGenerateDSYMFile
-x/Users/spot/Documents/FLAM3/build/Release/FLAM3.dSYM
-x/Users/spot/Documents/FLAM3/build/Release/FLAM3
-lSLF07#2@61"GenerateDSYMFile build/Release/FLAM3.dSYM build/Release/FLAM3315521328#315521328#0(0"0(0#0#47"/Users/spot/Documents/FLAM3/build/Release/FLAM38630223968#171"    cd /Users/spot/Documents/FLAM3    /Developer/usr/bin/dsymutil /Users/spot/Documents/FLAM3/build/Release/FLAM3 -o /Users/spot/Documents/FLAM3/build/Release/FLAM3.dSYM0#
-
-CLd /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/FLAM3 normal i386
-s315521328.357061
-e315521328.419258
-r1
-xLd
-x/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/FLAM3
-xnormal
-xi386
-old: warning: directory '/Users/spot/Documents/FLAM3/build/Release' following -L not found
-old: warning: directory '/Users/spot/Documents/FLAM3/build/Release' following -F not found
-old: warning: in /Users/spot/client_generic/libxml/lib/libxml2.dll.a, file was built for unsupported file format which is not the architecture being linked (i386)
-lSLF07#2@96"Link /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/FLAM3315521328#315521328#0(342"ld: warning: directory '/Users/spot/Documents/FLAM3/build/Release' following -L not foundld: warning: directory '/Users/spot/Documents/FLAM3/build/Release' following -F not foundld: warning: in /Users/spot/client_generic/libxml/lib/libxml2.dll.a, file was built for unsupported file format which is not the architecture being linked (i386)3(22@76"Directory '/Users/spot/Documents/FLAM3/build/Release' following -L not found315521328#0#90#0(6@0"315521328#0#0#0#0#0"0(22@76"Directory '/Users/spot/Documents/FLAM3/build/Release' following -F not found315521328#90#90#0(6@0"315521328#0#0#0#0#0"0(22@148"In /Users/spot/client_generic/libxml/lib/libxml2.dll.a, file was built for unsupported file format which is not the architecture being linked (i386)315521328#180#162#0(6@0"315521328#0#0#0#0#0"0(0#0#0"8629428832#645"    cd /Users/spot/Documents/FLAM3    setenv MACOSX_DEPLOYMENT_TARGET 10.6    /Developer/usr/bin/gcc-4.2 -arch i386 -isysroot /Developer/SDKs/MacOSX10.6.sdk -L/Users/spot/Documents/FLAM3/build/Release -L/Users/spot/Documents/FLAM3/../../client_generic/libxml/lib -L/Users/spot/Documents/FLAM3/../../client_generic/libpng/osx/lib -F/Users/spot/Documents/FLAM3/build/Release -filelist /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/FLAM3.LinkFileList -mmacosx-version-min=10.6 -lpng -lz -lxml2 -lxml2.dll -lpng -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/i386/FLAM30#
-
-CLd /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/FLAM3 normal ppc
-s315521328.358148
-e315521328.418872
-r1
-xLd
-x/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/FLAM3
-xnormal
-xppc
-old: warning: directory '/Users/spot/Documents/FLAM3/build/Release' following -L not found
-old: warning: directory '/Users/spot/Documents/FLAM3/build/Release' following -F not found
-old: warning: in /Users/spot/client_generic/libxml/lib/libxml2.dll.a, file was built for unsupported file format which is not the architecture being linked (ppc)
-lSLF07#2@95"Link /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/FLAM3315521328#315521328#0(341"ld: warning: directory '/Users/spot/Documents/FLAM3/build/Release' following -L not foundld: warning: directory '/Users/spot/Documents/FLAM3/build/Release' following -F not foundld: warning: in /Users/spot/client_generic/libxml/lib/libxml2.dll.a, file was built for unsupported file format which is not the architecture being linked (ppc)3(22@76"Directory '/Users/spot/Documents/FLAM3/build/Release' following -L not found315521328#0#90#0(6@0"315521328#0#0#0#0#0"0(22@76"Directory '/Users/spot/Documents/FLAM3/build/Release' following -F not found315521328#90#90#0(6@0"315521328#0#0#0#0#0"0(22@147"In /Users/spot/client_generic/libxml/lib/libxml2.dll.a, file was built for unsupported file format which is not the architecture being linked (ppc)315521328#180#161#0(6@0"315521328#0#0#0#0#0"0(0#0#0"8629081824#642"    cd /Users/spot/Documents/FLAM3    setenv MACOSX_DEPLOYMENT_TARGET 10.6    /Developer/usr/bin/gcc-4.2 -arch ppc -isysroot /Developer/SDKs/MacOSX10.6.sdk -L/Users/spot/Documents/FLAM3/build/Release -L/Users/spot/Documents/FLAM3/../../client_generic/libxml/lib -L/Users/spot/Documents/FLAM3/../../client_generic/libpng/osx/lib -F/Users/spot/Documents/FLAM3/build/Release -filelist /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/FLAM3.LinkFileList -mmacosx-version-min=10.6 -lpng -lz -lxml2 -lxml2.dll -lpng -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/ppc/FLAM30#
-
-CLd /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/FLAM3 normal x86_64
-s315521328.355889
-e315521328.424318
-r1
-xLd
-x/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/FLAM3
-xnormal
-xx86_64
-old: warning: directory '/Users/spot/Documents/FLAM3/build/Release' following -L not found
-old: warning: directory '/Users/spot/Documents/FLAM3/build/Release' following -F not found
-old: warning: in /Users/spot/client_generic/libxml/lib/libxml2.dll.a, file was built for unsupported file format which is not the architecture being linked (x86_64)
-lSLF07#2@98"Link /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/FLAM3315521328#315521328#0(344"ld: warning: directory '/Users/spot/Documents/FLAM3/build/Release' following -L not foundld: warning: directory '/Users/spot/Documents/FLAM3/build/Release' following -F not foundld: warning: in /Users/spot/client_generic/libxml/lib/libxml2.dll.a, file was built for unsupported file format which is not the architecture being linked (x86_64)3(22@76"Directory '/Users/spot/Documents/FLAM3/build/Release' following -L not found315521328#0#90#0(6@0"315521328#0#0#0#0#0"0(22@76"Directory '/Users/spot/Documents/FLAM3/build/Release' following -F not found315521328#90#90#0(6@0"315521328#0#0#0#0#0"0(22@150"In /Users/spot/client_generic/libxml/lib/libxml2.dll.a, file was built for unsupported file format which is not the architecture being linked (x86_64)315521328#180#164#0(6@0"315521328#0#0#0#0#0"0(0#0#0"8630064032#651"    cd /Users/spot/Documents/FLAM3    setenv MACOSX_DEPLOYMENT_TARGET 10.6    /Developer/usr/bin/gcc-4.2 -arch x86_64 -isysroot /Developer/SDKs/MacOSX10.6.sdk -L/Users/spot/Documents/FLAM3/build/Release -L/Users/spot/Documents/FLAM3/../../client_generic/libxml/lib -L/Users/spot/Documents/FLAM3/../../client_generic/libpng/osx/lib -F/Users/spot/Documents/FLAM3/build/Release -filelist /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/FLAM3.LinkFileList -mmacosx-version-min=10.6 -lpng -lz -lxml2 -lxml2.dll -lpng -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/FLAM3.build/Objects-normal/x86_64/FLAM30#
-
-CLibtool /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/i386/libflam3.a normal i386
-s315610822.236894
-e315610822.289064
-r1
-xLibtool
-x/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/i386/libflam3.a
-xnormal
-xi386
-lSLF07#2@88"Libtool build/FLAM3.build/Release/flam3.build/Objects-normal/i386/libflam3.a normal i386315610822#315610822#0(0"0(0#0#0"8622862752#433"    cd /Users/spot/Documents/FLAM3    setenv MACOSX_DEPLOYMENT_TARGET 10.6    /Developer/usr/bin/libtool -static -arch_only i386 -syslibroot /Developer/SDKs/MacOSX10.6.sdk -L/Users/spot/Documents/FLAM3/build/Release -filelist /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/i386/flam3.LinkFileList -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/i386/libflam3.a0#
-
-CLibtool /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/libflam3.a normal ppc
-s315610822.237631
-e315610822.290484
-r1
-xLibtool
-x/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/libflam3.a
-xnormal
-xppc
-lSLF07#2@86"Libtool build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/libflam3.a normal ppc315610822#315610822#0(0"0(0#0#0"8616769376#430"    cd /Users/spot/Documents/FLAM3    setenv MACOSX_DEPLOYMENT_TARGET 10.6    /Developer/usr/bin/libtool -static -arch_only ppc -syslibroot /Developer/SDKs/MacOSX10.6.sdk -L/Users/spot/Documents/FLAM3/build/Release -filelist /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/flam3.LinkFileList -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/ppc/libflam3.a0#
-
-CLibtool /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/libflam3.a normal x86_64
-s315610822.235961
-e315610822.290351
-r1
-xLibtool
-x/Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/libflam3.a
-xnormal
-xx86_64
-lSLF07#2@92"Libtool build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/libflam3.a normal x86_64315610822#315610822#0(0"0(0#0#0"8625472000#439"    cd /Users/spot/Documents/FLAM3    setenv MACOSX_DEPLOYMENT_TARGET 10.6    /Developer/usr/bin/libtool -static -arch_only x86_64 -syslibroot /Developer/SDKs/MacOSX10.6.sdk -L/Users/spot/Documents/FLAM3/build/Release -filelist /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/flam3.LinkFileList -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Release/flam3.build/Objects-normal/x86_64/libflam3.a0#
-
