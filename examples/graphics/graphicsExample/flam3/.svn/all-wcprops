@@ -1,0 +1,335 @@
+K 25
+svn:wc:ra_dav:version-url
+V 27
+/svn/!svn/ver/163/trunk/src
+END
+test.flam3
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/3/trunk/src/test.flam3
+END
+configure
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/33/trunk/src/configure
+END
+parser.h
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/3/trunk/src/parser.h
+END
+Makefile.in
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/24/trunk/src/Makefile.in
+END
+flam3.c
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/161/trunk/src/flam3.c
+END
+flam3-genome.man
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/3/trunk/src/flam3-genome.man
+END
+flam3-animate.man
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/3/trunk/src/flam3-animate.man
+END
+flam3.h
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/162/trunk/src/flam3.h
+END
+config.guess
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/3/trunk/src/config.guess
+END
+config.h
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/33/trunk/src/config.h
+END
+flam3-genome.c
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/146/trunk/src/flam3-genome.c
+END
+vidres.flam3
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/3/trunk/src/vidres.flam3
+END
+ltmain.sh
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/24/trunk/src/ltmain.sh
+END
+config.sub
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/3/trunk/src/config.sub
+END
+flam3.dsw
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/3/trunk/src/flam3.dsw
+END
+flam3-animate.c
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/147/trunk/src/flam3-animate.c
+END
+genome.dsp
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/3/trunk/src/genome.dsp
+END
+variations.c
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/151/trunk/src/variations.c
+END
+private.h
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/152/trunk/src/private.h
+END
+isaac.c
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/3/trunk/src/isaac.c
+END
+palettes.c
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/35/trunk/src/palettes.c
+END
+animate.dsp
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/3/trunk/src/animate.dsp
+END
+variations.h
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/151/trunk/src/variations.h
+END
+png.c
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/svn/!svn/ver/90/trunk/src/png.c
+END
+isaac.h
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/3/trunk/src/isaac.h
+END
+jpeg.c
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/svn/!svn/ver/3/trunk/src/jpeg.c
+END
+palettes.h
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/3/trunk/src/palettes.h
+END
+interpolation.c
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/163/trunk/src/interpolation.c
+END
+COPYING
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/3/trunk/src/COPYING
+END
+docstring.c
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/152/trunk/src/docstring.c
+END
+interpolation.h
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/3/trunk/src/interpolation.h
+END
+rect.c
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/153/trunk/src/rect.c
+END
+flam3-palettes.xml
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/3/trunk/src/flam3-palettes.xml
+END
+mkinstalldirs
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/3/trunk/src/mkinstalldirs
+END
+configure.in
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/150/trunk/src/configure.in
+END
+COPYING.txt
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/3/trunk/src/COPYING.txt
+END
+flam3-render.man
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/3/trunk/src/flam3-render.man
+END
+isaacs.h
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/3/trunk/src/isaacs.h
+END
+filters.c
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/3/trunk/src/filters.c
+END
+flam3-convert.man
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/3/trunk/src/flam3-convert.man
+END
+filters.h
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/162/trunk/src/filters.h
+END
+config.h.in
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/24/trunk/src/config.h.in
+END
+flam3-render.c
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/91/trunk/src/flam3-render.c
+END
+flam3-convert.c
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/3/trunk/src/flam3-convert.c
+END
+img.h
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/svn/!svn/ver/3/trunk/src/img.h
+END
+render.dsp
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/3/trunk/src/render.dsp
+END
+libtool
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/33/trunk/src/libtool
+END
+convert.dsp
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/3/trunk/src/convert.dsp
+END
+flam3.pc.in
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/89/trunk/src/flam3.pc.in
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/24/trunk/src/Makefile.am
+END
+missing
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/3/trunk/src/missing
+END
+README.txt
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/152/trunk/src/README.txt
+END
+parser.c
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/151/trunk/src/parser.c
+END
+aclocal.m4
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/24/trunk/src/aclocal.m4
+END
+install-sh
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/3/trunk/src/install-sh
+END

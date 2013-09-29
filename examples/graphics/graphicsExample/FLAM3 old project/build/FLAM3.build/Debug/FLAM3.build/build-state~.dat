@@ -1,0 +1,434 @@
+TFLAM3
+v7
+r0
+t315439816.901024
+cCheck dependencies
+cCompileC build/FLAM3.build/Debug/FLAM3.build/Objects-normal/x86_64/main.o /Users/spot/Documents/FLAM3/main.c normal x86_64 c com.apple.compilers.gcc.4_2
+cCompileC build/FLAM3.build/Debug/FLAM3.build/Objects-normal/x86_64/variations.o /Users/spot/Documents/FLAM3/flam3/src/variations.c normal x86_64 c com.apple.compilers.gcc.4_2
+cCompileC build/FLAM3.build/Debug/FLAM3.build/Objects-normal/x86_64/rect.o /Users/spot/Documents/FLAM3/flam3/src/rect.c normal x86_64 c com.apple.compilers.gcc.4_2
+cAnalyze /Users/spot/Documents/FLAM3/main.c
+cAnalyze /Users/spot/Documents/FLAM3/flam3/src/variations.c
+cAnalyze /Users/spot/Documents/FLAM3/flam3/src/rect.c
+
+N/Developer/SDKs/MacOSX10.6.sdk
+c000000004C5342BA00000000000000EE
+t1280524986
+s238
+
+N/Developer/SDKs/MacOSX10.6.sdk/usr/include/ctype.h
+c000000004AC59C810000000000002C18
+t1254464641
+s11288
+
+N/Developer/SDKs/MacOSX10.6.sdk/usr/include/libgen.h
+c000000004AC59C810000000000000790
+t1254464641
+s1936
+
+N/Developer/SDKs/MacOSX10.6.sdk/usr/include/math.h
+c000000004AC599B500000000000004F1
+t1254463925
+s1265
+
+N/Developer/SDKs/MacOSX10.6.sdk/usr/include/pthread.h
+c000000004AC59C8100000000000038F0
+t1254464641
+s14576
+
+N/Developer/SDKs/MacOSX10.6.sdk/usr/include/stdio.h
+c000000004AC59C820000000000004174
+t1254464642
+s16756
+
+N/Developer/SDKs/MacOSX10.6.sdk/usr/include/stdlib.h
+c000000004AC59C820000000000002DF5
+t1254464642
+s11765
+
+N/Developer/SDKs/MacOSX10.6.sdk/usr/include/string.h
+c000000004AC59C820000000000001731
+t1254464642
+s5937
+
+N/Developer/SDKs/MacOSX10.6.sdk/usr/include/time.h
+c000000004AC59C82000000000000178E
+t1254464642
+s6030
+
+N/Developer/SDKs/MacOSX10.6.sdk/usr/include/unistd.h
+c000000004AC59C82000000000000563E
+t1254464642
+s22078
+
+N/Users/spot/Documents/FLAM3/build/Debug/FLAM3
+t2
+s0
+
+N/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/Objects-normal/x86_64/FLAM3.LinkFileList
+c000000004D1D0347000000000000011D
+t1293747015
+s285
+
+N/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/Objects-normal/x86_64/main.o
+t1293747016
+s2644
+
+N/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/Objects-normal/x86_64/rect.o
+t2
+s0
+
+N/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/Objects-normal/x86_64/variations.o
+t2
+s0
+
+N/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/StaticAnalyzer/normal/x86_64/main.plist
+t1293747016
+s276
+
+N/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/StaticAnalyzer/normal/x86_64/rect.plist
+t2
+s0
+
+N/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/StaticAnalyzer/normal/x86_64/variations.plist
+t2
+s0
+
+N/Users/spot/Documents/FLAM3/flam3/src/config.h
+c000000004D1D02D70000000000000A4F
+t1293746903
+s2639
+
+N/Users/spot/Documents/FLAM3/flam3/src/flam3.h
+c000000004D1D02D700000000000049CB
+t1293746903
+s18891
+i<stdio.h>
+i<libxml/parser.h>
+i"isaac.h"
+i<windows.h>
+
+N/Users/spot/Documents/FLAM3/flam3/src/interpolation.h
+c000000004D1D02D700000000000009AB
+t1293746903
+s2475
+i"private.h"
+
+N/Users/spot/Documents/FLAM3/flam3/src/isaac.h
+c000000004D1D02D70000000000000654
+t1293746903
+s1620
+i"isaacs.h"
+
+N/Users/spot/Documents/FLAM3/flam3/src/isaacs.h
+c000000004D1D02D70000000000000332
+t1293746903
+s818
+
+N/Users/spot/Documents/FLAM3/flam3/src/private.h
+c000000004D1D02D7000000000000111E
+t1293746903
+s4382
+i"flam3.h"
+i"config.h"
+i<stdlib.h>
+i<ctype.h>
+i<time.h>
+i<string.h>
+i<libxml/parser.h>
+i<unistd.h>
+i<libgen.h>
+i<math.h>
+i<pthread.h>
+
+N/Users/spot/Documents/FLAM3/flam3/src/rect.c
+c000000004D1D02D7000000000000A876
+t1293746903
+s43126
+
+N/Users/spot/Documents/FLAM3/flam3/src/variations.c
+c000000004D1D02D70000000000011499
+t1293746903
+s70809
+i"variations.h"
+i"interpolation.h"
+
+N/Users/spot/Documents/FLAM3/flam3/src/variations.h
+c000000004D1D02D70000000000001898
+t1293746903
+s6296
+i"private.h"
+
+N/Users/spot/Documents/FLAM3/main.c
+c000000004D1D029A0000000000000089
+t1293746842
+s137
+i<stdio.h>
+
+CAnalyze /Users/spot/Documents/FLAM3/flam3/src/rect.c
+s315439816.480453
+e315439816.556170
+r1
+xAnalyze
+x/Users/spot/Documents/FLAM3/flam3/src/rect.c
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:43:4: error: unknown type name 'bucket'
+o    bucket *b;
+o    ^
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:44:4: error: unknown type name 'abucket'
+o    abucket *accumulate;
+o    ^
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:46:4: error: unknown type name 'flam3_de_helper'
+o    flam3_de_helper *de;
+o    ^
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:51:4: error: unknown type name 'flam3_frame'
+o    flam3_frame *spec;
+o    ^
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:70:4: error: use of undeclared identifier 'time_t'
+o    time_t progress_timer=0;
+o    ^
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:71:20: error: variable has incomplete type 'struct timespec'
+o    struct timespec pauset;
+o                    ^
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:71:11: note: forward declaration of 'struct timespec'
+o    struct timespec pauset;
+o           ^
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:86:10: error: use of undeclared identifier 'bucket'
+o          bucket *b;
+o          ^
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:89:10: error: use of undeclared identifier 'b'
+o          b = dthp->b + i + j*wid;
+o          ^
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:92:14: error: use of undeclared identifier 'b'
+o          if (b[0][4] == 0 || b[0][3] == 0)
+o              ^
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:99:16: error: use of undeclared identifier 'b'
+o                b = dthp->b + (i + ii) + (j + jj)*wid;
+o                ^
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:100:28: error: use of undeclared identifier 'b'
+o                f_select += b[0][4]/255.0;
+o                            ^
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:109:29: error: use of undeclared identifier 'DE_THRESH'
+o          else if (f_select<=DE_THRESH)
+o                             ^
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:112:33: error: use of undeclared identifier 'DE_THRESH'
+o             f_select_int = (int)DE_THRESH +
+o                                 ^
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:124:10: error: use of undeclared identifier 'b'
+o          b = dthp->b + i + j*wid;
+o          ^
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:135:32: error: use of undeclared identifier 'b'
+o                c[0] = (double) b[0][0];
+o                                ^
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:136:32: error: use of undeclared identifier 'b'
+o                c[1] = (double) b[0][1];
+o                                ^
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:137:32: error: use of undeclared identifier 'b'
+o                c[2] = (double) b[0][2];
+o                                ^
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:138:32: error: use of undeclared identifier 'b'
+o                c[3] = (double) b[0][3];
+o                                ^
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:182:13: error: use of undeclared identifier 'progress_timer'
+o             progress_timer = time(NULL);
+o             ^
+ofatal error: too many errors emitted, stopping now
+o20 errors generated.
+lSLF07#2@52"Analyze /Users/spot/Documents/FLAM3/flam3/src/rect.c315439816#315439816#0(3046"/Users/spot/Documents/FLAM3/flam3/src/rect.c:43:4: error: unknown type name 'bucket'    bucket *b;    ^/Users/spot/Documents/FLAM3/flam3/src/rect.c:44:4: error: unknown type name 'abucket'    abucket *accumulate;    ^/Users/spot/Documents/FLAM3/flam3/src/rect.c:46:4: error: unknown type name 'flam3_de_helper'    flam3_de_helper *de;    ^/Users/spot/Documents/FLAM3/flam3/src/rect.c:51:4: error: unknown type name 'flam3_frame'    flam3_frame *spec;    ^/Users/spot/Documents/FLAM3/flam3/src/rect.c:70:4: error: use of undeclared identifier 'time_t'    time_t progress_timer=0;    ^/Users/spot/Documents/FLAM3/flam3/src/rect.c:71:20: error: variable has incomplete type 'struct timespec'    struct timespec pauset;                    ^/Users/spot/Documents/FLAM3/flam3/src/rect.c:71:11: note: forward declaration of 'struct timespec'    struct timespec pauset;           ^/Users/spot/Documents/FLAM3/flam3/src/rect.c:86:10: error: use of undeclared identifier 'bucket'          bucket *b;          ^/Users/spot/Documents/FLAM3/flam3/src/rect.c:89:10: error: use of undeclared identifier 'b'          b = dthp->b + i + j*wid;          ^/Users/spot/Documents/FLAM3/flam3/src/rect.c:92:14: error: use of undeclared identifier 'b'          if (b[0][4] == 0 || b[0][3] == 0)              ^/Users/spot/Documents/FLAM3/flam3/src/rect.c:99:16: error: use of undeclared identifier 'b'                b = dthp->b + (i + ii) + (j + jj)*wid;                ^/Users/spot/Documents/FLAM3/flam3/src/rect.c:100:28: error: use of undeclared identifier 'b'                f_select += b[0][4]/255.0;                            ^/Users/spot/Documents/FLAM3/flam3/src/rect.c:109:29: error: use of undeclared identifier 'DE_THRESH'          else if (f_select<=DE_THRESH)                             ^/Users/spot/Documents/FLAM3/flam3/src/rect.c:112:33: error: use of undeclared identifier 'DE_THRESH'             f_select_int = (int)DE_THRESH +                                 ^/Users/spot/Documents/FLAM3/flam3/src/rect.c:124:10: error: use of undeclared identifier 'b'          b = dthp->b + i + j*wid;          ^/Users/spot/Documents/FLAM3/flam3/src/rect.c:135:32: error: use of undeclared identifier 'b'                c[0] = (double) b[0][0];                                ^/Users/spot/Documents/FLAM3/flam3/src/rect.c:136:32: error: use of undeclared identifier 'b'                c[1] = (double) b[0][1];                                ^/Users/spot/Documents/FLAM3/flam3/src/rect.c:137:32: error: use of undeclared identifier 'b'                c[2] = (double) b[0][2];                                ^/Users/spot/Documents/FLAM3/flam3/src/rect.c:138:32: error: use of undeclared identifier 'b'                c[3] = (double) b[0][3];                                ^/Users/spot/Documents/FLAM3/flam3/src/rect.c:182:13: error: use of undeclared identifier 'progress_timer'             progress_timer = time(NULL);             ^fatal error: too many errors emitted, stopping now20 errors generated.1(25@46"Analyzer skipped this file due to parse errors315439816#18446744073709551615#0#19(25@26"unknown type name 'bucket'315439816#18446744073709551615#0#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#43#0#43#0#0"0(25@27"unknown type name 'abucket'315439816#18446744073709551615#0#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#44#0#44#0#0"0(25@35"unknown type name 'flam3_de_helper'315439816#18446744073709551615#0#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#46#0#46#0#0"0(25@31"unknown type name 'flam3_frame'315439816#18446744073709551615#0#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#51#0#51#0#0"0(25@37"use of undeclared identifier 'time_t'315439816#18446744073709551615#0#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#70#0#70#0#0"0(25@46"variable has incomplete type 'struct timespec'315439816#18446744073709551615#0#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#71#0#71#0#0"0(25@37"use of undeclared identifier 'bucket'315439816#18446744073709551615#0#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#86#0#86#0#0"0(25@32"use of undeclared identifier 'b'315439816#18446744073709551615#0#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#89#0#89#0#0"0(25@32"use of undeclared identifier 'b'315439816#18446744073709551615#0#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#92#0#92#0#0"0(25@32"use of undeclared identifier 'b'315439816#18446744073709551615#0#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#99#0#99#0#0"0(25@32"use of undeclared identifier 'b'315439816#18446744073709551615#0#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#100#0#100#0#0"0(25@40"use of undeclared identifier 'DE_THRESH'315439816#18446744073709551615#0#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#109#0#109#0#0"0(25@40"use of undeclared identifier 'DE_THRESH'315439816#18446744073709551615#0#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#112#0#112#0#0"0(25@32"use of undeclared identifier 'b'315439816#18446744073709551615#0#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#124#0#124#0#0"0(25@32"use of undeclared identifier 'b'315439816#18446744073709551615#0#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#135#0#135#0#0"0(25@32"use of undeclared identifier 'b'315439816#18446744073709551615#0#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#136#0#136#0#0"0(25@32"use of undeclared identifier 'b'315439816#18446744073709551615#0#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#137#0#137#0#0"0(25@32"use of undeclared identifier 'b'315439816#18446744073709551615#0#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#138#0#138#0#0"0(25@45"use of undeclared identifier 'progress_timer'315439816#18446744073709551615#0#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#182#0#182#0#0"0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#0#0#0#0#0"0(0#0#44"/Users/spot/Documents/FLAM3/flam3/src/rect.c8613634848#1177"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x c -arch x86_64 -fmessage-length=0 -pipe -fdiagnostics-print-source-range-info -std=gnu99 -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Debug -I/Users/spot/Documents/FLAM3/build/Debug/include -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/DerivedSources/x86_64 -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/DerivedSources --analyze /Users/spot/Documents/FLAM3/flam3/src/rect.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/StaticAnalyzer/normal/x86_64/rect.plist0#
+
+CAnalyze /Users/spot/Documents/FLAM3/flam3/src/variations.c
+s315439816.363201
+e315439816.864155
+r1
+xAnalyze
+x/Users/spot/Documents/FLAM3/flam3/src/variations.c
+oIn file included from /Users/spot/Documents/FLAM3/flam3/src/variations.c:19:
+oIn file included from /Users/spot/Documents/FLAM3/flam3/src/variations.h:22:
+oIn file included from /Users/spot/Documents/FLAM3/flam3/src/private.h:22:
+o/Users/spot/Documents/FLAM3/flam3/src/flam3.h:24:10: fatal error: 'libxml/parser.h' file not found
+o #include <libxml/parser.h>
+o          ^
+o1 error generated.
+lSLF07#2@58"Analyze /Users/spot/Documents/FLAM3/flam3/src/variations.c315439816#315439816#0(386"In file included from /Users/spot/Documents/FLAM3/flam3/src/variations.c:19:In file included from /Users/spot/Documents/FLAM3/flam3/src/variations.h:22:In file included from /Users/spot/Documents/FLAM3/flam3/src/private.h:22:/Users/spot/Documents/FLAM3/flam3/src/flam3.h:24:10: fatal error: 'libxml/parser.h' file not found #include <libxml/parser.h>          ^1 error generated.1(25@46"Analyzer skipped this file due to parse errors315439816#18446744073709551615#0#1(25@32"'libxml/parser.h' file not found315439816#18446744073709551615#0#0(6@45"/Users/spot/Documents/FLAM3/flam3/src/flam3.h315439703#24#0#24#0#0"0(6@45"/Users/spot/Documents/FLAM3/flam3/src/flam3.h315439703#0#0#0#0#0"0(0#0#50"/Users/spot/Documents/FLAM3/flam3/src/variations.c8613923520#1189"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x c -arch x86_64 -fmessage-length=0 -pipe -fdiagnostics-print-source-range-info -std=gnu99 -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Debug -I/Users/spot/Documents/FLAM3/build/Debug/include -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/DerivedSources/x86_64 -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/DerivedSources --analyze /Users/spot/Documents/FLAM3/flam3/src/variations.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/StaticAnalyzer/normal/x86_64/variations.plist0#
+
+CAnalyze /Users/spot/Documents/FLAM3/main.c
+s315439815.996310
+e315439816.363091
+r1
+xAnalyze
+x/Users/spot/Documents/FLAM3/main.c
+lSLF07#2@42"Analyze /Users/spot/Documents/FLAM3/main.c315439815#315439816#0(0"0(0#0#34"/Users/spot/Documents/FLAM3/main.c8615716256#1167"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x c -arch x86_64 -fmessage-length=0 -pipe -fdiagnostics-print-source-range-info -std=gnu99 -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Debug -I/Users/spot/Documents/FLAM3/build/Debug/include -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/DerivedSources/x86_64 -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/DerivedSources --analyze /Users/spot/Documents/FLAM3/main.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/StaticAnalyzer/normal/x86_64/main.plist0#
+
+CCheck dependencies
+r0
+lSLF07#2@18"Check dependencies315439815#315439815#0(0"0(0#1#0"8247620834010738688#0"0#
+
+CCompileC build/FLAM3.build/Debug/FLAM3.build/Objects-normal/x86_64/main.o /Users/spot/Documents/FLAM3/main.c normal x86_64 c com.apple.compilers.gcc.4_2
+s315439815.949824
+e315439816.481413
+r1
+xCompileC
+xbuild/FLAM3.build/Debug/FLAM3.build/Objects-normal/x86_64/main.o
+x/Users/spot/Documents/FLAM3/main.c
+xnormal
+xx86_64
+xc
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@42"Compile /Users/spot/Documents/FLAM3/main.c315439815#315439816#0(0"0(0#0#34"/Users/spot/Documents/FLAM3/main.c7955997338297972736#1113"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Debug -I/Users/spot/Documents/FLAM3/build/Debug/include -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/DerivedSources/x86_64 -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/main.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/Objects-normal/x86_64/main.o0#
+
+CCompileC build/FLAM3.build/Debug/FLAM3.build/Objects-normal/x86_64/rect.o /Users/spot/Documents/FLAM3/flam3/src/rect.c normal x86_64 c com.apple.compilers.gcc.4_2
+s315439815.995729
+e315439816.480268
+r0
+xCompileC
+xbuild/FLAM3.build/Debug/FLAM3.build/Objects-normal/x86_64/rect.o
+x/Users/spot/Documents/FLAM3/flam3/src/rect.c
+xnormal
+xx86_64
+xc
+xcom.apple.compilers.gcc.4_2
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:43: error: expected specifier-qualifier-list before 'bucket'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c: In function 'de_thread':
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:60: error: 'de_thread_helper' has no member named 'oversample'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:61: warning: implicit declaration of function 'floor'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:61: warning: incompatible implicit declaration of built-in function 'floor'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:63: warning: implicit declaration of function 'pow'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:63: warning: incompatible implicit declaration of built-in function 'pow'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:64: error: 'de_thread_helper' has no member named 'width'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:65: error: 'de_thread_helper' has no member named 'height'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:66: error: 'de_thread_helper' has no member named 'progress_size'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:67: error: 'de_thread_helper' has no member named 'start_row'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:68: error: 'de_thread_helper' has no member named 'end_row'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:70: error: 'time_t' undeclared (first use in this function)
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:70: error: (Each undeclared identifier is reported only once
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:70: error: for each function it appears in.)
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:70: error: expected ';' before 'progress_timer'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:71: error: storage size of 'pauset' isn't known
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:86: error: 'bucket' undeclared (first use in this function)
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:86: error: 'b' undeclared (first use in this function)
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:89: error: 'de_thread_helper' has no member named 'b'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:99: error: 'de_thread_helper' has no member named 'b'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:107: error: 'de_thread_helper' has no member named 'de'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:108: error: 'de_thread_helper' has no member named 'de'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:109: error: 'DE_THRESH' undeclared (first use in this function)
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:110: warning: implicit declaration of function 'ceil'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:110: warning: incompatible implicit declaration of built-in function 'ceil'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:113: error: 'de_thread_helper' has no member named 'curve'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:116: error: 'de_thread_helper' has no member named 'de'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:117: error: 'de_thread_helper' has no member named 'de'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:120: error: 'de_thread_helper' has no member named 'de'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:122: warning: incompatible implicit declaration of built-in function 'ceil'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:122: error: 'de_thread_helper' has no member named 'de'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:124: error: 'de_thread_helper' has no member named 'b'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:130: error: 'de_thread_helper' has no member named 'de'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:140: error: 'de_thread_helper' has no member named 'de'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:140: error: 'de_thread_helper' has no member named 'k1'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:140: warning: implicit declaration of function 'log'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:140: warning: incompatible implicit declaration of built-in function 'log'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:140: error: 'de_thread_helper' has no member named 'k2'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:148: warning: implicit declaration of function 'add_c_to_accum'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:148: error: 'de_thread_helper' has no member named 'accumulate'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:151: error: 'de_thread_helper' has no member named 'accumulate'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:152: error: 'de_thread_helper' has no member named 'accumulate'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:153: error: 'de_thread_helper' has no member named 'accumulate'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:154: error: 'de_thread_helper' has no member named 'accumulate'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:156: error: 'de_thread_helper' has no member named 'accumulate'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:157: error: 'de_thread_helper' has no member named 'accumulate'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:158: error: 'de_thread_helper' has no member named 'accumulate'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:159: error: 'de_thread_helper' has no member named 'accumulate'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:161: error: 'de_thread_helper' has no member named 'accumulate'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:162: error: 'de_thread_helper' has no member named 'accumulate'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:163: error: 'de_thread_helper' has no member named 'accumulate'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:164: error: 'de_thread_helper' has no member named 'accumulate'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:165: error: 'de_thread_helper' has no member named 'accumulate'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:166: error: 'de_thread_helper' has no member named 'accumulate'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:167: error: 'de_thread_helper' has no member named 'accumulate'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:168: error: 'de_thread_helper' has no member named 'accumulate'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:179: error: 'de_thread_helper' has no member named 'last_thread'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:181: error: 'de_thread_helper' has no member named 'spec'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:181: warning: implicit declaration of function 'time'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:181: error: 'NULL' undeclared (first use in this function)
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:181: error: 'progress_timer' undeclared (first use in this function)
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:183: warning: implicit declaration of function 'fprintf'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:183: warning: incompatible implicit declaration of built-in function 'fprintf'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:183: error: 'stderr' undeclared (first use in this function)
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:184: warning: implicit declaration of function 'fflush'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:189: error: 'de_thread_helper' has no member named 'spec'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:193: error: 'de_thread_helper' has no member named 'last_thread'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:195: error: 'de_thread_helper' has no member named 'spec'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:195: error: 'de_thread_helper' has no member named 'spec'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:200: error: 'de_thread_helper' has no member named 'aborted'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:206: warning: implicit declaration of function 'nanosleep'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:208: error: 'de_thread_helper' has no member named 'spec'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:208: error: 'de_thread_helper' has no member named 'spec'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:212: error: 'de_thread_helper' has no member named 'aborted'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:217: error: 'de_thread_helper' has no member named 'aborted'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:240: error: 'de_thread_helper' has no member named 'aborted'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:71: warning: unused variable 'pauset'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c: In function 'iter_thread':
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:256: error: 'flam3_thread_helper' undeclared (first use in this function)
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:256: error: 'fthp' undeclared (first use in this function)
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:256: error: expected expression before ')' token
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:257: error: 'flam3_iter_constants' undeclared (first use in this function)
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:257: error: 'ficp' undeclared (first use in this function)
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:258: error: storage size of 'pauset' isn't known
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:272: warning: implicit declaration of function 'memset'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:272: warning: incompatible implicit declaration of built-in function 'memset'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:272: error: 'time_t' undeclared (first use in this function)
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:279: error: expected ';' before 'newt'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:284: error: 'newt' undeclared (first use in this function)
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:292: warning: incompatible implicit declaration of built-in function 'fprintf'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:292: error: 'stderr' undeclared (first use in this function)
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:308: warning: incompatible implicit declaration of built-in function 'fprintf'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:310: warning: incompatible implicit declaration of built-in function 'fprintf'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:310: warning: incompatible implicit declaration of built-in function 'ceil'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:311: warning: incompatible implicit declaration of built-in function 'fprintf'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:336: error: expected ';' before 'tnow'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:337: error: expected ';' before 'tend'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:346: error: 'NULL' undeclared (first use in this function)
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:352: error: 'tend' undeclared (first use in this function)
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:352: error: 'tnow' undeclared (first use in this function)
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:392: warning: implicit declaration of function 'flam3_random_isaac_11'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:394: warning: implicit declaration of function 'flam3_random_isaac_01'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:398: warning: implicit declaration of function 'flam3_iterate'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:415: error: 'bucket' undeclared (first use in this function)
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:415: error: 'b' undeclared (first use in this function)
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:430: error: 'buckets' undeclared (first use in this function)
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:430: error: expected expression before ')' token
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:466: error: 'CMAP_SIZE' undeclared (first use in this function)
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:469: error: 'flam3_palette_mode_linear' undeclared (first use in this function)
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:473: error: 'CMAP_SIZE_M1' undeclared (first use in this function)
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:499: warning: implicit declaration of function 'bump_no_overflow'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:258: warning: unused variable 'pauset'
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c: At top level:
+o/Users/spot/Documents/FLAM3/flam3/src/rect.c:527: error: expected ')' before '*' token
+lSLF07#2@52"Compile /Users/spot/Documents/FLAM3/flam3/src/rect.c315439815#315439816#0(12049"/Users/spot/Documents/FLAM3/flam3/src/rect.c:43: error: expected specifier-qualifier-list before 'bucket'/Users/spot/Documents/FLAM3/flam3/src/rect.c: In function 'de_thread':/Users/spot/Documents/FLAM3/flam3/src/rect.c:60: error: 'de_thread_helper' has no member named 'oversample'/Users/spot/Documents/FLAM3/flam3/src/rect.c:61: warning: implicit declaration of function 'floor'/Users/spot/Documents/FLAM3/flam3/src/rect.c:61: warning: incompatible implicit declaration of built-in function 'floor'/Users/spot/Documents/FLAM3/flam3/src/rect.c:63: warning: implicit declaration of function 'pow'/Users/spot/Documents/FLAM3/flam3/src/rect.c:63: warning: incompatible implicit declaration of built-in function 'pow'/Users/spot/Documents/FLAM3/flam3/src/rect.c:64: error: 'de_thread_helper' has no member named 'width'/Users/spot/Documents/FLAM3/flam3/src/rect.c:65: error: 'de_thread_helper' has no member named 'height'/Users/spot/Documents/FLAM3/flam3/src/rect.c:66: error: 'de_thread_helper' has no member named 'progress_size'/Users/spot/Documents/FLAM3/flam3/src/rect.c:67: error: 'de_thread_helper' has no member named 'start_row'/Users/spot/Documents/FLAM3/flam3/src/rect.c:68: error: 'de_thread_helper' has no member named 'end_row'/Users/spot/Documents/FLAM3/flam3/src/rect.c:70: error: 'time_t' undeclared (first use in this function)/Users/spot/Documents/FLAM3/flam3/src/rect.c:70: error: (Each undeclared identifier is reported only once/Users/spot/Documents/FLAM3/flam3/src/rect.c:70: error: for each function it appears in.)/Users/spot/Documents/FLAM3/flam3/src/rect.c:70: error: expected ';' before 'progress_timer'/Users/spot/Documents/FLAM3/flam3/src/rect.c:71: error: storage size of 'pauset' isn't known/Users/spot/Documents/FLAM3/flam3/src/rect.c:86: error: 'bucket' undeclared (first use in this function)/Users/spot/Documents/FLAM3/flam3/src/rect.c:86: error: 'b' undeclared (first use in this function)/Users/spot/Documents/FLAM3/flam3/src/rect.c:89: error: 'de_thread_helper' has no member named 'b'/Users/spot/Documents/FLAM3/flam3/src/rect.c:99: error: 'de_thread_helper' has no member named 'b'/Users/spot/Documents/FLAM3/flam3/src/rect.c:107: error: 'de_thread_helper' has no member named 'de'/Users/spot/Documents/FLAM3/flam3/src/rect.c:108: error: 'de_thread_helper' has no member named 'de'/Users/spot/Documents/FLAM3/flam3/src/rect.c:109: error: 'DE_THRESH' undeclared (first use in this function)/Users/spot/Documents/FLAM3/flam3/src/rect.c:110: warning: implicit declaration of function 'ceil'/Users/spot/Documents/FLAM3/flam3/src/rect.c:110: warning: incompatible implicit declaration of built-in function 'ceil'/Users/spot/Documents/FLAM3/flam3/src/rect.c:113: error: 'de_thread_helper' has no member named 'curve'/Users/spot/Documents/FLAM3/flam3/src/rect.c:116: error: 'de_thread_helper' has no member named 'de'/Users/spot/Documents/FLAM3/flam3/src/rect.c:117: error: 'de_thread_helper' has no member named 'de'/Users/spot/Documents/FLAM3/flam3/src/rect.c:120: error: 'de_thread_helper' has no member named 'de'/Users/spot/Documents/FLAM3/flam3/src/rect.c:122: warning: incompatible implicit declaration of built-in function 'ceil'/Users/spot/Documents/FLAM3/flam3/src/rect.c:122: error: 'de_thread_helper' has no member named 'de'/Users/spot/Documents/FLAM3/flam3/src/rect.c:124: error: 'de_thread_helper' has no member named 'b'/Users/spot/Documents/FLAM3/flam3/src/rect.c:130: error: 'de_thread_helper' has no member named 'de'/Users/spot/Documents/FLAM3/flam3/src/rect.c:140: error: 'de_thread_helper' has no member named 'de'/Users/spot/Documents/FLAM3/flam3/src/rect.c:140: error: 'de_thread_helper' has no member named 'k1'/Users/spot/Documents/FLAM3/flam3/src/rect.c:140: warning: implicit declaration of function 'log'/Users/spot/Documents/FLAM3/flam3/src/rect.c:140: warning: incompatible implicit declaration of built-in function 'log'/Users/spot/Documents/FLAM3/flam3/src/rect.c:140: error: 'de_thread_helper' has no member named 'k2'/Users/spot/Documents/FLAM3/flam3/src/rect.c:148: warning: implicit declaration of function 'add_c_to_accum'/Users/spot/Documents/FLAM3/flam3/src/rect.c:148: error: 'de_thread_helper' has no member named 'accumulate'/Users/spot/Documents/FLAM3/flam3/src/rect.c:151: error: 'de_thread_helper' has no member named 'accumulate'/Users/spot/Documents/FLAM3/flam3/src/rect.c:152: error: 'de_thread_helper' has no member named 'accumulate'/Users/spot/Documents/FLAM3/flam3/src/rect.c:153: error: 'de_thread_helper' has no member named 'accumulate'/Users/spot/Documents/FLAM3/flam3/src/rect.c:154: error: 'de_thread_helper' has no member named 'accumulate'/Users/spot/Documents/FLAM3/flam3/src/rect.c:156: error: 'de_thread_helper' has no member named 'accumulate'/Users/spot/Documents/FLAM3/flam3/src/rect.c:157: error: 'de_thread_helper' has no member named 'accumulate'/Users/spot/Documents/FLAM3/flam3/src/rect.c:158: error: 'de_thread_helper' has no member named 'accumulate'/Users/spot/Documents/FLAM3/flam3/src/rect.c:159: error: 'de_thread_helper' has no member named 'accumulate'/Users/spot/Documents/FLAM3/flam3/src/rect.c:161: error: 'de_thread_helper' has no member named 'accumulate'/Users/spot/Documents/FLAM3/flam3/src/rect.c:162: error: 'de_thread_helper' has no member named 'accumulate'/Users/spot/Documents/FLAM3/flam3/src/rect.c:163: error: 'de_thread_helper' has no member named 'accumulate'/Users/spot/Documents/FLAM3/flam3/src/rect.c:164: error: 'de_thread_helper' has no member named 'accumulate'/Users/spot/Documents/FLAM3/flam3/src/rect.c:165: error: 'de_thread_helper' has no member named 'accumulate'/Users/spot/Documents/FLAM3/flam3/src/rect.c:166: error: 'de_thread_helper' has no member named 'accumulate'/Users/spot/Documents/FLAM3/flam3/src/rect.c:167: error: 'de_thread_helper' has no member named 'accumulate'/Users/spot/Documents/FLAM3/flam3/src/rect.c:168: error: 'de_thread_helper' has no member named 'accumulate'/Users/spot/Documents/FLAM3/flam3/src/rect.c:179: error: 'de_thread_helper' has no member named 'last_thread'/Users/spot/Documents/FLAM3/flam3/src/rect.c:181: error: 'de_thread_helper' has no member named 'spec'/Users/spot/Documents/FLAM3/flam3/src/rect.c:181: warning: implicit declaration of function 'time'/Users/spot/Documents/FLAM3/flam3/src/rect.c:181: error: 'NULL' undeclared (first use in this function)/Users/spot/Documents/FLAM3/flam3/src/rect.c:181: error: 'progress_timer' undeclared (first use in this function)/Users/spot/Documents/FLAM3/flam3/src/rect.c:183: warning: implicit declaration of function 'fprintf'/Users/spot/Documents/FLAM3/flam3/src/rect.c:183: warning: incompatible implicit declaration of built-in function 'fprintf'/Users/spot/Documents/FLAM3/flam3/src/rect.c:183: error: 'stderr' undeclared (first use in this function)/Users/spot/Documents/FLAM3/flam3/src/rect.c:184: warning: implicit declaration of function 'fflush'/Users/spot/Documents/FLAM3/flam3/src/rect.c:189: error: 'de_thread_helper' has no member named 'spec'/Users/spot/Documents/FLAM3/flam3/src/rect.c:193: error: 'de_thread_helper' has no member named 'last_thread'/Users/spot/Documents/FLAM3/flam3/src/rect.c:195: error: 'de_thread_helper' has no member named 'spec'/Users/spot/Documents/FLAM3/flam3/src/rect.c:195: error: 'de_thread_helper' has no member named 'spec'/Users/spot/Documents/FLAM3/flam3/src/rect.c:200: error: 'de_thread_helper' has no member named 'aborted'/Users/spot/Documents/FLAM3/flam3/src/rect.c:206: warning: implicit declaration of function 'nanosleep'/Users/spot/Documents/FLAM3/flam3/src/rect.c:208: error: 'de_thread_helper' has no member named 'spec'/Users/spot/Documents/FLAM3/flam3/src/rect.c:208: error: 'de_thread_helper' has no member named 'spec'/Users/spot/Documents/FLAM3/flam3/src/rect.c:212: error: 'de_thread_helper' has no member named 'aborted'/Users/spot/Documents/FLAM3/flam3/src/rect.c:217: error: 'de_thread_helper' has no member named 'aborted'/Users/spot/Documents/FLAM3/flam3/src/rect.c:240: error: 'de_thread_helper' has no member named 'aborted'/Users/spot/Documents/FLAM3/flam3/src/rect.c:71: warning: unused variable 'pauset'/Users/spot/Documents/FLAM3/flam3/src/rect.c: In function 'iter_thread':/Users/spot/Documents/FLAM3/flam3/src/rect.c:256: error: 'flam3_thread_helper' undeclared (first use in this function)/Users/spot/Documents/FLAM3/flam3/src/rect.c:256: error: 'fthp' undeclared (first use in this function)/Users/spot/Documents/FLAM3/flam3/src/rect.c:256: error: expected expression before ')' token/Users/spot/Documents/FLAM3/flam3/src/rect.c:257: error: 'flam3_iter_constants' undeclared (first use in this function)/Users/spot/Documents/FLAM3/flam3/src/rect.c:257: error: 'ficp' undeclared (first use in this function)/Users/spot/Documents/FLAM3/flam3/src/rect.c:258: error: storage size of 'pauset' isn't known/Users/spot/Documents/FLAM3/flam3/src/rect.c:272: warning: implicit declaration of function 'memset'/Users/spot/Documents/FLAM3/flam3/src/rect.c:272: warning: incompatible implicit declaration of built-in function 'memset'/Users/spot/Documents/FLAM3/flam3/src/rect.c:272: error: 'time_t' undeclared (first use in this function)/Users/spot/Documents/FLAM3/flam3/src/rect.c:279: error: expected ';' before 'newt'/Users/spot/Documents/FLAM3/flam3/src/rect.c:284: error: 'newt' undeclared (first use in this function)/Users/spot/Documents/FLAM3/flam3/src/rect.c:292: warning: incompatible implicit declaration of built-in function 'fprintf'/Users/spot/Documents/FLAM3/flam3/src/rect.c:292: error: 'stderr' undeclared (first use in this function)/Users/spot/Documents/FLAM3/flam3/src/rect.c:308: warning: incompatible implicit declaration of built-in function 'fprintf'/Users/spot/Documents/FLAM3/flam3/src/rect.c:310: warning: incompatible implicit declaration of built-in function 'fprintf'/Users/spot/Documents/FLAM3/flam3/src/rect.c:310: warning: incompatible implicit declaration of built-in function 'ceil'/Users/spot/Documents/FLAM3/flam3/src/rect.c:311: warning: incompatible implicit declaration of built-in function 'fprintf'/Users/spot/Documents/FLAM3/flam3/src/rect.c:336: error: expected ';' before 'tnow'/Users/spot/Documents/FLAM3/flam3/src/rect.c:337: error: expected ';' before 'tend'/Users/spot/Documents/FLAM3/flam3/src/rect.c:346: error: 'NULL' undeclared (first use in this function)/Users/spot/Documents/FLAM3/flam3/src/rect.c:352: error: 'tend' undeclared (first use in this function)/Users/spot/Documents/FLAM3/flam3/src/rect.c:352: error: 'tnow' undeclared (first use in this function)/Users/spot/Documents/FLAM3/flam3/src/rect.c:392: warning: implicit declaration of function 'flam3_random_isaac_11'/Users/spot/Documents/FLAM3/flam3/src/rect.c:394: warning: implicit declaration of function 'flam3_random_isaac_01'/Users/spot/Documents/FLAM3/flam3/src/rect.c:398: warning: implicit declaration of function 'flam3_iterate'/Users/spot/Documents/FLAM3/flam3/src/rect.c:415: error: 'bucket' undeclared (first use in this function)/Users/spot/Documents/FLAM3/flam3/src/rect.c:415: error: 'b' undeclared (first use in this function)/Users/spot/Documents/FLAM3/flam3/src/rect.c:430: error: 'buckets' undeclared (first use in this function)/Users/spot/Documents/FLAM3/flam3/src/rect.c:430: error: expected expression before ')' token/Users/spot/Documents/FLAM3/flam3/src/rect.c:466: error: 'CMAP_SIZE' undeclared (first use in this function)/Users/spot/Documents/FLAM3/flam3/src/rect.c:469: error: 'flam3_palette_mode_linear' undeclared (first use in this function)/Users/spot/Documents/FLAM3/flam3/src/rect.c:473: error: 'CMAP_SIZE_M1' undeclared (first use in this function)/Users/spot/Documents/FLAM3/flam3/src/rect.c:499: warning: implicit declaration of function 'bump_no_overflow'/Users/spot/Documents/FLAM3/flam3/src/rect.c:258: warning: unused variable 'pauset'/Users/spot/Documents/FLAM3/flam3/src/rect.c: At top level:/Users/spot/Documents/FLAM3/flam3/src/rect.c:527: error: expected ')' before '*' token111(4@49"Expected specifier-qualifier-list before 'bucket'315439816#0#106#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#43#0#43#0#19"expected * before *0(4@51"'de_thread_helper' has no member named 'oversample'315439816#177#108#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#60#0#60#0#27"'*' has no member named '*'0(22@40"Implicit declaration of function 'floor'315439816#285#99#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#61#0#61#0#36"implicit declaration of function '*'0(22@62"Incompatible implicit declaration of built-in function 'floor'315439816#384#121#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#61#0#61#0#0"0(22@38"Implicit declaration of function 'pow'315439816#505#97#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#63#0#63#0#36"implicit declaration of function '*'0(22@60"Incompatible implicit declaration of built-in function 'pow'315439816#602#119#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#63#0#63#0#0"0(4@46"'de_thread_helper' has no member named 'width'315439816#721#103#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#64#0#64#0#27"'*' has no member named '*'0(4@47"'de_thread_helper' has no member named 'height'315439816#824#104#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#65#0#65#0#27"'*' has no member named '*'0(4@54"'de_thread_helper' has no member named 'progress_size'315439816#928#111#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#66#0#66#0#27"'*' has no member named '*'0(4@50"'de_thread_helper' has no member named 'start_row'315439816#1039#107#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#67#0#67#0#27"'*' has no member named '*'0(4@48"'de_thread_helper' has no member named 'end_row'315439816#1146#105#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#68#0#68#0#27"'*' has no member named '*'0(4@48"'time_t' undeclared (first use in this function)315439816#1251#105#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#70#0#70#0#43"'*' undeclared (first use in this function)0(4@36"Expected ';' before 'progress_timer'315439816#1552#93#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#70#0#70#0#19"expected * before *0(4@36"Storage size of 'pauset' isn't known315439816#1645#93#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#71#0#71#0#0"0(4@48"'bucket' undeclared (first use in this function)315439816#1738#105#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#86#0#86#0#43"'*' undeclared (first use in this function)0(4@43"'b' undeclared (first use in this function)315439816#1843#100#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#86#0#86#0#43"'*' undeclared (first use in this function)0(4@42"'de_thread_helper' has no member named 'b'315439816#1943#99#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#89#0#89#0#27"'*' has no member named '*'0(4@42"'de_thread_helper' has no member named 'b'315439816#2042#99#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#99#0#99#0#27"'*' has no member named '*'0(4@43"'de_thread_helper' has no member named 'de'315439816#2141#101#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#107#0#107#0#27"'*' has no member named '*'0(4@43"'de_thread_helper' has no member named 'de'315439816#2242#101#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#108#0#108#0#27"'*' has no member named '*'0(4@51"'DE_THRESH' undeclared (first use in this function)315439816#2343#109#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#109#0#109#0#43"'*' undeclared (first use in this function)0(22@39"Implicit declaration of function 'ceil'315439816#2452#99#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#110#0#110#0#36"implicit declaration of function '*'0(22@61"Incompatible implicit declaration of built-in function 'ceil'315439816#2551#121#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#110#0#110#0#0"0(4@46"'de_thread_helper' has no member named 'curve'315439816#2672#104#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#113#0#113#0#27"'*' has no member named '*'0(4@43"'de_thread_helper' has no member named 'de'315439816#2776#101#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#116#0#116#0#27"'*' has no member named '*'0(4@43"'de_thread_helper' has no member named 'de'315439816#2877#101#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#117#0#117#0#27"'*' has no member named '*'0(4@43"'de_thread_helper' has no member named 'de'315439816#2978#101#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#120#0#120#0#27"'*' has no member named '*'0(22@61"Incompatible implicit declaration of built-in function 'ceil'315439816#3079#121#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#122#0#122#0#0"0(4@43"'de_thread_helper' has no member named 'de'315439816#3200#101#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#122#0#122#0#27"'*' has no member named '*'0(4@42"'de_thread_helper' has no member named 'b'315439816#3301#100#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#124#0#124#0#27"'*' has no member named '*'0(4@43"'de_thread_helper' has no member named 'de'315439816#3401#101#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#130#0#130#0#27"'*' has no member named '*'0(4@43"'de_thread_helper' has no member named 'de'315439816#3502#101#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#140#0#140#0#27"'*' has no member named '*'0(4@43"'de_thread_helper' has no member named 'k1'315439816#3603#101#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#140#0#140#0#27"'*' has no member named '*'0(22@38"Implicit declaration of function 'log'315439816#3704#98#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#140#0#140#0#36"implicit declaration of function '*'0(22@60"Incompatible implicit declaration of built-in function 'log'315439816#3802#120#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#140#0#140#0#0"0(4@43"'de_thread_helper' has no member named 'k2'315439816#3922#101#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#140#0#140#0#27"'*' has no member named '*'0(22@49"Implicit declaration of function 'add_c_to_accum'315439816#4023#109#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#148#0#148#0#36"implicit declaration of function '*'0(4@51"'de_thread_helper' has no member named 'accumulate'315439816#4132#109#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#148#0#148#0#27"'*' has no member named '*'0(4@51"'de_thread_helper' has no member named 'accumulate'315439816#4241#109#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#151#0#151#0#27"'*' has no member named '*'0(4@51"'de_thread_helper' has no member named 'accumulate'315439816#4350#109#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#152#0#152#0#27"'*' has no member named '*'0(4@51"'de_thread_helper' has no member named 'accumulate'315439816#4459#109#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#153#0#153#0#27"'*' has no member named '*'0(4@51"'de_thread_helper' has no member named 'accumulate'315439816#4568#109#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#154#0#154#0#27"'*' has no member named '*'0(4@51"'de_thread_helper' has no member named 'accumulate'315439816#4677#109#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#156#0#156#0#27"'*' has no member named '*'0(4@51"'de_thread_helper' has no member named 'accumulate'315439816#4786#109#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#157#0#157#0#27"'*' has no member named '*'0(4@51"'de_thread_helper' has no member named 'accumulate'315439816#4895#109#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#158#0#158#0#27"'*' has no member named '*'0(4@51"'de_thread_helper' has no member named 'accumulate'315439816#5004#109#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#159#0#159#0#27"'*' has no member named '*'0(4@51"'de_thread_helper' has no member named 'accumulate'315439816#5113#109#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#161#0#161#0#27"'*' has no member named '*'0(4@51"'de_thread_helper' has no member named 'accumulate'315439816#5222#109#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#162#0#162#0#27"'*' has no member named '*'0(4@51"'de_thread_helper' has no member named 'accumulate'315439816#5331#109#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#163#0#163#0#27"'*' has no member named '*'0(4@51"'de_thread_helper' has no member named 'accumulate'315439816#5440#109#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#164#0#164#0#27"'*' has no member named '*'0(4@51"'de_thread_helper' has no member named 'accumulate'315439816#5549#109#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#165#0#165#0#27"'*' has no member named '*'0(4@51"'de_thread_helper' has no member named 'accumulate'315439816#5658#109#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#166#0#166#0#27"'*' has no member named '*'0(4@51"'de_thread_helper' has no member named 'accumulate'315439816#5767#109#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#167#0#167#0#27"'*' has no member named '*'0(4@51"'de_thread_helper' has no member named 'accumulate'315439816#5876#109#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#168#0#168#0#27"'*' has no member named '*'0(4@52"'de_thread_helper' has no member named 'last_thread'315439816#5985#110#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#179#0#179#0#27"'*' has no member named '*'0(4@45"'de_thread_helper' has no member named 'spec'315439816#6095#103#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#181#0#181#0#27"'*' has no member named '*'0(22@39"Implicit declaration of function 'time'315439816#6198#99#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#181#0#181#0#36"implicit declaration of function '*'0(4@46"'NULL' undeclared (first use in this function)315439816#6297#104#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#181#0#181#0#43"'*' undeclared (first use in this function)0(4@56"'progress_timer' undeclared (first use in this function)315439816#6401#114#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#181#0#181#0#43"'*' undeclared (first use in this function)0(22@42"Implicit declaration of function 'fprintf'315439816#6515#102#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#183#0#183#0#36"implicit declaration of function '*'0(22@64"Incompatible implicit declaration of built-in function 'fprintf'315439816#6617#124#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#183#0#183#0#0"0(4@48"'stderr' undeclared (first use in this function)315439816#6741#106#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#183#0#183#0#43"'*' undeclared (first use in this function)0(22@41"Implicit declaration of function 'fflush'315439816#6847#101#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#184#0#184#0#36"implicit declaration of function '*'0(4@45"'de_thread_helper' has no member named 'spec'315439816#6948#103#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#189#0#189#0#27"'*' has no member named '*'0(4@52"'de_thread_helper' has no member named 'last_thread'315439816#7051#110#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#193#0#193#0#27"'*' has no member named '*'0(4@45"'de_thread_helper' has no member named 'spec'315439816#7161#103#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#195#0#195#0#27"'*' has no member named '*'0(4@45"'de_thread_helper' has no member named 'spec'315439816#7264#103#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#195#0#195#0#27"'*' has no member named '*'0(4@48"'de_thread_helper' has no member named 'aborted'315439816#7367#106#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#200#0#200#0#27"'*' has no member named '*'0(22@44"Implicit declaration of function 'nanosleep'315439816#7473#104#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#206#0#206#0#36"implicit declaration of function '*'0(4@45"'de_thread_helper' has no member named 'spec'315439816#7577#103#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#208#0#208#0#27"'*' has no member named '*'0(4@45"'de_thread_helper' has no member named 'spec'315439816#7680#103#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#208#0#208#0#27"'*' has no member named '*'0(4@48"'de_thread_helper' has no member named 'aborted'315439816#7783#106#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#212#0#212#0#27"'*' has no member named '*'0(4@48"'de_thread_helper' has no member named 'aborted'315439816#7889#106#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#217#0#217#0#27"'*' has no member named '*'0(4@48"'de_thread_helper' has no member named 'aborted'315439816#7995#106#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#240#0#240#0#27"'*' has no member named '*'0(22@24"Unused variable 'pauset'315439816#8101#83#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#71#0#71#0#19"unused variable '*'0(4@61"'flam3_thread_helper' undeclared (first use in this function)315439816#8257#119#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#256#0#256#0#43"'*' undeclared (first use in this function)0(4@46"'fthp' undeclared (first use in this function)315439816#8376#104#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#256#0#256#0#43"'*' undeclared (first use in this function)0(4@36"Expected expression before ')' token315439816#8480#94#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#256#0#256#0#19"expected * before *0(4@62"'flam3_iter_constants' undeclared (first use in this function)315439816#8574#120#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#257#0#257#0#43"'*' undeclared (first use in this function)0(4@46"'ficp' undeclared (first use in this function)315439816#8694#104#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#257#0#257#0#43"'*' undeclared (first use in this function)0(4@36"Storage size of 'pauset' isn't known315439816#8798#94#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#258#0#258#0#0"0(22@41"Implicit declaration of function 'memset'315439816#8892#101#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#272#0#272#0#36"implicit declaration of function '*'0(22@63"Incompatible implicit declaration of built-in function 'memset'315439816#8993#123#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#272#0#272#0#0"0(4@48"'time_t' undeclared (first use in this function)315439816#9116#106#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#272#0#272#0#43"'*' undeclared (first use in this function)0(4@26"Expected ';' before 'newt'315439816#9222#84#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#279#0#279#0#19"expected * before *0(4@46"'newt' undeclared (first use in this function)315439816#9306#104#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#284#0#284#0#43"'*' undeclared (first use in this function)0(22@64"Incompatible implicit declaration of built-in function 'fprintf'315439816#9410#124#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#292#0#292#0#0"0(4@48"'stderr' undeclared (first use in this function)315439816#9534#106#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#292#0#292#0#43"'*' undeclared (first use in this function)0(22@64"Incompatible implicit declaration of built-in function 'fprintf'315439816#9640#124#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#308#0#308#0#0"0(22@64"Incompatible implicit declaration of built-in function 'fprintf'315439816#9764#124#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#310#0#310#0#0"0(22@61"Incompatible implicit declaration of built-in function 'ceil'315439816#9888#121#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#310#0#310#0#0"0(22@64"Incompatible implicit declaration of built-in function 'fprintf'315439816#10009#124#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#311#0#311#0#0"0(4@26"Expected ';' before 'tnow'315439816#10133#84#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#336#0#336#0#19"expected * before *0(4@26"Expected ';' before 'tend'315439816#10217#84#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#337#0#337#0#19"expected * before *0(4@46"'NULL' undeclared (first use in this function)315439816#10301#104#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#346#0#346#0#43"'*' undeclared (first use in this function)0(4@46"'tend' undeclared (first use in this function)315439816#10405#104#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#352#0#352#0#43"'*' undeclared (first use in this function)0(4@46"'tnow' undeclared (first use in this function)315439816#10509#104#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#352#0#352#0#43"'*' undeclared (first use in this function)0(22@56"Implicit declaration of function 'flam3_random_isaac_11'315439816#10613#116#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#392#0#392#0#36"implicit declaration of function '*'0(22@56"Implicit declaration of function 'flam3_random_isaac_01'315439816#10729#116#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#394#0#394#0#36"implicit declaration of function '*'0(22@48"Implicit declaration of function 'flam3_iterate'315439816#10845#108#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#398#0#398#0#36"implicit declaration of function '*'0(4@48"'bucket' undeclared (first use in this function)315439816#10953#106#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#415#0#415#0#43"'*' undeclared (first use in this function)0(4@43"'b' undeclared (first use in this function)315439816#11059#101#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#415#0#415#0#43"'*' undeclared (first use in this function)0(4@49"'buckets' undeclared (first use in this function)315439816#11160#107#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#430#0#430#0#43"'*' undeclared (first use in this function)0(4@36"Expected expression before ')' token315439816#11267#94#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#430#0#430#0#19"expected * before *0(4@51"'CMAP_SIZE' undeclared (first use in this function)315439816#11361#109#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#466#0#466#0#43"'*' undeclared (first use in this function)0(4@67"'flam3_palette_mode_linear' undeclared (first use in this function)315439816#11470#125#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#469#0#469#0#43"'*' undeclared (first use in this function)0(4@54"'CMAP_SIZE_M1' undeclared (first use in this function)315439816#11595#112#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#473#0#473#0#43"'*' undeclared (first use in this function)0(22@51"Implicit declaration of function 'bump_no_overflow'315439816#11707#111#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#499#0#499#0#36"implicit declaration of function '*'0(22@24"Unused variable 'pauset'315439816#11818#84#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#258#0#258#0#19"unused variable '*'0(23@13"At top level:315439816#11902#60#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#0#0#0#0#0"0(4@29"Expected ')' before '*' token315439816#11962#87#0(6@44"/Users/spot/Documents/FLAM3/flam3/src/rect.c315439703#527#0#527#0#19"expected * before *0(0#0#44"/Users/spot/Documents/FLAM3/flam3/src/rect.c8616107968#1123"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Debug -I/Users/spot/Documents/FLAM3/build/Debug/include -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/DerivedSources/x86_64 -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/rect.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/Objects-normal/x86_64/rect.o1#
+
+CCompileC build/FLAM3.build/Debug/FLAM3.build/Objects-normal/x86_64/variations.o /Users/spot/Documents/FLAM3/flam3/src/variations.c normal x86_64 c com.apple.compilers.gcc.4_2
+s315439815.995127
+e315439816.900965
+r0
+xCompileC
+xbuild/FLAM3.build/Debug/FLAM3.build/Objects-normal/x86_64/variations.o
+x/Users/spot/Documents/FLAM3/flam3/src/variations.c
+xnormal
+xx86_64
+xc
+xcom.apple.compilers.gcc.4_2
+oIn file included from /Users/spot/Documents/FLAM3/flam3/src/private.h:22,
+o                 from /Users/spot/Documents/FLAM3/flam3/src/variations.h:22,
+o                 from /Users/spot/Documents/FLAM3/flam3/src/variations.c:19:
+o/Users/spot/Documents/FLAM3/flam3/src/flam3.h:24:27: error: libxml/parser.h: No such file or directory
+oIn file included from /Users/spot/Documents/FLAM3/flam3/src/private.h:22,
+o                 from /Users/spot/Documents/FLAM3/flam3/src/variations.h:22,
+o                 from /Users/spot/Documents/FLAM3/flam3/src/variations.c:19:
+o/Users/spot/Documents/FLAM3/flam3/src/flam3.h:497: error: expected specifier-qualifier-list before 'xmlDocPtr'
+o/Users/spot/Documents/FLAM3/flam3/src/variations.c: In function 'var97_flux':
+o/Users/spot/Documents/FLAM3/flam3/src/variations.c:1919: warning: unused variable 'c'
+o/Users/spot/Documents/FLAM3/flam3/src/variations.c:1918: warning: unused variable 's'
+o/Users/spot/Documents/FLAM3/flam3/src/variations.c: In function 'apply_xform':
+o/Users/spot/Documents/FLAM3/flam3/src/variations.c:2118: warning: unused variable 's'
+o/Users/spot/Documents/FLAM3/flam3/src/variations.c:2118: warning: unused variable 'next_color'
+lSLF07#2@58"Compile /Users/spot/Documents/FLAM3/flam3/src/variations.c315439815#315439816#0(1180"In file included from /Users/spot/Documents/FLAM3/flam3/src/private.h:22,                 from /Users/spot/Documents/FLAM3/flam3/src/variations.h:22,                 from /Users/spot/Documents/FLAM3/flam3/src/variations.c:19:/Users/spot/Documents/FLAM3/flam3/src/flam3.h:24:27: error: libxml/parser.h: No such file or directoryIn file included from /Users/spot/Documents/FLAM3/flam3/src/private.h:22,                 from /Users/spot/Documents/FLAM3/flam3/src/variations.h:22,                 from /Users/spot/Documents/FLAM3/flam3/src/variations.c:19:/Users/spot/Documents/FLAM3/flam3/src/flam3.h:497: error: expected specifier-qualifier-list before 'xmlDocPtr'/Users/spot/Documents/FLAM3/flam3/src/variations.c: In function 'var97_flux':/Users/spot/Documents/FLAM3/flam3/src/variations.c:1919: warning: unused variable 'c'/Users/spot/Documents/FLAM3/flam3/src/variations.c:1918: warning: unused variable 's'/Users/spot/Documents/FLAM3/flam3/src/variations.c: In function 'apply_xform':/Users/spot/Documents/FLAM3/flam3/src/variations.c:2118: warning: unused variable 's'/Users/spot/Documents/FLAM3/flam3/src/variations.c:2118: warning: unused variable 'next_color'6(4@42"Libxml/parser.h: No such file or directory315439816#228#103#4(7@72"In file included from /Users/spot/Documents/FLAM3/flam3/src/variations.c315439816#18446744073709551615#0#0(6@50"/Users/spot/Documents/FLAM3/flam3/src/variations.c315439703#19#0#19#0#0"0(7@72"In file included from /Users/spot/Documents/FLAM3/flam3/src/variations.h315439816#18446744073709551615#0#0(6@50"/Users/spot/Documents/FLAM3/flam3/src/variations.h315439703#22#0#22#0#0"0(7@69"In file included from /Users/spot/Documents/FLAM3/flam3/src/private.h315439816#18446744073709551615#0#0(6@47"/Users/spot/Documents/FLAM3/flam3/src/private.h315439703#22#0#22#0#0"0(13@91"Libxml/parser.h: No such file or directory in /Users/spot/Documents/FLAM3/flam3/src/flam3.h315439816#18446744073709551615#0#0(6@45"/Users/spot/Documents/FLAM3/flam3/src/flam3.h315439703#24#0#24#0#0"0(6@45"/Users/spot/Documents/FLAM3/flam3/src/flam3.h315439703#24#0#24#0#28"*: No such file or directory0(4@52"Expected specifier-qualifier-list before 'xmlDocPtr'315439816#559#111#4(7@72"In file included from /Users/spot/Documents/FLAM3/flam3/src/variations.c315439816#18446744073709551615#0#0(6@50"/Users/spot/Documents/FLAM3/flam3/src/variations.c315439703#19#0#19#0#0"0(7@72"In file included from /Users/spot/Documents/FLAM3/flam3/src/variations.h315439816#18446744073709551615#0#0(6@50"/Users/spot/Documents/FLAM3/flam3/src/variations.h315439703#22#0#22#0#0"0(7@69"In file included from /Users/spot/Documents/FLAM3/flam3/src/private.h315439816#18446744073709551615#0#0(6@47"/Users/spot/Documents/FLAM3/flam3/src/private.h315439703#22#0#22#0#0"0(13@101"Expected specifier-qualifier-list before 'xmlDocPtr' in /Users/spot/Documents/FLAM3/flam3/src/flam3.h315439816#18446744073709551615#0#0(6@45"/Users/spot/Documents/FLAM3/flam3/src/flam3.h315439703#497#0#497#0#0"0(6@45"/Users/spot/Documents/FLAM3/flam3/src/flam3.h315439703#497#0#497#0#19"expected * before *0(22@19"Unused variable 'c'315439816#748#86#0(6@50"/Users/spot/Documents/FLAM3/flam3/src/variations.c315439703#1919#0#1919#0#19"unused variable '*'0(22@19"Unused variable 's'315439816#834#86#0(6@50"/Users/spot/Documents/FLAM3/flam3/src/variations.c315439703#1918#0#1918#0#19"unused variable '*'0(22@19"Unused variable 's'315439816#999#86#0(6@50"/Users/spot/Documents/FLAM3/flam3/src/variations.c315439703#2118#0#2118#0#19"unused variable '*'0(22@28"Unused variable 'next_color'315439816#1085#95#0(6@50"/Users/spot/Documents/FLAM3/flam3/src/variations.c315439703#2118#0#2118#0#19"unused variable '*'0(0#0#50"/Users/spot/Documents/FLAM3/flam3/src/variations.c8616406048#1135"    cd /Users/spot/Documents/FLAM3    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/FLAM3-generated-files.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/FLAM3-own-target-headers.hmap -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/FLAM3-all-target-headers.hmap -iquote /Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/FLAM3-project-headers.hmap -F/Users/spot/Documents/FLAM3/build/Debug -I/Users/spot/Documents/FLAM3/build/Debug/include -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/DerivedSources/x86_64 -I/Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/DerivedSources -c /Users/spot/Documents/FLAM3/flam3/src/variations.c -o /Users/spot/Documents/FLAM3/build/FLAM3.build/Debug/FLAM3.build/Objects-normal/x86_64/variations.o1#
+
+CLd /Users/spot/Documents/FLAM3/build/Debug/FLAM3 normal x86_64
+r0
+
