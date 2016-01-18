@@ -22,7 +22,6 @@
 		71D2D08A1C4D6D1100F9113F /* ofxFftBasic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 71D2D06F1C4D6D1100F9113F /* ofxFftBasic.cpp */; };
 		71D2D08B1C4D6D1100F9113F /* ofxFftw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 71D2D0711C4D6D1100F9113F /* ofxFftw.cpp */; };
 		71D2D08C1C4D6D1100F9113F /* ofxProcessFFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 71D2D0731C4D6D1100F9113F /* ofxProcessFFT.cpp */; };
-		71D2D08D1C4D6D1100F9113F /* fftw3f.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 71D2D07E1C4D6D1100F9113F /* fftw3f.a */; };
 		71D2D08E1C4D6D1100F9113F /* kiss_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = 71D2D0841C4D6D1100F9113F /* kiss_fft.c */; };
 		71D2D08F1C4D6D1100F9113F /* kiss_fftr.c in Sources */ = {isa = PBXBuildFile; fileRef = 71D2D0861C4D6D1100F9113F /* kiss_fftr.c */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
@@ -91,7 +90,6 @@
 		71D2D0791C4D6D1100F9113F /* fftw3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fftw3.h; sourceTree = "<group>"; };
 		71D2D07B1C4D6D1100F9113F /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		71D2D07C1C4D6D1100F9113F /* .keep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .keep; sourceTree = "<group>"; };
-		71D2D07E1C4D6D1100F9113F /* fftw3f.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = fftw3f.a; sourceTree = "<group>"; };
 		71D2D0821C4D6D1100F9113F /* .keep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .keep; sourceTree = "<group>"; };
 		71D2D0831C4D6D1100F9113F /* _kiss_fft_guts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _kiss_fft_guts.h; sourceTree = "<group>"; };
 		71D2D0841C4D6D1100F9113F /* kiss_fft.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = kiss_fft.c; sourceTree = "<group>"; };
@@ -116,7 +114,6 @@
 				711EDDB01C2C67B200D4FA8A /* libxml2.tbd in Frameworks */,
 				711EDDAE1C2C65F500D4FA8A /* CoreAudio.framework in Frameworks */,
 				E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */,
-				71D2D08D1C4D6D1100F9113F /* fftw3f.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,7 +217,6 @@
 		71D2D07D1C4D6D1100F9113F /* osx */ = {
 			isa = PBXGroup;
 			children = (
-				71D2D07E1C4D6D1100F9113F /* fftw3f.a */,
 			);
 			path = osx;
 			sourceTree = "<group>";
