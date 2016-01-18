@@ -55,13 +55,19 @@ void ofApp::setup(){
     memset(&cp, 0, sizeof(flam3_genome));
     flam3_copy(&cp, &cps[gi]);
 	   
-    soundStream.listDevices();
-    soundStream.setup(this, 0, 2, 44100, 256, 4);
+    audioMode = AUDIO_MODE_MIC;
+    ofSoundStreamListDevices();
+    
+    int bufferSize = 512;
+    soundStream.setup(this, 0, 2, 44100, bufferSize, 4);
+    fft = ofxFft::create(bufferSize, OF_FFT_WINDOW_HAMMING);
+    
+    audioInput = new float[bufferSize];
+    fftOutput = new float[fft->getBinSize()];
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    
     counter = counter + speed;
 }
 
@@ -75,22 +81,39 @@ void ofApp::track(int trk, double v) {
 
 //--------------------------------------------------------------
 void ofApp::audioIn(float * input, int bufferSize, int nChannels){
-    float tot = 0.0;
-    for (int i = 0; i < bufferSize; i++) {
-        float s = input[i*nChannels] * 0.5;
-        tot += s * s;
+    if (audioMode == AUDIO_MODE_MIC) {
+        memcpy(audioInput, input, sizeof(float) * bufferSize);
+    } else if (audioMode == AUDIO_MODE_NOISE) {
+        for (int i = 0; i < bufferSize; i++)
+            audioInput[i] = ofRandom(-1, 1);
+    } else if (audioMode == AUDIO_MODE_NONE) {
+        // TODO: don't overwrite constantly
+        for (int i = 0; i < bufferSize; i++)
+            audioInput[i] = 0;
     }
-    tot /= bufferSize;
-    tot = sqrt(tot);
-    // mmpx = tot;
+
+    fft->setSignal(audioInput);
+    //fft->clampSignal();
+    memcpy(fftOutput, fft->getAmplitude(), sizeof(float) * fft->getBinSize());
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     
     float startTime = ofGetElapsedTimef();
-    int bands = 4096;
-    float *sp = ofSoundGetSpectrum(bands);
+    int bands = fft->getBinSize();
+    float *sp;
+
+    if (audioMode == AUDIO_MODE_MP3) {
+        sp = ofSoundGetSpectrum(bands);
+    } else if (audioMode == AUDIO_MODE_MIC || audioMode == AUDIO_MODE_NOISE) {
+        sp = fftOutput;
+    } else {
+        // No audio
+        // TODO: replace this with an empty array
+        sp = fftOutput;
+    }
+
     
     if (0) {
         // vDSP_create_fftsetup
@@ -385,6 +408,25 @@ void ofApp::draw(){
      100, 100,
      10, 100);
      */
+    
+    ofPushStyle();
+    ofSetColor(255);
+    ofNoFill();
+    ofSetLineWidth(1);
+    ofPushMatrix();
+    ofTranslate(100, 100);
+    ofBeginShape();
+    for (int i = 0; i < bands; i++) {
+        ofVertex(i, -sp[i] * 100);
+    }
+    ofEndShape();
+    
+    char str[25];
+    sprintf(str, "audioMode=%d", audioMode);
+    ofDrawBitmapString(str, 0, 0);
+    
+    ofPopMatrix();
+    ofPopStyle();
 }
 
 
@@ -400,6 +442,12 @@ void ofApp::keyPressed  (int key){
         gj = (gj+1) % ncps;
     } else if (key == 'a') {
         momode++;
+    } else if (key == 's') {
+        audioMode++;
+        if (audioMode >= N_AUDIO_MODES)
+            audioMode = 0;
+        if (audioMode != AUDIO_MODE_MP3)
+            mySound.stop();
     } else if (key == ' ') {
         wandering = !wandering;
     } else if (key == 'f') {
@@ -419,16 +467,20 @@ void ofApp::keyPressed  (int key){
         ofSoundStreamSetup(0, 1, this);
         mySound.stop();
     } else if (key == '1') {
-        mySound.loadSound("/Users/scottdraves/Music/08 once upon the sea of blissful awareness (esionjim rmx).mp3", true);
+        audioMode = AUDIO_MODE_MP3;
+        mySound.loadSound("audio/08 once upon the sea of blissful awareness (esionjim rmx).mp3", true);
         mySound.play();
     } else if (key == '2') {
-        mySound.loadSound("/Users/scottdraves/Music/01 - Steve McQueen.mp3", true);
+        audioMode = AUDIO_MODE_MP3;
+        mySound.loadSound("audio/01 - Steve McQueen.mp3", true);
         mySound.play();
     } else if (key == '3') {
-        mySound.loadSound("/Users/scottdraves/Music/db120c10-01-Sonata No 1 in G Minor BWV 1001 Adagio.mp3", true);
+        audioMode = AUDIO_MODE_MP3;
+        mySound.loadSound("audio/db120c10-01-Sonata No 1 in G Minor BWV 1001 Adagio.mp3", true);
         mySound.play();
     } else if (key == '4') {
-        mySound.loadSound("/Users/scottdraves/Music/skrillex_bangarang.mp3", true);
+        audioMode = AUDIO_MODE_MP3;
+        mySound.loadSound("audio/skrillex_bangarang.mp3", true);
         mySound.play();
     } else if (key == '9') {
         mySound.setPosition(mySound.getPosition()-0.02);
