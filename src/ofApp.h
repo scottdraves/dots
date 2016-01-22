@@ -2,6 +2,8 @@
 
 #include "ofMain.h"
 #include "ofxFft.h"
+#include "fmod.h"
+#include "GuiApp.h"
 
 extern "C" {
 #include "flam3.h"
@@ -76,6 +78,9 @@ public:
     
     randctx rc;
     
-    
+    // The GUI window
+    shared_ptr<GuiApp> gui;
+    ofFbo visualsFbo;
+    shared_ptr<ofTexture> visuals;
 };
 

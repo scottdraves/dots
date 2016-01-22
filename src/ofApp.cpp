@@ -4,8 +4,9 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    ofBackground(0);
+
     counter = 0;
-    ofBackground(255,255,255);
     nsamples = 25000;	seed = 0;
     gi = 0;
     gj = 0;
@@ -13,7 +14,6 @@ void ofApp::setup(){
     ofSetWindowTitle("D0TS");
     samples= (double *) malloc(sizeof(double)*nsamples*8);
     parity = 0;
-    ofBackground(0,0,0);
     framecount = 0;
     mpx = mpy = 0.0;
     mmpx = mmpy = 0.0;
@@ -21,8 +21,9 @@ void ofApp::setup(){
     momode = 1;
     speed = 0.25;
     wandering = 0;
-    ofToggleFullscreen();
     ofHideCursor();
+    
+    visualsFbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA, 4);
     
     // cpv = (flam3_genome *) malloc(sizeof(flam3_genome)*2);
     {
@@ -69,6 +70,9 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     counter = counter + speed;
+    
+    gui->visuals = &visualsFbo.getTexture();
+    wandering = gui->wandering;
 }
 
 void ofApp::track(int trk, double v) {
@@ -99,6 +103,12 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    visualsFbo.begin();
+    ofBackground(0, 255);
+    ofSetColor(255, 255);
+    
+    ofEnableAlphaBlending();
+    
     
     float startTime = ofGetElapsedTimef();
     int bands = fft->getBinSize();
@@ -121,9 +131,6 @@ void ofApp::draw(){
         // http://forum.openframeworks.cc/index.php?topic=8998.0
         // https://github.com/micknoise/Maximilian
     }
-    
-    ofEnableAlphaBlending();
-    // ofEnableSmoothing();
     
     int cohere = 1;
     double t0, t1, t2;
@@ -282,7 +289,7 @@ void ofApp::draw(){
     }
     
     ofSetLineWidth(1);
-    ofSetColor(255,255,255,255);
+    ofSetColor(255, 255);
     // free(sp)?
     // see ~/Downloads/analysis2/fft/src/fft.h
     float max = 0.0;
@@ -427,6 +434,12 @@ void ofApp::draw(){
     
     ofPopMatrix();
     ofPopStyle();
+    
+    ofClearAlpha();
+    visualsFbo.end();
+
+    ofSetColor(255);
+    visualsFbo.draw(0, 0);
 }
 
 
@@ -449,6 +462,7 @@ void ofApp::keyPressed  (int key){
         if (audioMode != AUDIO_MODE_MP3)
             mySound.stop();
     } else if (key == ' ') {
+        // TODO: move entirely to GUI
         wandering = !wandering;
     } else if (key == 'f') {
         ofToggleFullscreen();
@@ -565,5 +579,5 @@ void ofApp::mouseReleased(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-    
+    visualsFbo.allocate(w, h, GL_RGBA);
 }
