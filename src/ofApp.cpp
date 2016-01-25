@@ -60,19 +60,44 @@ void ofApp::setup(){
     ofSoundStreamListDevices();
     
     int bufferSize = 512;
+    soundStreamDevice = 0;
     soundStream.setup(this, 0, 2, 44100, bufferSize, 4);
+    soundStream.setDeviceID(soundStreamDevice);
     fft = ofxFft::create(bufferSize, OF_FFT_WINDOW_HAMMING);
     
     audioInput = new float[bufferSize];
     fftOutput = new float[fft->getBinSize()];
+    for (int i = 0; i < bufferSize; ++i) {
+        audioInput[i] = 0;
+    }
+    for (int i = 0; i < fft->getBinSize(); ++i) {
+        fftOutput[i] = 0;
+    }
+    
+    gui->nAudioBuckets = fft->getBinSize();
+    gui->audioBuckets = fftOutput;
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     counter = counter + speed;
     
+    gui->frameRate = ofGetFrameRate();
     gui->visuals = &visualsFbo.getTexture();
     wandering = gui->wandering;
+    fftDecayRate = gui->fftDecayRate;
+    
+    if (soundStreamDevice != gui->soundStreamDevice) {
+        soundStreamDevice = gui->soundStreamDevice;
+        soundStream.close();
+        soundStream.setDeviceID(soundStreamDevice);
+        bool streamStarted = soundStream.setup(this, 0, 2, 44100, 512, 4);
+        if (streamStarted) {
+            cout << "Started audio stream with device " << soundStreamDevice << endl;
+        } else {
+            cout << "Could not start audio stream with device " << soundStreamDevice << endl;
+        }
+    }
 }
 
 void ofApp::track(int trk, double v) {
@@ -97,8 +122,13 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels){
     }
 
     fft->setSignal(audioInput);
-    //fft->clampSignal();
-    memcpy(fftOutput, fft->getAmplitude(), sizeof(float) * fft->getBinSize());
+    float *fftAmplitude = fft->getAmplitude();
+
+    for (int i = 0; i < fft->getBinSize(); ++i) {
+        if (fftAmplitude[i] > fftOutput[i] || fftDecayRate <= 0.01) {
+            fftOutput[i] = fftAmplitude[i];
+        }
+    }
 }
 
 //--------------------------------------------------------------
@@ -415,31 +445,21 @@ void ofApp::draw(){
      100, 100,
      10, 100);
      */
-    
-    ofPushStyle();
-    ofSetColor(255);
-    ofNoFill();
-    ofSetLineWidth(1);
-    ofPushMatrix();
-    ofTranslate(100, 100);
-    ofBeginShape();
-    for (int i = 0; i < bands; i++) {
-        ofVertex(i, -sp[i] * 100);
-    }
-    ofEndShape();
-    
-    char str[25];
-    sprintf(str, "audioMode=%d", audioMode);
-    ofDrawBitmapString(str, 0, 0);
-    
-    ofPopMatrix();
-    ofPopStyle();
-    
+        
     ofClearAlpha();
     visualsFbo.end();
 
     ofSetColor(255);
     visualsFbo.draw(0, 0);
+    
+    // TODO: move to update()
+    if (fftOutput) {
+        if (fftDecayRate > 0.01) {
+            for (int i = 0; i < bands; ++i) {
+                fftOutput[i] *= fftDecayRate;
+            }
+        }
+    }
 }
 
 

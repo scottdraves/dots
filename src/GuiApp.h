@@ -12,7 +12,17 @@ public:
     
     ofParameterGroup parameters;
     ofParameter<bool> wandering;
+    ofParameter<float> fftDecayRate;
+    
+    vector<ofSoundDevice> soundDevices;
+    int nSoundDevices;
+    ofParameter<int> soundStreamDevice;
+    
     ofxPanel gui;
     
+    // To mirror from ofApp
+    float frameRate;
     ofTexture* visuals;
+    float *audioBuckets;
+    int nAudioBuckets;
 };

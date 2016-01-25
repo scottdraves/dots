@@ -71,10 +71,13 @@ public:
     
     int audioMode;
     ofSoundPlayer mySound;
+    int soundStreamDevice;
     ofSoundStream soundStream;  // for input
+
     float* audioInput;
     float* fftOutput;
     ofxFft* fft;
+    float fftDecayRate;
     
     randctx rc;
     
