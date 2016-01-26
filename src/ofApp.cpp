@@ -63,7 +63,7 @@ void ofApp::setup(){
     soundStreamDevice = 0;
     soundStream.setup(this, 0, 2, 44100, bufferSize, 4);
     soundStream.setDeviceID(soundStreamDevice);
-    fft = ofxFft::create(bufferSize, OF_FFT_WINDOW_HAMMING);
+    fft = ofxFft::create(bufferSize, OF_FFT_WINDOW_HANN);
     
     audioInput = new float[bufferSize];
     fftOutput = new float[fft->getBinSize()];
@@ -121,12 +121,18 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels){
             audioInput[i] = 0;
     }
 
-    fft->setSignal(audioInput);
-    float *fftAmplitude = fft->getAmplitude();
+    // Only process data if we're listening
+    if (audioMode == AUDIO_MODE_MIC || audioMode == AUDIO_MODE_NOISE) {
+        fft->setSignal(audioInput);
+        float *fftAmplitude = fft->getAmplitude();
 
-    for (int i = 0; i < fft->getBinSize(); ++i) {
-        if (fftAmplitude[i] > fftOutput[i] || fftDecayRate <= 0.01) {
-            fftOutput[i] = fftAmplitude[i];
+        for (int i = 0; i < fft->getBinSize(); ++i) {
+            float val = log10(fftAmplitude[i]) + 2;
+            if (val > fftOutput[i] || fftDecayRate <= 0.01) {
+                fftOutput[i] = val;
+            } else {
+                fftOutput[i] *= fftDecayRate;
+            }
         }
     }
 }
@@ -142,18 +148,16 @@ void ofApp::draw(){
     
     float startTime = ofGetElapsedTimef();
     int bands = fft->getBinSize();
-    float *sp;
+    float *sp = fftOutput;
 
     if (audioMode == AUDIO_MODE_MP3) {
-        sp = ofSoundGetSpectrum(bands);
+        float *ss = ofSoundGetSpectrum(bands);
+        memcpy(fftOutput, ss, sizeof(float) * bands);
     } else if (audioMode == AUDIO_MODE_MIC || audioMode == AUDIO_MODE_NOISE) {
-        sp = fftOutput;
+        // No action needed
     } else {
-        // No audio
-        // TODO: replace this with an empty array
-        sp = fftOutput;
+        memcpy(fftOutput, 0, sizeof(float) * bands);
     }
-
     
     if (0) {
         // vDSP_create_fftsetup
@@ -451,15 +455,6 @@ void ofApp::draw(){
 
     ofSetColor(255);
     visualsFbo.draw(0, 0);
-    
-    // TODO: move to update()
-    if (fftOutput) {
-        if (fftDecayRate > 0.01) {
-            for (int i = 0; i < bands; ++i) {
-                fftOutput[i] *= fftDecayRate;
-            }
-        }
-    }
 }
 
 
