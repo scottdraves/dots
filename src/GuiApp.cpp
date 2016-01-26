@@ -14,6 +14,7 @@ void GuiApp::setup(){
     soundDevices = ss.getDeviceList();
     nSoundDevices = soundDevices.size();
     
+    parameters.add(audioMode.set("audioMode", AUDIO_MODE_MIC, 0, N_AUDIO_MODES-1));
     parameters.add(soundStreamDevice.set("soundStreamDevice", 0, 0, nSoundDevices));
     parameters.add(wandering.set("wandering", false));
     parameters.add(fftDecayRate.set("fftDecayRate", 0.9, 0, 1));
@@ -96,8 +97,20 @@ void GuiApp::draw() {
         }
         ofEndShape();
         
+        string audioModeDesc;
+        if (audioMode == AUDIO_MODE_MIC) {
+            audioModeDesc = "Microphone Input";
+        } else if (audioMode == AUDIO_MODE_MP3) {
+            audioModeDesc = "MP3 Playing";
+        } else if (audioMode == AUDIO_MODE_NOISE) {
+            audioModeDesc = "White Noise";
+        } else {
+            audioModeDesc = "No Audio";
+        }
+        ofDrawBitmapString(audioModeDesc, 5, 15-100);
+
         if (soundStreamDevice < soundDevices.size()) {
-            ofDrawBitmapString(soundDevices[soundStreamDevice].name, 5, 15-100);
+            ofDrawBitmapString(soundDevices[soundStreamDevice].name, 5, 30-100);
         }
         
         ofPopMatrix();

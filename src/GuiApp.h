@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxGui.h"
+#include "appConstants.h"
 
 class GuiApp: public ofBaseApp {
 public:
@@ -14,6 +15,7 @@ public:
     ofParameter<bool> wandering;
     ofParameter<float> fftDecayRate;
     
+    ofParameter<int> audioMode;
     vector<ofSoundDevice> soundDevices;
     int nSoundDevices;
     ofParameter<int> soundStreamDevice;

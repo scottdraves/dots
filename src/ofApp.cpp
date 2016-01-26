@@ -87,6 +87,12 @@ void ofApp::update(){
     wandering = gui->wandering;
     fftDecayRate = gui->fftDecayRate;
     
+    if (audioMode != gui->audioMode) {
+        audioMode = gui->audioMode;
+        if (audioMode != AUDIO_MODE_MP3)
+            mySound.stop();
+    }
+    
     if (soundStreamDevice != gui->soundStreamDevice) {
         soundStreamDevice = gui->soundStreamDevice;
         soundStream.close();
@@ -156,7 +162,7 @@ void ofApp::draw(){
     } else if (audioMode == AUDIO_MODE_MIC || audioMode == AUDIO_MODE_NOISE) {
         // No action needed
     } else {
-        memcpy(fftOutput, 0, sizeof(float) * bands);
+        memset(fftOutput, 0, sizeof(float) * bands);
     }
     
     if (0) {
@@ -496,19 +502,19 @@ void ofApp::keyPressed  (int key){
         ofSoundStreamSetup(0, 1, this);
         mySound.stop();
     } else if (key == '1') {
-        audioMode = AUDIO_MODE_MP3;
+        gui->audioMode.set(AUDIO_MODE_MP3);
         mySound.loadSound("audio/08 once upon the sea of blissful awareness (esionjim rmx).mp3", true);
         mySound.play();
     } else if (key == '2') {
-        audioMode = AUDIO_MODE_MP3;
+        gui->audioMode.set(AUDIO_MODE_MP3);
         mySound.loadSound("audio/01 - Steve McQueen.mp3", true);
         mySound.play();
     } else if (key == '3') {
-        audioMode = AUDIO_MODE_MP3;
+        gui->audioMode.set(AUDIO_MODE_MP3);
         mySound.loadSound("audio/db120c10-01-Sonata No 1 in G Minor BWV 1001 Adagio.mp3", true);
         mySound.play();
     } else if (key == '4') {
-        audioMode = AUDIO_MODE_MP3;
+        gui->audioMode.set(AUDIO_MODE_MP3);
         mySound.loadSound("audio/skrillex_bangarang.mp3", true);
         mySound.play();
     } else if (key == '9') {

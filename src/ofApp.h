@@ -4,16 +4,11 @@
 #include "ofxFft.h"
 #include "fmod.h"
 #include "GuiApp.h"
+#include "appConstants.h"
 
 extern "C" {
 #include "flam3.h"
 }
-
-#define AUDIO_MODE_NONE     0
-#define AUDIO_MODE_MIC      1
-#define AUDIO_MODE_MP3      2
-#define AUDIO_MODE_NOISE    3
-#define N_AUDIO_MODES       4
 
 class ofApp : public ofBaseApp{
     
