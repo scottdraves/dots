@@ -506,7 +506,7 @@ void ofApp::keyPressed  (int key){
         mySound.stop();
     } else if (key == '1') {
         gui->audioMode.set(AUDIO_MODE_MP3);
-        mySound.loadSound("audio/08 once upon the sea of blissful awareness (esionjim rmx).mp3", true);
+        mySound.loadSound("audio/no_ordinary_window-youtube.mp3", true);
         mySound.play();
     } else if (key == '2') {
         gui->audioMode.set(AUDIO_MODE_MP3);
