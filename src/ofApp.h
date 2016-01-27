@@ -66,7 +66,7 @@ public:
     
     int audioMode;
     ofSoundPlayer mySound;
-    int soundStreamDevice;
+    int soundStreamDevice, nChannels;
     ofSoundStream soundStream;  // for input
 
     float* audioInput;

@@ -15,7 +15,7 @@ void GuiApp::setup(){
     nSoundDevices = soundDevices.size();
     
     parameters.add(audioMode.set("audioMode", AUDIO_MODE_MIC, 0, N_AUDIO_MODES-1));
-    parameters.add(soundStreamDevice.set("soundStreamDevice", 0, 0, nSoundDevices));
+    parameters.add(soundStreamDevice.set("soundStreamDevice", 0, 0, nSoundDevices-1));
     parameters.add(wandering.set("wandering", false));
     parameters.add(fftDecayRate.set("fftDecayRate", 0.9, 0, 1));
     gui.setup(parameters);

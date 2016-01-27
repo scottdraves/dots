@@ -61,7 +61,8 @@ void ofApp::setup(){
     
     int bufferSize = 512;
     soundStreamDevice = 0;
-    soundStream.setup(this, 0, 2, 44100, bufferSize, 4);
+    nChannels = 1;
+    soundStream.setup(this, 0, nChannels, 44100, bufferSize, 4);
     soundStream.setDeviceID(soundStreamDevice);
     fft = ofxFft::create(bufferSize, OF_FFT_WINDOW_HANN);
     
@@ -97,7 +98,7 @@ void ofApp::update(){
         soundStreamDevice = gui->soundStreamDevice;
         soundStream.close();
         soundStream.setDeviceID(soundStreamDevice);
-        bool streamStarted = soundStream.setup(this, 0, 2, 44100, 512, 4);
+        bool streamStarted = soundStream.setup(this, 0, nChannels, 44100, 512, 4);
         if (streamStarted) {
             cout << "Started audio stream with device " << soundStreamDevice << endl;
         } else {
