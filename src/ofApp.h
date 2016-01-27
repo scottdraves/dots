@@ -27,6 +27,8 @@ public:
     void windowResized(int w, int h);
     void audioIn(float * input, int bufferSize, int nChannels);
     
+    void setFlameParameters();
+    
     float curVol = 0.0;
     
     void killCurrent();
@@ -69,8 +71,10 @@ public:
     int soundStreamDevice, nChannels;
     ofSoundStream soundStream;  // for input
 
+    int nFftBuckets;
     float* audioInput;
     float* fftOutput;
+    float audioRMS, smoothedAudioRMS;
     ofxFft* fft;
     float fftDecayRate;
     

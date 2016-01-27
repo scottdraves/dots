@@ -65,17 +65,19 @@ void ofApp::setup(){
     soundStream.setup(this, 0, nChannels, 44100, bufferSize, 4);
     soundStream.setDeviceID(soundStreamDevice);
     fft = ofxFft::create(bufferSize, OF_FFT_WINDOW_HANN);
+    nFftBuckets = fft->getBinSize();
     
     audioInput = new float[bufferSize];
-    fftOutput = new float[fft->getBinSize()];
+    fftOutput = new float[nFftBuckets];
+    audioRMS = smoothedAudioRMS = 0;
     for (int i = 0; i < bufferSize; ++i) {
         audioInput[i] = 0;
     }
-    for (int i = 0; i < fft->getBinSize(); ++i) {
+    for (int i = 0; i < nFftBuckets; ++i) {
         fftOutput[i] = 0;
     }
     
-    gui->nAudioBuckets = fft->getBinSize();
+    gui->nAudioBuckets = nFftBuckets;
     gui->audioBuckets = fftOutput;
 }
 
@@ -141,70 +143,21 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels){
                 fftOutput[i] *= fftDecayRate;
             }
         }
+        
+        float newAudioRMS = 0.0;
+        for (int i = 0; i < bufferSize; i++){
+            float sample = input[i] * 0.5;
+            newAudioRMS += sample * sample;
+        }
+        newAudioRMS /= bufferSize;
+        newAudioRMS = sqrt(newAudioRMS);
+
+        audioRMS = newAudioRMS;
+        smoothedAudioRMS += (audioRMS - smoothedAudioRMS) * 0.3;
     }
 }
 
-//--------------------------------------------------------------
-void ofApp::draw(){
-    visualsFbo.begin();
-    ofBackground(0, 255);
-    ofSetColor(255, 255);
-    
-    ofEnableAlphaBlending();
-    
-    
-    float startTime = ofGetElapsedTimef();
-    int bands = fft->getBinSize();
-    float *sp = fftOutput;
-
-    if (audioMode == AUDIO_MODE_MP3) {
-        float *ss = ofSoundGetSpectrum(bands);
-        memcpy(fftOutput, ss, sizeof(float) * bands);
-    } else if (audioMode == AUDIO_MODE_MIC || audioMode == AUDIO_MODE_NOISE) {
-        // No action needed
-    } else {
-        memset(fftOutput, 0, sizeof(float) * bands);
-    }
-    
-    if (0) {
-        // vDSP_create_fftsetup
-        // ~/cinder_0.8.4_mac/src/cinder/audio/FftProcessorImplAccelerate.cpp
-        // http://forum.openframeworks.cc/index.php?topic=8998.0
-        // https://github.com/micknoise/Maximilian
-    }
-    
-    int cohere = 1;
-    double t0, t1, t2;
-    
-    initrc(seed);
-    
-    if (wandering) {
-        double ispeed = 80.0;
-        if (counter > (ncps * ispeed))
-            counter = 0;
-        for (int i = 0; i < ncps; i++) {
-            cps[i].time = (double) i;
-        }
-        flam3_interpolate(cps, ncps, counter/ispeed, 0, &cp);
-    } else {
-        flam3_rotate(&cp, 1.0+speed*10, flam3_inttype_log);
-    }
-    
-    if (prepare_precalc_flags2(&cp)) {
-        fprintf(stderr,"prepare xform pointers returned error: aborting.\n");
-        return;
-    }
-    
-    unsigned short *xform_distrib;
-    xform_distrib = flam3_create_xform_distrib(&cp);
-    
-    double *s = samples + (parity?(4*nsamples):0);
-    
-    s[0] = flam3_random_isaac_11(&rc);
-    s[1] = flam3_random_isaac_11(&rc);
-    s[2] = flam3_random_isaac_01(&rc);
-    s[3] = flam3_random_isaac_01(&rc);
-    
+void ofApp::setFlameParameters() {
     switch (gi) {
         case 0:
             cp.xform[4].var[5] = mpx;
@@ -305,7 +258,7 @@ void ofApp::draw(){
             for (int i = 0; i < cp.num_xforms; i++) {
                 for (int j = 0; j < 3; j++) {
                     for (int k = 0; k < 2; k++) {
-                        float nz = sp[(5*b++)%bands];
+                        float nz = fftOutput[(5*b++)%nFftBuckets];
                         cp.xform[i].c[j][k] = 5 * (nz - lz);
                         lz = nz;
                     }
@@ -315,8 +268,62 @@ void ofApp::draw(){
             }
             break;
     }
+
+}
+
+//--------------------------------------------------------------
+void ofApp::draw(){
+    visualsFbo.begin();
+    ofBackground(0, 255);
+    ofSetColor(255, 255);
     
+    ofEnableAlphaBlending();
     
+    float startTime = ofGetElapsedTimef();
+    float *sp = fftOutput;
+
+    if (audioMode == AUDIO_MODE_MP3) {
+        float *ss = ofSoundGetSpectrum(nFftBuckets);
+        memcpy(fftOutput, ss, sizeof(float) * nFftBuckets);
+    } else if (audioMode == AUDIO_MODE_MIC || audioMode == AUDIO_MODE_NOISE) {
+        // No action needed
+    } else {
+        memset(fftOutput, 0, sizeof(float) * nFftBuckets);
+    }
+    
+    int cohere = 1;
+    double t0, t1, t2;
+    
+    initrc(seed);
+    
+    if (wandering) {
+        double ispeed = 80.0;
+        if (counter > (ncps * ispeed))
+            counter = 0;
+        for (int i = 0; i < ncps; i++) {
+            cps[i].time = (double) i;
+        }
+        flam3_interpolate(cps, ncps, counter/ispeed, 0, &cp);
+    } else {
+        flam3_rotate(&cp, 1.0+speed*10, flam3_inttype_log);
+    }
+    
+    if (prepare_precalc_flags2(&cp)) {
+        fprintf(stderr,"prepare xform pointers returned error: aborting.\n");
+        return;
+    }
+    
+    unsigned short *xform_distrib;
+    xform_distrib = flam3_create_xform_distrib(&cp);
+    
+    double *s = samples + (parity?(4*nsamples):0);
+    
+    s[0] = flam3_random_isaac_11(&rc);
+    s[1] = flam3_random_isaac_11(&rc);
+    s[2] = flam3_random_isaac_01(&rc);
+    s[3] = flam3_random_isaac_01(&rc);
+    
+    setFlameParameters();
     flam3_iterate(&cp, nsamples, 20, s, xform_distrib, &rc);
     
     double *s0, *s1;
@@ -331,30 +338,25 @@ void ofApp::draw(){
     
     ofSetLineWidth(1);
     ofSetColor(255, 255);
-    // free(sp)?
-    // see ~/Downloads/analysis2/fft/src/fft.h
-    float max = 0.0;
-    int maxBand = 0;
-    for (int i = 0; i < bands; i++) {
-        if (sp[i] > max) {
-            max = sp[i];
-            maxBand = i;
-        }
+    
+    // Compute audio centroid
+    float centroidN = 0, centroidD = 0;
+    for (int i = 0; i < nFftBuckets; ++i) {
+        centroidN += fftOutput[i] * i;
+        centroidD += fftOutput[i];
     }
-    if (0)
-        for (int i = 0; i < bands; i++) {
-            int w=3;
-            ofRect(i*w,0,w,100*sp[i]);
-        }
-    if (1) {
-        mpx = mmpx + 20 * maxBand/(double)bands;
-        mpy = mmpy + sp[30]/max;
-    } else {
-        mpx = mmpx;
-        mpy = mmpy;
-    }
-    //mpx *= speed*4;
-    //mpy *= speed*4;
+    float centroidBucket = centroidN / centroidD;
+    float centroidNorm = fmin(centroidBucket / nFftBuckets, 1);
+    float centroidMapped = sqrt(ofMap(centroidNorm, 0, 0.15, 0, 1, true)); // TODO: should we use sqrt here?
+    
+    // Compute audio RMS
+    float audioRMSMapped = fmin(1, audioRMS * 15);
+    
+    // Note: this is very dependent on the tempo of the music, would make a good
+    // parameter to allow a knob to vary. Or maybe set per scene;
+    float smoothingFactor = 0.05;
+    mpx += (centroidMapped - mpx) * smoothingFactor;
+    mpy += (audioRMSMapped - mpy) * smoothingFactor;
     
     track(0, mpx);
     track(1, mpy);
@@ -377,11 +379,11 @@ void ofApp::draw(){
         
         //int zzz = flam3_random_isaac_01(&rc) < 0.0001;
         ///if (zzz) fprintf(stderr, "w=%f mpy=%f\n", w, mpy);
-        int mpy_sp = mpy * bands;
+        int mpy_sp = mpy * nFftBuckets;
         if (mpy_sp < 0) mpy_sp = 0;
-        if (mpy_sp >= bands) mpy_sp = bands-1;
+        if (mpy_sp >= nFftBuckets) mpy_sp = nFftBuckets-1;
         if (gj&1) {
-            w *= 10 * (0.0 + sp[(int)(bands/5*i/(float)nsamples)]) * (0.5 + mpy);
+            w *= 10 * (0.0 + sp[(int)(nFftBuckets/5*i/(float)nsamples)]) * (0.5 + mpy);
         } else {
             w *= 2 * mpy;
         }
