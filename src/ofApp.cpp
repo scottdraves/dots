@@ -136,7 +136,8 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels){
         float *fftAmplitude = fft->getAmplitude();
 
         for (int i = 0; i < fft->getBinSize(); ++i) {
-            float val = log10(fftAmplitude[i]) + 2;
+            // TODO: in theory this should be 20, but 16 seems to work better.
+            float val = ofClamp(16.0 * log10(fftAmplitude[i] + 1), 0.0, 1.0);
             if (val > fftOutput[i] || fftDecayRate <= 0.01) {
                 fftOutput[i] = val;
             } else {
@@ -350,7 +351,7 @@ void ofApp::draw(){
     float centroidMapped = sqrt(ofMap(centroidNorm, 0, 0.15, 0, 1, true)); // TODO: should we use sqrt here?
     
     // Compute audio RMS
-    float audioRMSMapped = fmin(1, audioRMS * 15);
+    float audioRMSMapped = ofClamp(audioRMS * 5, 0.0, 1.0);
     
     // Note: this is very dependent on the tempo of the music, would make a good
     // parameter to allow a knob to vary. Or maybe set per scene;

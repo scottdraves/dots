@@ -19,7 +19,7 @@ void GuiApp::setup(){
     parameters.add(wandering.set("wandering", false));
     parameters.add(fftDecayRate.set("fftDecayRate", 0.9, 0, 1));
     gui.setup(parameters);
-    gui.setPosition(10, 300);
+    gui.setPosition(10, 450);
     
     visuals = NULL;
     audioBuckets = NULL;
