@@ -1,24 +1,39 @@
 #include "GuiApp.h"
 
 void GuiApp::setup(){
-    parameters.setName("parameters");
-    
+
     ofSoundStream ss;
     soundDevices = ss.getDeviceList();
     nSoundDevices = soundDevices.size();
+
+    audioInputParameters.setName("Audio Input");
+    audioInputParameters.add(audioMode.set("audioMode", AUDIO_MODE_MIC, 0, N_AUDIO_MODES-1));
+    audioInputParameters.add(soundStreamDevice.set("soundStreamDevice", 0, 0, nSoundDevices-1));
+    inputGui.setup(audioInputParameters);
     
-    parameters.add(audioMode.set("audioMode", AUDIO_MODE_MIC, 0, N_AUDIO_MODES-1));
-    parameters.add(soundStreamDevice.set("soundStreamDevice", 0, 0, nSoundDevices-1));
-    parameters.add(wandering.set("wandering", false));
-    parameters.add(fftDecayRate.set("fftDecayRate", 0.9, 0, 1));
-    gui.setup(parameters);
-    gui.setPosition(10, 450);
+    audioAnalysisParameters.setName("Audio Analysis");
+    audioAnalysisParameters.add(fftDecayRate.set("fftDecayRate", 0.9, 0, 1));
+    audioAnalysisParameters.add(centroidMaxBucket.set("centroidMax (mpx)", 0.35, 0, 1));
+    audioAnalysisParameters.add(rmsMultiple.set("rmsMult (mpy)", 5, 0, 15));
+    audioAnalysisParameters.add(mpxSmoothingFactor.set("mpxSmoothingFactor", 0.4, 0, 1));
+    audioAnalysisParameters.add(mpySmoothingFactor.set("mpySmoothingFactor", 0.1, 0, 1));
+    analysisGui.setup(audioAnalysisParameters);
+    
+    displayParameters.setName("Display");
+    displayParameters.add(wandering.set("wandering", false));
+    displayGui.setup(displayParameters);
+    
+    inputGui.setPosition(10, 450);
+    analysisGui.setPosition(inputGui.getPosition().x + inputGui.getWidth() + 10, inputGui.getPosition().y);
+    displayGui.setPosition(analysisGui.getPosition().x + analysisGui.getWidth() + 10, analysisGui.getPosition().y);
     
     visuals = NULL;
     audioBuckets = NULL;
     nAudioBuckets = 0;
     frameRate = 0;
-
+    mpx = 0;
+    mpy = 0;
+    
     ofBackground(0);
     ofSetVerticalSync(false);
 }
@@ -78,15 +93,16 @@ void GuiApp::draw() {
         ofNoFill();
         ofSetLineWidth(1);
         
-        float fftWidth = 480.0 / nAudioBuckets;
+        float fftWidth = 480.0, fftHeight = 100;
+        float fftBucketWidth = fftWidth / nAudioBuckets;
         
         ofPushMatrix();
         
         ofTranslate(margin, 0);
-        ofDrawRectangle(0, 0, 480, -100);
+        ofDrawRectangle(0, 0, fftWidth, -fftHeight);
         ofBeginShape();
         for (int i = 0; i < nAudioBuckets; i++) {
-            ofVertex(i * fftWidth, -audioBuckets[i] * 100);
+            ofVertex(i * fftBucketWidth, -audioBuckets[i] * fftHeight);
         }
         ofEndShape();
         
@@ -100,11 +116,31 @@ void GuiApp::draw() {
         } else {
             audioModeDesc = "No Audio";
         }
-        ofDrawBitmapString(audioModeDesc, 5, 15-100);
+        ofDrawBitmapString(audioModeDesc, 5, 15-fftHeight);
 
         if (soundStreamDevice < soundDevices.size()) {
-            ofDrawBitmapString(soundDevices[soundStreamDevice].name, 5, 30-100);
+            ofDrawBitmapString(soundDevices[soundStreamDevice].name, 5, 30-fftHeight);
         }
+        
+        // Draw audio centroid
+        float mappedCentroid = fftWidth * audioCentroid;
+        ofSetColor(200, 0, 0);
+        ofDrawLine(mappedCentroid, 0, mappedCentroid, -fftHeight);
+        ofDrawBitmapString("centroid", mappedCentroid + 4, -30);
+        float mappedCentroidMax = fftWidth * centroidMaxBucket;
+        ofSetColor(125, 0, 0);
+        ofDrawLine(mappedCentroidMax, 0, mappedCentroidMax, -fftHeight);
+        ofDrawBitmapString("centroidMax", mappedCentroidMax + 4, -30);
+        
+        // Draw MPX, MPY
+        float mpxHeight = 100 * mpx;
+        float mpyHeight = 100 * mpy;
+        ofFill();
+        ofSetColor(255);
+        ofDrawBitmapString("mpx", fftWidth + 10, -100);
+        ofDrawRectangle(fftWidth + 10, 0, 25, -mpxHeight);
+        ofDrawBitmapString("mpy", fftWidth + 40, -100);
+        ofDrawRectangle(fftWidth + 40, 0, 25, -mpyHeight);
         
         ofPopMatrix();
         ofPopStyle();
@@ -112,7 +148,9 @@ void GuiApp::draw() {
     
     ofPopMatrix();
 
-    gui.draw();
+    inputGui.draw();
+    analysisGui.draw();
+    displayGui.draw();
 }
 
 

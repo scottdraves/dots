@@ -17,6 +17,10 @@ void ofApp::setup(){
     framecount = 0;
     mpx = mpy = 0.0;
     mmpx = mmpy = 0.0;
+    mpxSmoothingFactor = 0.4;
+    mpySmoothingFactor = 0.1;
+    centroidMaxBucket = 0.35;
+    rmsMultiple = 5;
     fullscreen = 1;
     momode = 1;
     speed = 0.25;
@@ -87,8 +91,17 @@ void ofApp::update(){
     
     gui->frameRate = ofGetFrameRate();
     gui->visuals = &visualsFbo.getTexture();
+    gui->mpx = mpx;
+    gui->mpy = mpy;
+    gui->audioCentroid = audioCentroid;
+    gui->audioRMS = audioRMS;
+    
     wandering = gui->wandering;
     fftDecayRate = gui->fftDecayRate;
+    rmsMultiple = gui->rmsMultiple;
+    centroidMaxBucket = gui->centroidMaxBucket;
+    mpxSmoothingFactor = gui->mpxSmoothingFactor;
+    mpySmoothingFactor = gui->mpySmoothingFactor;
     
     if (audioMode != gui->audioMode) {
         audioMode = gui->audioMode;
@@ -108,14 +121,6 @@ void ofApp::update(){
         }
     }
 }
-
-void ofApp::track(int trk, double v) {
-    char s[25];
-    sprintf(s, "%g", v);
-    ofDrawBitmapString(s, 20, 300 + trk*200);
-    ofRect(0, 300 + trk*200 + v*100, 10, 10);
-}
-
 
 //--------------------------------------------------------------
 void ofApp::audioIn(float * input, int bufferSize, int nChannels){
@@ -347,20 +352,18 @@ void ofApp::draw(){
         centroidD += fftOutput[i];
     }
     float centroidBucket = centroidN / centroidD;
-    float centroidNorm = fmin(centroidBucket / nFftBuckets, 1);
-    float centroidMapped = sqrt(ofMap(centroidNorm, 0, 0.15, 0, 1, true)); // TODO: should we use sqrt here?
+    audioCentroid = fmin(centroidBucket / nFftBuckets, 1);
     
-    // Compute audio RMS
-    float audioRMSMapped = ofClamp(audioRMS * 5, 0.0, 1.0);
+    // Compute audio centroid mapping to useful space
+    float centroidMapped = sqrt(ofMap(audioCentroid, 0, centroidMaxBucket, 0, 1, true)); // TODO: should we use sqrt here?
     
-    // Note: this is very dependent on the tempo of the music, would make a good
-    // parameter to allow a knob to vary. Or maybe set per scene;
-    float smoothingFactor = 0.05;
-    mpx += (centroidMapped - mpx) * smoothingFactor;
-    mpy += (audioRMSMapped - mpy) * smoothingFactor;
+    // Compute audio RMS mapping to useful space
+    float audioRMSMapped = ofClamp(audioRMS * rmsMultiple, 0.0, 1.0);
     
-    track(0, mpx);
-    track(1, mpy);
+    // Note: this is very dependent on the tempo of the music.
+    mpx += (centroidMapped - mpx) * mpxSmoothingFactor;
+    mpy += (audioRMSMapped - mpy) * mpySmoothingFactor;
+
     if (1) {
         char s[25];
         sprintf(s, "gi=%d", gi);

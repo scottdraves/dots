@@ -11,20 +11,28 @@ public:
     void draw();
     void keyPressed(int key);
     
-    ofParameterGroup parameters;
-    ofParameter<bool> wandering;
+    ofParameterGroup audioAnalysisParameters;
     ofParameter<float> fftDecayRate;
+    ofParameter<float> centroidMaxBucket;
+    ofParameter<float> rmsMultiple;
+    ofParameter<float> mpxSmoothingFactor, mpySmoothingFactor;
     
+    ofParameterGroup audioInputParameters;
     ofParameter<int> audioMode;
     vector<ofSoundDevice> soundDevices;
     int nSoundDevices;
     ofParameter<int> soundStreamDevice;
     
-    ofxPanel gui;
+    ofParameterGroup displayParameters;
+    ofParameter<bool> wandering;
+    
+    ofxPanel analysisGui, inputGui, displayGui;
     
     // To mirror from ofApp
     float frameRate;
     ofTexture* visuals;
     float *audioBuckets;
     int nAudioBuckets;
+    float mpx, mpy;
+    float audioCentroid, audioRMS;
 };

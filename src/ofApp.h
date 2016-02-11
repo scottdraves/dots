@@ -37,9 +37,6 @@ public:
     void initrc(long sed);
     int randomi(int n);
     
-    void track(int trk, double v);
-    
-    
     float 	counter;
     int wandering;
     int framecount;
@@ -58,7 +55,7 @@ public:
     flam3_genome *cpv;
     flam3_genome cp;
     int gi, gj;
-    float mpx, mpy;
+    float mpx, mpy, mpxSmoothingFactor, mpySmoothingFactor;
     float mmpx, mmpy;
     float speed;
     
@@ -74,7 +71,8 @@ public:
     int nFftBuckets;
     float* audioInput;
     float* fftOutput;
-    float audioRMS, smoothedAudioRMS;
+    float audioRMS, smoothedAudioRMS, rmsMultiple;
+    float audioCentroid, centroidMaxBucket;
     ofxFft* fft;
     float fftDecayRate;
     
