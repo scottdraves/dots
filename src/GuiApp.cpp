@@ -153,9 +153,10 @@ void GuiApp::draw() {
     displayGui.draw();
 }
 
+void GuiApp::handleKey(int key) {
+    // None for now
+}
 
 void GuiApp::keyPressed(int key) {
-    if (key == ' ') {
-        wandering.set(!wandering.get());
-    }
+    keyPresses.push(key);
 }

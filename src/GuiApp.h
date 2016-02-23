@@ -10,6 +10,7 @@ public:
     void update();
     void draw();
     void keyPressed(int key);
+    void handleKey(int key);
     
     ofParameterGroup audioAnalysisParameters;
     ofParameter<float> fftDecayRate;
@@ -35,4 +36,6 @@ public:
     int nAudioBuckets;
     float mpx, mpy;
     float audioCentroid, audioRMS;
+    
+    queue<int> keyPresses;
 };

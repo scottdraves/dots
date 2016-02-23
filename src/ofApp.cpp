@@ -8,7 +8,7 @@ void ofApp::setup(){
 
     counter = 0;
     nsamples = 25000;	seed = 0;
-    gi = 0;
+    genomeIdx = 0;
     gj = 0;
     transp = 60;
     ofSetWindowTitle("D0TS");
@@ -58,7 +58,7 @@ void ofApp::setup(){
         genebank = flam3_parse_from_file(in, inf, flam3_defaults_on, &ngenebank);
     }
     memset(&cp, 0, sizeof(flam3_genome));
-    flam3_copy(&cp, &cps[gi]);
+    flam3_copy(&cp, &cps[genomeIdx]);
 	   
     audioMode = AUDIO_MODE_MIC;
     ofSoundStreamListDevices();
@@ -89,6 +89,19 @@ void ofApp::setup(){
 void ofApp::update(){
     counter = counter + speed;
     
+    // Handle our keypresses
+    while (!keyPresses.empty()) {
+        handleKey(keyPresses.front());
+        keyPresses.pop();
+    }
+    
+    // Handle GUI keypresses
+    while (!gui->keyPresses.empty()) {
+        handleKey(gui->keyPresses.front());
+        gui->keyPresses.pop();
+    }
+    
+    // Copy data to gui
     gui->frameRate = ofGetFrameRate();
     gui->visuals = &visualsFbo.getTexture();
     gui->mpx = mpx;
@@ -96,6 +109,7 @@ void ofApp::update(){
     gui->audioCentroid = audioCentroid;
     gui->audioRMS = audioRMS;
     
+    // Copy data from gui
     wandering = gui->wandering;
     fftDecayRate = gui->fftDecayRate;
     rmsMultiple = gui->rmsMultiple;
@@ -164,7 +178,7 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels){
 }
 
 void ofApp::setFlameParameters() {
-    switch (gi) {
+    switch (genomeIdx) {
         case 0:
             cp.xform[4].var[5] = mpx;
             cp.xform[3].var[8] = mpy;
@@ -366,7 +380,7 @@ void ofApp::draw(){
 
     if (1) {
         char s[25];
-        sprintf(s, "gi=%d", gi);
+        sprintf(s, "gi=%d", genomeIdx);
         ofDrawBitmapString(s, 20, 100);
     }
     
@@ -470,28 +484,25 @@ void ofApp::draw(){
     visualsFbo.draw(0, 0);
 }
 
-
-//--------------------------------------------------------------
-void ofApp::keyPressed  (int key){
-    if (key == OF_KEY_LEFT) {
-        gi = (gi-1+ncps) % ncps;
-        flam3_copy(&cp, &cps[gi]);
+void ofApp::handleKey(int key) {
+    if (key == ' ') {
+        gui->wandering.set(!gui->wandering.get());
+    } else if (key == OF_KEY_LEFT) {
+        if (--genomeIdx < 0) genomeIdx = ncps;
+        flam3_copy(&cp, &cps[genomeIdx]);
     } else if (key == OF_KEY_RIGHT) {
-        gi = (gi+1) % ncps;
-        flam3_copy(&cp, &cps[gi]);
+        if (++genomeIdx >= ncps) genomeIdx = ncps;
+        flam3_copy(&cp, &cps[genomeIdx]);
     } else if (key == 'd') {
         gj = (gj+1) % ncps;
     } else if (key == 'a') {
         momode++;
     } else if (key == 's') {
-        audioMode++;
+        gui->audioMode.set(gui->audioMode.get() + 1);
         if (audioMode >= N_AUDIO_MODES)
             audioMode = 0;
         if (audioMode != AUDIO_MODE_MP3)
             mySound.stop();
-    } else if (key == ' ') {
-        // TODO: move entirely to GUI
-        wandering = !wandering;
     } else if (key == 'f') {
         ofToggleFullscreen();
         ofHideCursor();
@@ -528,8 +539,15 @@ void ofApp::keyPressed  (int key){
         mySound.setPosition(mySound.getPosition()-0.02);
     } else if (key == '8') {
         mySound.setPosition(mySound.getPosition()+0.02);
+    } else {
+        // Give the GUI a chance to handle the key if we don't know what it is
+        gui->handleKey(key);
     }
-    
+}
+
+//--------------------------------------------------------------
+void ofApp::keyPressed(int key){
+    keyPresses.push(key);
 }
 
 int ofApp::randomi(int n) {
@@ -550,16 +568,16 @@ void ofApp::killCurrent() {
         flam3_cross(&cps[parent0], &genebank[parent1], &result, CROSS_NOT_SPECIFIED, &rc, NULL);
     }
     flam3_copy(&cp, &result);
-    flam3_copy(&cps[gi], &result);
+    flam3_copy(&cps[genomeIdx], &result);
 }
 
 void ofApp::mateCurrent() {
     flam3_genome result;
     initrc(time(NULL));
     int parent1 = random()%ncps;
-    flam3_cross(&cps[gi], &cps[parent1], &result, CROSS_NOT_SPECIFIED, &rc, NULL);
+    flam3_cross(&cps[genomeIdx], &cps[parent1], &result, CROSS_NOT_SPECIFIED, &rc, NULL);
     flam3_copy(&cp, &result);
-    flam3_copy(&cps[gi], &result);
+    flam3_copy(&cps[genomeIdx], &result);
 }
 
 void ofApp::mutateCurrent() {
@@ -569,8 +587,8 @@ void ofApp::mutateCurrent() {
     for (int i = 0; i < flam3_nvariations; i++)
         ivars[i] = i;
     
-    flam3_mutate(&cps[gi], MUTATE_NOT_SPECIFIED, ivars, flam3_nvariations, 0, 0.2, &rc, NULL);
-    flam3_copy(&cp, &cps[gi]);
+    flam3_mutate(&cps[genomeIdx], MUTATE_NOT_SPECIFIED, ivars, flam3_nvariations, 0, 0.2, &rc, NULL);
+    flam3_copy(&cp, &cps[genomeIdx]);
 }
 
 void ofApp::initrc(long sed) {

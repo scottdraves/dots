@@ -36,6 +36,7 @@ public:
     void mutateCurrent();
     void initrc(long sed);
     int randomi(int n);
+    void handleKey(int key);
     
     float 	counter;
     int wandering;
@@ -54,7 +55,7 @@ public:
     flam3_genome *cps;
     flam3_genome *cpv;
     flam3_genome cp;
-    int gi, gj;
+    int genomeIdx, gj;
     float mpx, mpy, mpxSmoothingFactor, mpySmoothingFactor;
     float mmpx, mmpy;
     float speed;
@@ -77,10 +78,12 @@ public:
     float fftDecayRate;
     
     randctx rc;
-    
+
     // The GUI window
     shared_ptr<GuiApp> gui;
     ofFbo visualsFbo;
     shared_ptr<ofTexture> visuals;
+
+    queue<int> keyPresses;
 };
 
