@@ -15,16 +15,22 @@ void ofApp::setup(){
     samples= (double *) malloc(sizeof(double)*nsamples*8);
     parity = 0;
     framecount = 0;
+    fullscreen = 1;
+    momode = 1;
+
+    // GUI-displayed
     mpx = mpy = 0.0;
     mmpx = mmpy = 0.0;
+
+    // GUI-controlled
+    baseSpeed = 0.25;
+    rmsSpeedMult = 0;
     mpxSmoothingFactor = 0.4;
     mpySmoothingFactor = 0.1;
     centroidMaxBucket = 0.35;
     rmsMultiple = 5;
-    fullscreen = 1;
-    momode = 1;
-    speed = 0.25;
     wandering = 0;
+    
     ofHideCursor();
     
     visualsFbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA, 4);
@@ -87,7 +93,7 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    counter = counter + speed;
+    counter = counter + smoothedAudioRMS;
     
     // Handle our keypresses
     while (!keyPresses.empty()) {
@@ -116,6 +122,8 @@ void ofApp::update(){
     centroidMaxBucket = gui->centroidMaxBucket;
     mpxSmoothingFactor = gui->mpxSmoothingFactor;
     mpySmoothingFactor = gui->mpySmoothingFactor;
+    baseSpeed = gui->baseSpeed;
+    rmsSpeedMult = gui->rmsSpeedMult;
     
     if (audioMode != gui->audioMode) {
         audioMode = gui->audioMode;
@@ -325,7 +333,8 @@ void ofApp::draw(){
         }
         flam3_interpolate(cps, ncps, counter/ispeed, 0, &cp);
     } else {
-        flam3_rotate(&cp, 1.0+speed*10, flam3_inttype_log);
+        float speed = baseSpeed + smoothedAudioRMS * rmsSpeedMult;
+        flam3_rotate(&cp, speed, flam3_inttype_log);
     }
     
     if (prepare_precalc_flags2(&cp)) {
@@ -512,9 +521,9 @@ void ofApp::handleKey(int key) {
     } else if (key == OF_KEY_DOWN) {
         killCurrent();
     } else if (key == ',') {
-        speed *= 0.80;
+        gui->baseSpeed *= 0.80;
     } else if (key == '.') {
-        speed *= 1.2;
+        gui->baseSpeed *= 1.2;
     } else if (key == '0') {
         mySound.setPosition(mySound.getPosition()-0.02);
         ofSoundStreamSetup(0, 1, this);

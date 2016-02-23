@@ -58,7 +58,7 @@ public:
     int genomeIdx, gj;
     float mpx, mpy, mpxSmoothingFactor, mpySmoothingFactor;
     float mmpx, mmpy;
-    float speed;
+    float baseSpeed, rmsSpeedMult;
     
     
     float * left;

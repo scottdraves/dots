@@ -26,6 +26,7 @@ public:
     
     ofParameterGroup displayParameters;
     ofParameter<bool> wandering;
+    ofParameter<float> baseSpeed, rmsSpeedMult;
     
     ofxPanel analysisGui, inputGui, displayGui;
     

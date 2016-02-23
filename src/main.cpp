@@ -13,7 +13,7 @@ int main( ){
     settings.resizable = true;
     shared_ptr<ofAppBaseWindow> mainWindow = ofCreateWindow(settings);
     
-    settings.width = 600;
+    settings.width = 650;
     settings.height = 600;
     settings.setPosition(ofVec2f(0,0));
     settings.resizable = true;
