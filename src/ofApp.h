@@ -42,6 +42,7 @@ public:
     int wandering;
     int framecount;
     int fullscreen;
+    float frameClearSpeed;
     int nsamples;
     double *samples;
     int parity;
@@ -60,7 +61,8 @@ public:
     float mmpx, mmpy;
     float baseSpeed, rmsSpeedMult;
     
-    
+    float particleAlpha;
+
     float * left;
     float * right;
     

@@ -21,6 +21,8 @@ void GuiApp::setup(){
     
     displayParameters.setName("Display");
     displayParameters.add(wandering.set("wandering", false));
+    displayParameters.add(clearSpeed.set("clearSpeed", 50, 0, 255));
+    displayParameters.add(particleAlpha.set("particleAlpha", 50, 0, 255));
     displayParameters.add(baseSpeed.set("baseSpeed", 0, 0, 10));
     displayParameters.add(rmsSpeedMult.set("rmsSpeedMult", 30, 0, 100));
     displayGui.setup(displayParameters);

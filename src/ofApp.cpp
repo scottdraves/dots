@@ -5,6 +5,7 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofBackground(0);
+//    ofSetFrameRate(60);
 
     counter = 0;
     nsamples = 25000;	seed = 0;
@@ -30,6 +31,7 @@ void ofApp::setup(){
     centroidMaxBucket = 0.35;
     rmsMultiple = 5;
     wandering = 0;
+    frameClearSpeed = 50;
     
     ofHideCursor();
     
@@ -93,7 +95,7 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    counter = counter + smoothedAudioRMS;
+    counter += baseSpeed;
     
     // Handle our keypresses
     while (!keyPresses.empty()) {
@@ -124,6 +126,8 @@ void ofApp::update(){
     mpySmoothingFactor = gui->mpySmoothingFactor;
     baseSpeed = gui->baseSpeed;
     rmsSpeedMult = gui->rmsSpeedMult;
+    frameClearSpeed = gui->clearSpeed;
+    particleAlpha = gui->particleAlpha;
     
     if (audioMode != gui->audioMode) {
         audioMode = gui->audioMode;
@@ -302,7 +306,10 @@ void ofApp::setFlameParameters() {
 //--------------------------------------------------------------
 void ofApp::draw(){
     visualsFbo.begin();
-    ofBackground(0, 255);
+    ofSetColor(0, frameClearSpeed);
+    ofFill();
+    ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
+
     ofSetColor(255, 255);
     
     ofEnableAlphaBlending();
@@ -325,12 +332,13 @@ void ofApp::draw(){
     initrc(seed);
     
     if (wandering) {
-        double ispeed = 80.0;
+        double ispeed = 800.0;
         if (counter > (ncps * ispeed))
             counter = 0;
         for (int i = 0; i < ncps; i++) {
             cps[i].time = (double) i;
         }
+        cout << counter << endl;
         flam3_interpolate(cps, ncps, counter/ispeed, 0, &cp);
     } else {
         float speed = baseSpeed + smoothedAudioRMS * rmsSpeedMult;
@@ -414,9 +422,9 @@ void ofApp::draw(){
         } else {
             w *= 2 * mpy;
         }
-        
+
         ///if (zzz) fprintf(stderr, "sp[]=%f w=%f mpy_sp=%d\n", sp[mpy_sp], w, mpy_sp);
-        double new_transp = 60.0;
+        double new_transp = particleAlpha;
         if (0) {
             new_transp = 40.0;
             if (w < 3)

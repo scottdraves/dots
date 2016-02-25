@@ -26,6 +26,8 @@ public:
     
     ofParameterGroup displayParameters;
     ofParameter<bool> wandering;
+    ofParameter<float> clearSpeed;
+    ofParameter<float> particleAlpha;
     ofParameter<float> baseSpeed, rmsSpeedMult;
     
     ofxPanel analysisGui, inputGui, displayGui;
