@@ -325,8 +325,7 @@ void ofApp::draw(){
     } else {
         memset(fftOutput, 0, sizeof(float) * nFftBuckets);
     }
-    
-    int cohere = 1;
+
     double t0, t1, t2;
     
     initrc(seed);
@@ -402,6 +401,11 @@ void ofApp::draw(){
     }
     
     ofFill();
+    int max_line_length = 20000 + 150000 * mpy;  // good parameter to vary, should be connected to screen size too.
+
+    ofVec2f cpCenter(cp.center[0], cp.center[1]);
+    ofVec2f screenCenter = ofVec2f(ofGetWidth()/2.0, ofGetHeight()/2.0);
+
     double sum_w = 0.0;
     for (int i = 0; i < nsamples-1; i++) {
         int c = (int)(s0[4*i+2] * CMAP_SIZE);
@@ -409,8 +413,8 @@ void ofApp::draw(){
         else if (c > (CMAP_SIZE-1)) c = CMAP_SIZE-1;
         
         double *cv = cp.palette[c].color;
-        float w = 1.0 + c/32.0;
-        w = (w - 1) * 3;
+        float radius = 1.0 + c/32.0;
+        radius = (radius - 1) * 3;
         
         //int zzz = flam3_random_isaac_01(&rc) < 0.0001;
         ///if (zzz) fprintf(stderr, "w=%f mpy=%f\n", w, mpy);
@@ -418,19 +422,19 @@ void ofApp::draw(){
         if (mpy_sp < 0) mpy_sp = 0;
         if (mpy_sp >= nFftBuckets) mpy_sp = nFftBuckets-1;
         if (gj&1) {
-            w *= 10 * (0.0 + sp[(int)(nFftBuckets/5*i/(float)nsamples)]) * (0.5 + mpy);
+            radius *= 10 * (0.0 + sp[(int)(nFftBuckets/5*i/(float)nsamples)]) * (0.5 + mpy);
         } else {
-            w *= 2 * mpy;
+            radius *= 2 * mpy;
         }
 
         ///if (zzz) fprintf(stderr, "sp[]=%f w=%f mpy_sp=%d\n", sp[mpy_sp], w, mpy_sp);
         double new_transp = particleAlpha;
         if (0) {
             new_transp = 40.0;
-            if (w < 3)
+            if (radius < 3)
                 new_transp = 255.0;
         } else if (0) {
-            new_transp =  255.0 - 5*w;
+            new_transp =  255.0 - 5*radius;
         } else if (0) {
             new_transp =  255.0;
         }
@@ -439,48 +443,22 @@ void ofApp::draw(){
         if (new_transp > 255.0)
             new_transp = 255.0;
         ofSetColor(255*cv[0],255*cv[1],255*cv[2], new_transp);
-        
-        int max_line_length = 20000 + 150000 * mpy;  // good parameter to vary, should be connected to screen size too.
-        
-        double a0 = s0[4*i] - cp.center[0];
-        double a1 = s0[4*i+1] - cp.center[1];
-        double a2 = s1[4*i] - cp.center[0];
-        double a3 = s1[4*i+1] - cp.center[1];
-        double mw = 100 * c;
-        a0 *= cp.pixels_per_unit;
-        a1 *= cp.pixels_per_unit;
-        a2 *= cp.pixels_per_unit;
-        a3 *= cp.pixels_per_unit;
-        a0 += 720;
-        a1 += 450;
-        a2 += 720;
-        a3 += 450;
-        if (cohere) {
-            // w = (w-1)*3;
-            if (momode&1) {
-                ofCircle(a0,a1,w);
-                ofCircle(a2,a3,w);
-            } else {
-                float w2 = w/2;
-                ofRect(a0-w2,a1-w2,w,w);
-                ofRect(a2-w2,a3-w2,w,w);
-            }
-            if ((a0-a2)*(a0-a2) + (a1-a3)*(a1-a3) < max_line_length) {
-                ofSetLineWidth(w);
-                ofLine(a0, a1, a2, a3);
-            }
-            
-        } else if (0) {
-            w = (w-1)*10;
-            ofCircle(a0,a1,w);
-            ofCircle(a2,a3,w);
-        } else {
-            w = (w-1)*8;
-            ofRect(a0-w/2,a1-w/2,w,w);
-            ofRect(a2-w/2,a3-w/2,w,w);
+
+        ofVec2f pt1 = ofVec2f(s0[4*i], s0[4*i+1]);
+        ofVec2f pt2 = ofVec2f(s1[4*i], s1[4*i+1]);
+        ofVec2f pt1Screen = (pt1 - cpCenter) * cp.pixels_per_unit + screenCenter;
+        ofVec2f pt2Screen = (pt2 - cpCenter) * cp.pixels_per_unit + screenCenter;
+
+        ofDrawCircle(pt1Screen, radius);
+        ofDrawCircle(pt2Screen, radius);
+
+        if (pt1Screen.squareDistance(pt2Screen) < max_line_length) {
+            ofSetLineWidth(radius);
+            ofDrawLine(pt1Screen, pt2Screen);
         }
-        
-        if (!(i&63) && (ofGetElapsedTimef() - startTime) > 1/30.0)
+
+        // TODO: reimplement
+        if (!(i&63) && (ofGetElapsedTimef() - startTime) > 1/60.0)
             break;
     }
     parity = !parity;
