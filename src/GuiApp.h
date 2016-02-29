@@ -28,12 +28,14 @@ public:
     ofParameter<bool> wandering;
     ofParameter<float> clearSpeed;
     ofParameter<float> particleAlpha;
+    ofParameter<float> basePointRadius;
     ofParameter<float> baseSpeed, rmsSpeedMult;
+    ofParameter<int> maxPixels, drawMode;
     
     ofxPanel analysisGui, inputGui, displayGui;
     
     // To mirror from ofApp
-    float frameRate;
+    float frameRate, pctParticles;
     ofTexture* visuals;
     float *audioBuckets;
     int nAudioBuckets;

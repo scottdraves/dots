@@ -11,6 +11,7 @@ int main( ){
     settings.height = 720;
     settings.setPosition(ofVec2f(300,0));
     settings.resizable = true;
+    settings.setGLVersion(3, 3);
     shared_ptr<ofAppBaseWindow> mainWindow = ofCreateWindow(settings);
     
     settings.width = 650;

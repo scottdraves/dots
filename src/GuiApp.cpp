@@ -10,6 +10,14 @@ void GuiApp::setup(){
     audioInputParameters.add(audioMode.set("audioMode", AUDIO_MODE_MIC, 0, N_AUDIO_MODES-1));
     audioInputParameters.add(soundStreamDevice.set("soundStreamDevice", 0, 0, nSoundDevices-1));
     inputGui.setup(audioInputParameters);
+
+    // Auto select loopback if available
+    for (int i = 0; i < soundDevices.size(); ++i) {
+        ofSoundDevice &sd = soundDevices[i];
+        if (sd.name.find("Soundflower") != string::npos && sd.name.find("2ch") != string::npos) {
+            soundStreamDevice.set(i);
+        }
+    }
     
     audioAnalysisParameters.setName("Audio Analysis");
     audioAnalysisParameters.add(fftDecayRate.set("fftDecayRate", 0.9, 0, 1));
@@ -23,8 +31,11 @@ void GuiApp::setup(){
     displayParameters.add(wandering.set("wandering", false));
     displayParameters.add(clearSpeed.set("clearSpeed", 50, 0, 255));
     displayParameters.add(particleAlpha.set("particleAlpha", 50, 0, 255));
+    displayParameters.add(basePointRadius.set("basePointRadius", 10, 0, 50));
     displayParameters.add(baseSpeed.set("baseSpeed", 0, 0, 10));
     displayParameters.add(rmsSpeedMult.set("rmsSpeedMult", 30, 0, 100));
+    displayParameters.add(maxPixels.set("maxPixels", 5000000, 100000, 10000000));
+    displayParameters.add(drawMode.set("drawMode", 0, 0, 2));
     displayGui.setup(displayParameters);
     
     inputGui.setPosition(10, 450);
@@ -35,6 +46,7 @@ void GuiApp::setup(){
     audioBuckets = NULL;
     nAudioBuckets = 0;
     frameRate = 0;
+    pctParticles = 0;
     mpx = 0;
     mpy = 0;
     
@@ -66,8 +78,14 @@ void GuiApp::draw() {
     if (frameRate) {
         sprintf(s, "%.2f fps", frameRate);
         ofDrawBitmapString(s, 10, 15);
-        ofTranslate(0, 17);
     }
+
+    if (pctParticles) {
+        sprintf(s, "%d%% particles", (int)(pctParticles*100));
+        ofDrawBitmapString(s, 150, 15);
+    }
+
+    ofTranslate(0, 17);
 
     if (visuals) {
         ofTranslate(0, margin);

@@ -5,6 +5,7 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofBackground(0);
+    ofSetVerticalSync(false);
 //    ofSetFrameRate(60);
 
     counter = 0;
@@ -91,6 +92,78 @@ void ofApp::setup(){
     
     gui->nAudioBuckets = nFftBuckets;
     gui->audioBuckets = fftOutput;
+
+
+    ofSetLogLevel(OF_LOG_VERBOSE);
+
+    // We're going to use a shader to draw point sizes,
+    // thanks openGL for making this a mess
+    glEnable(GL_POINT_SIZE);
+    glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+    glEnable(GL_VERTEX_PROGRAM_POINT_SIZE_ARB);
+    glEnable(GL_PROGRAM_POINT_SIZE_EXT);
+    glEnable(GL_PROGRAM_POINT_SIZE_ARB);
+    glEnable(GL_PROGRAM_POINT_SIZE);
+
+    simplePointShader.bindDefaults();
+    simplePointShader.load("pointShader");
+
+    pointShader.setGeometryInputType(GL_LINES);
+    pointShader.setGeometryOutputType(GL_TRIANGLE_STRIP);
+    pointShader.setGeometryOutputCount(12);
+    pointShader.bindDefaults();
+    pointShader.load("sh.vert", "sh.frag", "sh.geom");
+
+    maxParticleRadius = 300;
+    glGetFloatv(GL_POINT_SIZE_MAX, &maxParticleRadius);
+    cout << "Max particle radius: " << maxParticleRadius << endl;
+
+    float lineWidthRange[2];
+    glGetFloatv(GL_LINE_WIDTH_RANGE, lineWidthRange);
+    cout << "Line width range: " << lineWidthRange[0] << "-" << lineWidthRange[1] << endl;
+
+    pointRadii = (float *)malloc(sizeof(float) * nsamples * 2);
+    lineWidths = (float *)malloc(sizeof(float) * nsamples * 2);
+    shouldDrawLine = (bool *)malloc(sizeof(float) * nsamples);
+
+    lines.setMode(OF_PRIMITIVE_LINES);
+    lines.setUsage(GL_STREAM_DRAW);
+    points.setMode(OF_PRIMITIVE_POINTS);
+    points.setUsage(GL_STREAM_DRAW);
+
+    for (int i = 0; i < nsamples; ++i) {
+        points.addVertex(ofVec3f());
+        points.addColor(ofFloatColor());
+        points.addVertex(ofVec3f());
+        points.addColor(ofFloatColor());
+
+        lines.addVertex(ofVec3f());
+        lines.addColor(ofFloatColor());
+        lines.addVertex(ofVec3f());
+        lines.addColor(ofFloatColor());
+
+        pointRadii[2*i] = 0;
+        pointRadii[2*i+1] = 0;
+        lineWidths[2*i] = 0;
+        lineWidths[2*i+1] = 0;
+
+        shouldDrawLine[i] = true;
+    }
+
+    int loc;
+    pointShader.printActiveAttributes();
+    pointShader.begin();
+        loc = pointShader.getAttributeLocation("pointRadius");
+        lines.getVbo().setAttributeData(loc, pointRadii, 1, nsamples*2, GL_STREAM_DRAW);
+        loc = pointShader.getAttributeLocation("lineWidth");
+        lines.getVbo().setAttributeData(loc, lineWidths, 1, nsamples*2, GL_STREAM_DRAW);
+    pointShader.end();
+
+    simplePointShader.printActiveAttributes();
+    simplePointShader.begin();
+        loc = simplePointShader.getAttributeLocation("pointRadius");
+        points.getVbo().setAttributeData(loc, pointRadii, 1, nsamples*2, GL_STREAM_DRAW);
+    simplePointShader.end();
 }
 
 //--------------------------------------------------------------
@@ -128,6 +201,7 @@ void ofApp::update(){
     rmsSpeedMult = gui->rmsSpeedMult;
     frameClearSpeed = gui->clearSpeed;
     particleAlpha = gui->particleAlpha;
+    basePointRadius = gui->basePointRadius;
     
     if (audioMode != gui->audioMode) {
         audioMode = gui->audioMode;
@@ -311,7 +385,6 @@ void ofApp::draw(){
     ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
 
     ofSetColor(255, 255);
-    
     ofEnableAlphaBlending();
     
     float startTime = ofGetElapsedTimef();
@@ -401,92 +474,161 @@ void ofApp::draw(){
     }
     
     ofFill();
-    int max_line_length = 20000 + 150000 * mpy;  // good parameter to vary, should be connected to screen size too.
+    int max_line_length = 100 + ofGetWidth()/3 * mpy;  // good parameter to vary, should be connected to screen size too.
 
-    ofVec2f cpCenter(cp.center[0], cp.center[1]);
-    ofVec2f screenCenter = ofVec2f(ofGetWidth()/2.0, ofGetHeight()/2.0);
+    ofVec3f cpCenter(cp.center[0], cp.center[1], 0);
+    ofVec3f screenCenter(ofGetWidth()/2.0, ofGetHeight()/2.0, 0);
 
-    double sum_w = 0.0;
+    double totDotPixels = 0, totLinePixels = 0;
     for (int i = 0; i < nsamples-1; i++) {
-        int c = (int)(s0[4*i+2] * CMAP_SIZE);
-        if (c < 0) c = 0;
-        else if (c > (CMAP_SIZE-1)) c = CMAP_SIZE-1;
-        
-        double *cv = cp.palette[c].color;
-        float radius = 1.0 + c/32.0;
-        radius = (radius - 1) * 3;
-        
-        //int zzz = flam3_random_isaac_01(&rc) < 0.0001;
-        ///if (zzz) fprintf(stderr, "w=%f mpy=%f\n", w, mpy);
-        int mpy_sp = mpy * nFftBuckets;
-        if (mpy_sp < 0) mpy_sp = 0;
-        if (mpy_sp >= nFftBuckets) mpy_sp = nFftBuckets-1;
-        if (gj&1) {
-            radius *= 10 * (0.0 + sp[(int)(nFftBuckets/5*i/(float)nsamples)]) * (0.5 + mpy);
-        } else {
-            radius *= 2 * mpy;
+        // Radius depends on mpy
+        float radius = basePointRadius * mpy;
+        if (gj % 2 == 1) {
+            int bucket = ofMap(i, 0, nsamples-1, 0, nFftBuckets/5);
+            radius *= 10 * sp[bucket];
         }
+        radius = ofClamp(radius, 0, maxParticleRadius);
 
-        ///if (zzz) fprintf(stderr, "sp[]=%f w=%f mpy_sp=%d\n", sp[mpy_sp], w, mpy_sp);
-        double new_transp = particleAlpha;
-        if (0) {
-            new_transp = 40.0;
-            if (radius < 3)
-                new_transp = 255.0;
-        } else if (0) {
-            new_transp =  255.0 - 5*radius;
-        } else if (0) {
-            new_transp =  255.0;
-        }
-        if (new_transp < 0.0)
-            new_transp = 0.0;
-        if (new_transp > 255.0)
-            new_transp = 255.0;
-        ofSetColor(255*cv[0],255*cv[1],255*cv[2], new_transp);
+        int palleteIdx = (int)(s0[4*i+2] * CMAP_SIZE);
+        palleteIdx = ofClamp(palleteIdx, 0, CMAP_SIZE-1);
+        double *cv = cp.palette[palleteIdx].color;
+        ofColor color(255*cv[0],255*cv[1],255*cv[2], particleAlpha);
 
-        ofVec2f pt1 = ofVec2f(s0[4*i], s0[4*i+1]);
-        ofVec2f pt2 = ofVec2f(s1[4*i], s1[4*i+1]);
-        ofVec2f pt1Screen = (pt1 - cpCenter) * cp.pixels_per_unit + screenCenter;
-        ofVec2f pt2Screen = (pt2 - cpCenter) * cp.pixels_per_unit + screenCenter;
+        ofVec3f pt1(s0[4*i], s0[4*i+1], 0.0);
+        ofVec3f pt2(s1[4*i], s1[4*i+1], 0.0);
+        ofVec3f pt1Screen = (pt1 - cpCenter) * cp.pixels_per_unit + screenCenter;
+        ofVec3f pt2Screen = (pt2 - cpCenter) * cp.pixels_per_unit + screenCenter;
 
-        ofDrawCircle(pt1Screen, radius);
-        ofDrawCircle(pt2Screen, radius);
+        points.setVertex(2*i, pt1Screen);
+        points.setVertex(2*i+1, pt2Screen);
+        points.setColor(2*i, color);
+        points.setColor(2*i+1, color);
+        totDotPixels += radius * radius;
 
-        if (pt1Screen.squareDistance(pt2Screen) < max_line_length) {
-            ofSetLineWidth(radius);
-            ofDrawLine(pt1Screen, pt2Screen);
-        }
+        pointRadii[2*i] = radius;
+        pointRadii[2*i+1] = radius;
 
-        // TODO: reimplement
-        if (!(i&63) && (ofGetElapsedTimef() - startTime) > 1/60.0)
-            break;
+        lines.setVertex(2*i, pt1Screen);
+        lines.setVertex(2*i+1, pt2Screen);
+        lines.setColor(2*i, color);
+        lines.setColor(2*i+1, color);
+
+        float lineWidth = ofClamp(radius/4, 0, 2);
+        lineWidths[2*i] = lineWidth;
+        lineWidths[2*i+1] = lineWidth;
+
+        float dist = pt1Screen.distance(pt2Screen);
+        shouldDrawLine[i] = dist < max_line_length;
+        totLinePixels += shouldDrawLine[i] ? dist * lineWidth : 0;
     }
-    parity = !parity;
-    /*
-     ofNoFill();
-     ofSetLineWidth(1);
-     // Curve from 2nd to 3rd point.
-     ofCurve(10, 10,
-     100, 10,
-     100, 100,
-     10, 100);
-     */
-        
+
+    const float maxDotPixels = gui->maxPixels; // 20 million
+    const float maxLinePixels = gui->maxPixels; // 10 million
+    const int frameNum = ofGetFrameNum();
+    const int random = ofRandomuf() * 100000;
+    const float pctDotsToSave = ofClamp(totDotPixels, 0, maxDotPixels) / totDotPixels;
+    const float pctLinesToSave = ofClamp(totLinePixels, 0, maxLinePixels) / totLinePixels;
+
+    gui->pctParticles = pctDotsToSave;
+
+    const vector<ofVec3f> &verts = lines.getVertices();
+    const vector<ofFloatColor> &colors = lines.getColors();
+
+    for (int i = 0; i < nsamples-1; i++) {
+        // Discard a bunch of particles
+        if (((i+frameNum) % 1000) > pctDotsToSave * 1000) {
+            pointRadii[2*i] = 0;
+            pointRadii[2*i+1] = 0;
+            shouldDrawLine[i] = false;
+        }
+
+        if (shouldDrawLine[i] && ((i+frameNum) % 1000) > pctLinesToSave * 1000) {
+            shouldDrawLine[i] = false;
+        }
+
+        if (!shouldDrawLine[i]) {
+            lineWidths[2*i] = 0;
+            lineWidths[2*i+1] = 0;
+        }
+
+        // For old time's sake, here's the oF naive code
+        if (gui->drawMode == 2) {
+            if (pointRadii[2*i] > 0.01) {
+                ofSetColor(colors[2*i]);
+                if (shouldDrawLine[2*i]) {
+                    ofSetLineWidth(pointRadii[2*i]);
+                    ofDrawLine(verts[2*i], verts[2*i+1]);
+                }
+                ofDrawCircle(verts[2*i], pointRadii[2*i]);
+                ofDrawCircle(verts[2*i+1], pointRadii[2*i+1]);
+            }
+        }
+    }
+
+
+    // OLD: immediate-mode code
+//    for (int i = 0; i < verts.size(); ++i) {
+//        if (pointSizes[i] < 0.01) continue;
+//        glColor4f(colors[i].r, colors[i].g, colors[i].b, colors[i].a);
+//
+//        if (shouldDrawLine[i]) {
+//            glLineWidth(ofClamp(pointSizes[i], 0, 2.0));
+//            glBegin(GL_LINES);
+//                glVertex3f(verts[i].x, verts[i].y, -0.1);
+//                glVertex3f(prevVerts[i].x, prevVerts[i].y, -0.1);
+////                glVertex2f(verts[i].x, verts[i].y);
+////                glVertex2f(prevVerts[i].x, prevVerts[i].y);
+//            glEnd();
+//        }
+//
+//        glPointSize(pointSizes[i]);
+//        glBegin(GL_POINTS);
+//            glVertex3f(verts[i].x, verts[i].y, -0.1);
+//            glVertex3f(prevVerts[i].x, prevVerts[i].y, -0.1);
+//        glEnd();
+//    }
+
+    int loc;
+    if (gui->drawMode == 0) {
+        pointShader.begin();
+            pointShader.setUniform2f("screen", ofGetWidth(), ofGetHeight());
+
+            loc = pointShader.getAttributeLocation("pointRadius");
+            lines.getVbo().updateAttributeData(loc, pointRadii, nsamples*2);
+            loc = pointShader.getAttributeLocation("lineWidth");
+            lines.getVbo().updateAttributeData(loc, lineWidths, nsamples*2);
+
+            lines.draw();
+        pointShader.end();
+    } else if (gui->drawMode == 1) {
+        simplePointShader.begin();
+            loc = simplePointShader.getAttributeLocation("pointRadius");
+            points.getVbo().updateAttributeData(loc, pointRadii, nsamples*2);
+            points.draw();
+        simplePointShader.end();
+        lines.draw();
+    }
+
+    // Force finish rendering - just for better profiling
+    glFinish();
+
     ofClearAlpha();
     visualsFbo.end();
 
     ofSetColor(255);
     visualsFbo.draw(0, 0);
+
+    parity = !parity;
 }
 
 void ofApp::handleKey(int key) {
     if (key == ' ') {
         gui->wandering.set(!gui->wandering.get());
     } else if (key == OF_KEY_LEFT) {
-        if (--genomeIdx < 0) genomeIdx = ncps;
+        if (--genomeIdx < 0) genomeIdx = ncps-1;
         flam3_copy(&cp, &cps[genomeIdx]);
     } else if (key == OF_KEY_RIGHT) {
-        if (++genomeIdx >= ncps) genomeIdx = ncps;
+        if (++genomeIdx >= ncps) genomeIdx = 0;
         flam3_copy(&cp, &cps[genomeIdx]);
     } else if (key == 'd') {
         gj = (gj+1) % ncps;

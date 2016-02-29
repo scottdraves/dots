@@ -60,8 +60,15 @@ public:
     float mpx, mpy, mpxSmoothingFactor, mpySmoothingFactor;
     float mmpx, mmpy;
     float baseSpeed, rmsSpeedMult;
+
+    ofShader pointShader, simplePointShader;
+
+    ofVboMesh lines, linesBuf, points;
+    float *pointRadii, *lineWidths, *pointRadiiBuf, *lineWidthsBuf;
+    bool *shouldDrawLine;
     
-    float particleAlpha;
+    float particleAlpha, basePointRadius;
+    float maxParticleRadius; // determined by GL sometimes
 
     float * left;
     float * right;
@@ -80,6 +87,8 @@ public:
     float fftDecayRate;
     
     randctx rc;
+
+    ofEasyCam cam;
 
     // The GUI window
     shared_ptr<GuiApp> gui;

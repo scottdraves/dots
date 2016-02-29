@@ -124,6 +124,20 @@
 		71D2D0851C4D6D1100F9113F /* kiss_fft.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = kiss_fft.h; sourceTree = "<group>"; };
 		71D2D0861C4D6D1100F9113F /* kiss_fftr.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = kiss_fftr.c; sourceTree = "<group>"; };
 		71D2D0871C4D6D1100F9113F /* kiss_fftr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = kiss_fftr.h; sourceTree = "<group>"; };
+		71D8215D1C80E2B800EA6CBB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		71D8215F1C80E2B800EA6CBB /* 01 - Steve McQueen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "01 - Steve McQueen.mp3"; sourceTree = "<group>"; };
+		71D821601C80E2B800EA6CBB /* 08 once upon the sea of blissful awareness (esionjim rmx).mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "08 once upon the sea of blissful awareness (esionjim rmx).mp3"; sourceTree = "<group>"; };
+		71D821611C80E2B800EA6CBB /* db120c10-01-Sonata No 1 in G Minor BWV 1001 Adagio.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "db120c10-01-Sonata No 1 in G Minor BWV 1001 Adagio.mp3"; sourceTree = "<group>"; };
+		71D821621C80E2B800EA6CBB /* no_ordinary_window-youtube.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "no_ordinary_window-youtube.mp3"; sourceTree = "<group>"; };
+		71D821631C80E2B800EA6CBB /* skrillex_bangarang.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = skrillex_bangarang.mp3; sourceTree = "<group>"; };
+		71D821641C80E2B800EA6CBB /* genebank2.flam3 */ = {isa = PBXFileReference; lastKnownFileType = text; path = genebank2.flam3; sourceTree = "<group>"; };
+		71D821651C80E2B800EA6CBB /* live.flam3 */ = {isa = PBXFileReference; lastKnownFileType = text; path = live.flam3; sourceTree = "<group>"; };
+		71D821661C80E2B800EA6CBB /* settings.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = settings.xml; sourceTree = "<group>"; };
+		71D821671C80E2C400EA6CBB /* pointShader.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = pointShader.frag; sourceTree = "<group>"; };
+		71D821681C80E2CD00EA6CBB /* pointShader.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = pointShader.vert; sourceTree = "<group>"; };
+		71E4A2A91C825F140074EA5B /* sh.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sh.geom; sourceTree = "<group>"; };
+		71E4A2AA1C825F380074EA5B /* sh.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sh.vert; sourceTree = "<group>"; };
+		71E4A2AB1C825F5F0074EA5B /* sh.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sh.frag; sourceTree = "<group>"; };
 		71F4F6751C57B1BA007709A9 /* appConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appConstants.h; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E4B69B5B0A3A1756003C02F2 /* dotsLocalDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dotsLocalDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -296,6 +310,36 @@
 			path = kiss;
 			sourceTree = "<group>";
 		};
+		71D8215C1C80E2B800EA6CBB /* data */ = {
+			isa = PBXGroup;
+			children = (
+				71D8215D1C80E2B800EA6CBB /* .gitkeep */,
+				71D8215E1C80E2B800EA6CBB /* audio */,
+				71D821641C80E2B800EA6CBB /* genebank2.flam3 */,
+				71D821651C80E2B800EA6CBB /* live.flam3 */,
+				71D821661C80E2B800EA6CBB /* settings.xml */,
+				71D821671C80E2C400EA6CBB /* pointShader.frag */,
+				71D821681C80E2CD00EA6CBB /* pointShader.vert */,
+				71E4A2A91C825F140074EA5B /* sh.geom */,
+				71E4A2AA1C825F380074EA5B /* sh.vert */,
+				71E4A2AB1C825F5F0074EA5B /* sh.frag */,
+			);
+			name = data;
+			path = bin/data;
+			sourceTree = "<group>";
+		};
+		71D8215E1C80E2B800EA6CBB /* audio */ = {
+			isa = PBXGroup;
+			children = (
+				71D8215F1C80E2B800EA6CBB /* 01 - Steve McQueen.mp3 */,
+				71D821601C80E2B800EA6CBB /* 08 once upon the sea of blissful awareness (esionjim rmx).mp3 */,
+				71D821611C80E2B800EA6CBB /* db120c10-01-Sonata No 1 in G Minor BWV 1001 Adagio.mp3 */,
+				71D821621C80E2B800EA6CBB /* no_ordinary_window-youtube.mp3 */,
+				71D821631C80E2B800EA6CBB /* skrillex_bangarang.mp3 */,
+			);
+			path = audio;
+			sourceTree = "<group>";
+		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
@@ -320,6 +364,7 @@
 				711EDDAD1C2C65F500D4FA8A /* CoreAudio.framework */,
 				E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */,
 				E4EB6923138AFD0F00A09F29 /* Project.xcconfig */,
+				71D8215C1C80E2B800EA6CBB /* data */,
 				E4B69E1C0A3A1BDC003C02F2 /* src */,
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
 				BB4B014C10F69532006C3DED /* addons */,
