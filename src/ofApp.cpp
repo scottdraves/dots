@@ -472,6 +472,7 @@ void ofApp::draw(){
 
     ofVec3f cpCenter(cp.center[0], cp.center[1], 0);
     ofVec3f screenCenter(ofGetWidth()/2.0, ofGetHeight()/2.0, 0);
+    float screenScale = ofGetWidth() / 720.0;
 
     double totDotPixels = 0, totLinePixels = 0;
     for (int i = 0; i < nsamples-1; i++) {
@@ -491,8 +492,8 @@ void ofApp::draw(){
 
         ofVec3f pt1(s0[4*i], s0[4*i+1], 0.0);
         ofVec3f pt2(s1[4*i], s1[4*i+1], 0.0);
-        ofVec3f pt1Screen = (pt1 - cpCenter) * cp.pixels_per_unit + screenCenter;
-        ofVec3f pt2Screen = (pt2 - cpCenter) * cp.pixels_per_unit + screenCenter;
+        ofVec3f pt1Screen = (pt1 - cpCenter) * cp.pixels_per_unit * screenScale + screenCenter;
+        ofVec3f pt2Screen = (pt2 - cpCenter) * cp.pixels_per_unit * screenScale + screenCenter;
 
         points.setVertex(2*i, pt1Screen);
         points.setVertex(2*i+1, pt2Screen);
