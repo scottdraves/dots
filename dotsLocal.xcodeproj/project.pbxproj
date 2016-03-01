@@ -132,7 +132,6 @@
 		71D821631C80E2B800EA6CBB /* skrillex_bangarang.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = skrillex_bangarang.mp3; sourceTree = "<group>"; };
 		71D821641C80E2B800EA6CBB /* genebank2.flam3 */ = {isa = PBXFileReference; lastKnownFileType = text; path = genebank2.flam3; sourceTree = "<group>"; };
 		71D821651C80E2B800EA6CBB /* live.flam3 */ = {isa = PBXFileReference; lastKnownFileType = text; path = live.flam3; sourceTree = "<group>"; };
-		71D821661C80E2B800EA6CBB /* settings.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = settings.xml; sourceTree = "<group>"; };
 		71D821671C80E2C400EA6CBB /* simplePointShader.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = simplePointShader.frag; sourceTree = "<group>"; };
 		71D821681C80E2CD00EA6CBB /* simplePointShader.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = simplePointShader.vert; sourceTree = "<group>"; };
 		71E4A2A91C825F140074EA5B /* billboardShader.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = billboardShader.geom; sourceTree = "<group>"; };
@@ -317,7 +316,6 @@
 				71D8215E1C80E2B800EA6CBB /* audio */,
 				71D821641C80E2B800EA6CBB /* genebank2.flam3 */,
 				71D821651C80E2B800EA6CBB /* live.flam3 */,
-				71D821661C80E2B800EA6CBB /* settings.xml */,
 				71D821671C80E2C400EA6CBB /* simplePointShader.frag */,
 				71D821681C80E2CD00EA6CBB /* simplePointShader.vert */,
 				71E4A2A91C825F140074EA5B /* billboardShader.geom */,
