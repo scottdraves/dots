@@ -61,14 +61,12 @@ public:
     float mmpx, mmpy;
     float baseSpeed, rmsSpeedMult;
 
-    ofShader pointShader, simplePointShader;
+    ofShader billboardShader, simplePointShader;
 
     ofVboMesh lines, linesBuf, points;
-    float *pointRadii, *lineWidths, *pointRadiiBuf, *lineWidthsBuf;
+    float *pointRadii, *lineWidths;
     bool *shouldDrawLine;
-    
     float particleAlpha, basePointRadius;
-    float maxParticleRadius; // determined by GL sometimes
 
     float * left;
     float * right;

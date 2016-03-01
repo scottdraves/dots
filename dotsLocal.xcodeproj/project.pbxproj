@@ -133,11 +133,11 @@
 		71D821641C80E2B800EA6CBB /* genebank2.flam3 */ = {isa = PBXFileReference; lastKnownFileType = text; path = genebank2.flam3; sourceTree = "<group>"; };
 		71D821651C80E2B800EA6CBB /* live.flam3 */ = {isa = PBXFileReference; lastKnownFileType = text; path = live.flam3; sourceTree = "<group>"; };
 		71D821661C80E2B800EA6CBB /* settings.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = settings.xml; sourceTree = "<group>"; };
-		71D821671C80E2C400EA6CBB /* pointShader.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = pointShader.frag; sourceTree = "<group>"; };
-		71D821681C80E2CD00EA6CBB /* pointShader.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = pointShader.vert; sourceTree = "<group>"; };
-		71E4A2A91C825F140074EA5B /* sh.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sh.geom; sourceTree = "<group>"; };
-		71E4A2AA1C825F380074EA5B /* sh.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sh.vert; sourceTree = "<group>"; };
-		71E4A2AB1C825F5F0074EA5B /* sh.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sh.frag; sourceTree = "<group>"; };
+		71D821671C80E2C400EA6CBB /* simplePointShader.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = simplePointShader.frag; sourceTree = "<group>"; };
+		71D821681C80E2CD00EA6CBB /* simplePointShader.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = simplePointShader.vert; sourceTree = "<group>"; };
+		71E4A2A91C825F140074EA5B /* billboardShader.geom */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = billboardShader.geom; sourceTree = "<group>"; };
+		71E4A2AA1C825F380074EA5B /* billboardShader.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = billboardShader.vert; sourceTree = "<group>"; };
+		71E4A2AB1C825F5F0074EA5B /* billboardShader.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = billboardShader.frag; sourceTree = "<group>"; };
 		71F4F6751C57B1BA007709A9 /* appConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appConstants.h; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E4B69B5B0A3A1756003C02F2 /* dotsLocalDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dotsLocalDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -318,11 +318,11 @@
 				71D821641C80E2B800EA6CBB /* genebank2.flam3 */,
 				71D821651C80E2B800EA6CBB /* live.flam3 */,
 				71D821661C80E2B800EA6CBB /* settings.xml */,
-				71D821671C80E2C400EA6CBB /* pointShader.frag */,
-				71D821681C80E2CD00EA6CBB /* pointShader.vert */,
-				71E4A2A91C825F140074EA5B /* sh.geom */,
-				71E4A2AA1C825F380074EA5B /* sh.vert */,
-				71E4A2AB1C825F5F0074EA5B /* sh.frag */,
+				71D821671C80E2C400EA6CBB /* simplePointShader.frag */,
+				71D821681C80E2CD00EA6CBB /* simplePointShader.vert */,
+				71E4A2A91C825F140074EA5B /* billboardShader.geom */,
+				71E4A2AA1C825F380074EA5B /* billboardShader.vert */,
+				71E4A2AB1C825F5F0074EA5B /* billboardShader.frag */,
 			);
 			name = data;
 			path = bin/data;

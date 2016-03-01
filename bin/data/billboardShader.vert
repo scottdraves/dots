@@ -7,7 +7,6 @@ in vec4 normal;
 in vec4 color;
 in vec2 texcoord;
 
-in vec2 screen;
 in float pointRadius;
 in float lineWidth;
 

@@ -105,22 +105,22 @@ void ofApp::setup(){
     glEnable(GL_PROGRAM_POINT_SIZE_ARB);
     glEnable(GL_PROGRAM_POINT_SIZE);
 
+    simplePointShader.load("simplePointShader");
     simplePointShader.bindDefaults();
-    simplePointShader.load("pointShader");
 
-    pointShader.setGeometryInputType(GL_LINES);
-    pointShader.setGeometryOutputType(GL_TRIANGLE_STRIP);
-    pointShader.setGeometryOutputCount(12);
-    pointShader.bindDefaults();
-    pointShader.load("sh.vert", "sh.frag", "sh.geom");
+    billboardShader.setGeometryInputType(GL_LINES);
+    billboardShader.setGeometryOutputType(GL_TRIANGLE_STRIP);
+    billboardShader.setGeometryOutputCount(12);
+    billboardShader.load("billboardShader.vert", "billboardShader.frag", "billboardShader.geom");
+    billboardShader.bindDefaults();
 
-    maxParticleRadius = 300;
-    glGetFloatv(GL_POINT_SIZE_MAX, &maxParticleRadius);
-    cout << "Max particle radius: " << maxParticleRadius << endl;
+    float glMaxPointSize;
+    glGetFloatv(GL_POINT_SIZE_MAX, &glMaxPointSize);
+    cout << "GL max point radius: " << glMaxPointSize << endl;
 
     float lineWidthRange[2];
     glGetFloatv(GL_LINE_WIDTH_RANGE, lineWidthRange);
-    cout << "Line width range: " << lineWidthRange[0] << "-" << lineWidthRange[1] << endl;
+    cout << "GL line width range: " << lineWidthRange[0] << "-" << lineWidthRange[1] << endl;
 
     pointRadii = (float *)malloc(sizeof(float) * nsamples * 2);
     lineWidths = (float *)malloc(sizeof(float) * nsamples * 2);
@@ -151,13 +151,13 @@ void ofApp::setup(){
     }
 
     int loc;
-    pointShader.printActiveAttributes();
-    pointShader.begin();
-        loc = pointShader.getAttributeLocation("pointRadius");
+    billboardShader.printActiveAttributes();
+    billboardShader.begin();
+        loc = billboardShader.getAttributeLocation("pointRadius");
         lines.getVbo().setAttributeData(loc, pointRadii, 1, nsamples*2, GL_STREAM_DRAW);
-        loc = pointShader.getAttributeLocation("lineWidth");
+        loc = billboardShader.getAttributeLocation("lineWidth");
         lines.getVbo().setAttributeData(loc, lineWidths, 1, nsamples*2, GL_STREAM_DRAW);
-    pointShader.end();
+    billboardShader.end();
 
     simplePointShader.printActiveAttributes();
     simplePointShader.begin();
@@ -466,12 +466,6 @@ void ofApp::draw(){
     // Note: this is very dependent on the tempo of the music.
     mpx += (centroidMapped - mpx) * mpxSmoothingFactor;
     mpy += (audioRMSMapped - mpy) * mpySmoothingFactor;
-
-    if (1) {
-        char s[25];
-        sprintf(s, "gi=%d", genomeIdx);
-        ofDrawBitmapString(s, 20, 100);
-    }
     
     ofFill();
     int max_line_length = 100 + ofGetWidth()/3 * mpy;  // good parameter to vary, should be connected to screen size too.
@@ -487,7 +481,8 @@ void ofApp::draw(){
             int bucket = ofMap(i, 0, nsamples-1, 0, nFftBuckets/5);
             radius *= 10 * sp[bucket];
         }
-        radius = ofClamp(radius, 0, maxParticleRadius);
+        // TODO: remove?
+        radius = ofClamp(radius, 0, 300);
 
         int palleteIdx = (int)(s0[4*i+2] * CMAP_SIZE);
         palleteIdx = ofClamp(palleteIdx, 0, CMAP_SIZE-1);
@@ -590,16 +585,16 @@ void ofApp::draw(){
 
     int loc;
     if (gui->drawMode == 0) {
-        pointShader.begin();
-            pointShader.setUniform2f("screen", ofGetWidth(), ofGetHeight());
+        billboardShader.begin();
+            billboardShader.setUniform2f("screen", ofGetWidth(), ofGetHeight());
 
-            loc = pointShader.getAttributeLocation("pointRadius");
+            loc = billboardShader.getAttributeLocation("pointRadius");
             lines.getVbo().updateAttributeData(loc, pointRadii, nsamples*2);
-            loc = pointShader.getAttributeLocation("lineWidth");
+            loc = billboardShader.getAttributeLocation("lineWidth");
             lines.getVbo().updateAttributeData(loc, lineWidths, nsamples*2);
 
             lines.draw();
-        pointShader.end();
+        billboardShader.end();
     } else if (gui->drawMode == 1) {
         simplePointShader.begin();
             loc = simplePointShader.getAttributeLocation("pointRadius");
@@ -617,6 +612,11 @@ void ofApp::draw(){
 
     ofSetColor(255);
     visualsFbo.draw(0, 0);
+
+    // TODO: disable later
+    char str[25];
+    sprintf(str, "%.2f fps", ofGetFrameRate());
+    ofDrawBitmapString(str, 10, 15);
 
     parity = !parity;
 }
