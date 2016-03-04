@@ -127,6 +127,12 @@ void ofApp::setup(){
         pointRadii[2*i+1] = 0;
         lineWidths[2*i] = 0;
         lineWidths[2*i+1] = 0;
+
+        pointPairs[i].idx = i;
+        pointPairs[i].pt1 = ofVec3f(0);
+        pointPairs[i].pt2 = ofVec3f(0);
+        pointPairs[i].ptSize = 0;
+        pointPairs[i].lineWidth = 0;
     }
 
     int loc;
@@ -142,8 +148,8 @@ void ofApp::setup(){
     swapFrame = 0;
     flameSequences.resize(5);
     for (int i = 0; i < flameSequences.size(); ++i) {
-        flameSequences[i].nFrames = 0;
-        flameSequences[i].totFrames = flameSequences.size();
+        flameSequences[i].frameCreated = 0;
+        flameSequences[i].frameUpdated = -1;
         flameSequences[i].xform_distribution = NULL;
     }
 }
@@ -194,8 +200,8 @@ void ofApp::guiUpdate() {
 
         flameSequences.resize(gui->nFlameSequences);
         for (int i = oldSize-1; i < flameSequences.size(); ++i) {
-            flameSequences[i].nFrames = 0;
-            flameSequences[i].totFrames = flameSequences.size();
+            flameSequences[i].frameCreated = frame;
+            flameSequences[i].frameUpdated = -1;
             flameSequences[i].xform_distribution = NULL;
         }
 
@@ -233,11 +239,12 @@ void ofApp::flameUpdate() {
     }
 
     const int flameSeqIdxToUpdate = (frame-swapFrame) % flameSequences.size();
-    flameSeq &seq = flameSequences[flameSeqIdxToUpdate];
-    if (seq.xform_distribution) {
-        free(seq.xform_distribution);
+    flameSeq &seqToUpdate = flameSequences[flameSeqIdxToUpdate];
+    if (seqToUpdate.xform_distribution) {
+        free(seqToUpdate.xform_distribution);
     }
-    seq.xform_distribution = flam3_create_xform_distrib(&cp);
+    seqToUpdate.frameUpdated = frame;
+    seqToUpdate.xform_distribution = flam3_create_xform_distrib(&cp);
 
     std::swap(prevFlameSamples, currFlameSamples);
     setFlameParameters();
@@ -260,11 +267,6 @@ void ofApp::flameUpdate() {
                       &rc);
     }
 
-    const int max_line_length = 100 + ofGetWidth()/3 * mpy;
-    const ofVec3f cpCenter(cp.center[0], cp.center[1], 0);
-    const ofVec3f screenCenter(ofGetWidth()/2.0, ofGetHeight()/2.0, 0);
-    const float screenScale = ofGetWidth() / 1024.0 * gui->overallScale;
-
     totDotPixels = 0;
     totLinePixels = 0;
     for (int i = 0; i < nsamples-1; i++) {
@@ -282,27 +284,17 @@ void ofApp::flameUpdate() {
         double *cv = cp.palette[palleteIdx].color;
         ofColor color(255*cv[0],255*cv[1],255*cv[2], particleAlpha);
 
-        ofVec3f pt1(currFlameSamples[4*i], currFlameSamples[4*i+1], 0.0);
-        ofVec3f pt2(prevFlameSamples[4*i], prevFlameSamples[4*i+1], 0.0);
-        ofVec3f pt1Screen = (pt1 - cpCenter) * cp.pixels_per_unit * screenScale + screenCenter;
-        ofVec3f pt2Screen = (pt2 - cpCenter) * cp.pixels_per_unit * screenScale + screenCenter;
+        pointPairs[i].pt1.x = currFlameSamples[4*i];
+        pointPairs[i].pt1.y = currFlameSamples[4*i+1];
+        pointPairs[i].pt2.x = prevFlameSamples[4*i];
+        pointPairs[i].pt2.y = prevFlameSamples[4*i+1];
 
-        float dist = pt1Screen.distance(pt2Screen);
-        bool drawLine = dist < max_line_length;
-
-        pointPairs[i].pt1 = pt1Screen;
-        pointPairs[i].pt2 = pt2Screen;
         pointPairs[i].color = color;
         pointPairs[i].ptSize = radius;
-
-        if (drawLine) {
-            pointPairs[i].lineWidth = ofClamp(radius/4, 0, 6);
-        } else {
-            pointPairs[i].lineWidth = 0;
-        }
+        pointPairs[i].lineWidth = ofClamp(radius/4, 0, 6);
 
         totDotPixels += (radius * 2) * (radius * 2);
-        totLinePixels +=  dist * pointPairs[i].lineWidth;
+//        totLinePixels +=  pointPairs[i].lineWidth;
     }
 
     ++frame;
@@ -529,7 +521,7 @@ void ofApp::draw(){
     ofFill();
 
     const float maxDotPixels = gui->maxPixels; // 20 million
-    const float maxLinePixels = gui->maxPixels / 2.0; // 10 million
+//    const float maxLinePixels = gui->maxPixels / 2.0; // 10 million
     const int nToAllowRandom = gui->pctToAllowRandom * 1000;
 
     // Sort big->small
@@ -539,8 +531,7 @@ void ofApp::draw(){
     int tippingPt = -1;
     double drawnSoFar = 0;
     for (int i = pointPairs.size()-1; i >= 0; --i) {
-        const int idx = pointPairs[i].idx;
-        if (drawnSoFar < maxDotPixels || (i % 1000) < nToAllowRandom) {
+        if (drawnSoFar < maxDotPixels || (pointPairs[i].idx % 1000) < nToAllowRandom) {
             const float sizesq = (pointPairs[i].ptSize * 2) * (pointPairs[i].ptSize * 2);
             drawnSoFar += sizesq;
 
@@ -561,7 +552,14 @@ void ofApp::draw(){
     if (gui->drawMode == 0) {
         int loc;
         billboardShader.begin();
+            const int maxLineLength = 100 + ofGetWidth()/3 * mpy;
+            const int screenScale = ofGetWidth() / 1024.0 * gui->overallScale;
+
             billboardShader.setUniform2f("screen", ofGetWidth(), ofGetHeight());
+            billboardShader.setUniform2f("cpCenter", cp.center[0], cp.center[1]);
+            billboardShader.setUniform1f("screenScale", screenScale);
+            billboardShader.setUniform1f("cpPixelsPerUnit", cp.pixels_per_unit);
+            billboardShader.setUniform1f("maxLineLength", maxLineLength);
 
             loc = billboardShader.getAttributeLocation("pointRadius");
             lines.getVbo().updateAttributeData(loc, pointRadii, nsamples*2);
@@ -603,11 +601,14 @@ void ofApp::draw(){
 
 void ofApp::handleKey(int key) {
     if (key == ' ') {
+        swapFrame = frame;
         gui->wandering.set(!gui->wandering.get());
     } else if (key == OF_KEY_LEFT) {
+        swapFrame = frame;
         if (--genomeIdx < 0) genomeIdx = ncps-1;
         flam3_copy(&cp, &cps[genomeIdx]);
     } else if (key == OF_KEY_RIGHT) {
+        swapFrame = frame;
         if (++genomeIdx >= ncps) genomeIdx = 0;
         flam3_copy(&cp, &cps[genomeIdx]);
     } else if (key == 'd') {

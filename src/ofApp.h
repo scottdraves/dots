@@ -15,11 +15,10 @@ typedef struct pointPair {
     ofVec3f pt1, pt2;
     float ptSize, lineWidth;
     ofFloatColor color;
-    bool shouldDrawLine;
 } pointPair;
 
 typedef struct flameSeq {
-    int nFrames, totFrames;
+    long frameCreated, frameUpdated;
     unsigned short *xform_distribution;
 } flameSeq;
 
