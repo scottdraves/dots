@@ -10,6 +10,14 @@ extern "C" {
 #include "flam3.h"
 }
 
+typedef struct pointPair {
+    int idx;
+    ofVec3f pt1, pt2;
+    float ptSize, lineWidth;
+    ofFloatColor color;
+    bool shouldDrawLine;
+} pointPair;
+
 class ofApp : public ofBaseApp{
     
 public:
@@ -61,11 +69,12 @@ public:
     float mmpx, mmpy;
     float baseSpeed, rmsSpeedMult;
 
-    ofShader billboardShader, simplePointShader;
+    ofShader billboardShader;
 
-    ofVboMesh lines, linesBuf, points;
+    ofVboMesh lines;
+    vector<pointPair> pointPairs;
     float *pointRadii, *lineWidths;
-    bool *shouldDrawLine;
+
     float particleAlpha, basePointRadius;
 
     float * left;

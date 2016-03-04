@@ -6,7 +6,7 @@
 void ofApp::setup(){
     ofBackground(0);
     ofSetVerticalSync(false);
-//    ofSetFrameRate(60);
+    ofSetLogLevel(OF_LOG_VERBOSE);
 
     counter = 0;
     nsamples = 25000;	seed = 0;
@@ -93,21 +93,6 @@ void ofApp::setup(){
     gui->nAudioBuckets = nFftBuckets;
     gui->audioBuckets = fftOutput;
 
-
-    ofSetLogLevel(OF_LOG_VERBOSE);
-
-    // We're going to use a shader to draw point sizes,
-    // thanks openGL for making this a mess
-    glEnable(GL_POINT_SIZE);
-    glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
-    glEnable(GL_VERTEX_PROGRAM_POINT_SIZE_ARB);
-    glEnable(GL_PROGRAM_POINT_SIZE_EXT);
-    glEnable(GL_PROGRAM_POINT_SIZE_ARB);
-    glEnable(GL_PROGRAM_POINT_SIZE);
-
-    simplePointShader.load("simplePointShader");
-    simplePointShader.bindDefaults();
-
     billboardShader.setGeometryInputType(GL_LINES);
     billboardShader.setGeometryOutputType(GL_TRIANGLE_STRIP);
     billboardShader.setGeometryOutputCount(12);
@@ -124,19 +109,13 @@ void ofApp::setup(){
 
     pointRadii = (float *)malloc(sizeof(float) * nsamples * 2);
     lineWidths = (float *)malloc(sizeof(float) * nsamples * 2);
-    shouldDrawLine = (bool *)malloc(sizeof(float) * nsamples);
 
     lines.setMode(OF_PRIMITIVE_LINES);
     lines.setUsage(GL_STREAM_DRAW);
-    points.setMode(OF_PRIMITIVE_POINTS);
-    points.setUsage(GL_STREAM_DRAW);
+
+    pointPairs.resize(nsamples);
 
     for (int i = 0; i < nsamples; ++i) {
-        points.addVertex(ofVec3f());
-        points.addColor(ofFloatColor());
-        points.addVertex(ofVec3f());
-        points.addColor(ofFloatColor());
-
         lines.addVertex(ofVec3f());
         lines.addColor(ofFloatColor());
         lines.addVertex(ofVec3f());
@@ -146,8 +125,6 @@ void ofApp::setup(){
         pointRadii[2*i+1] = 0;
         lineWidths[2*i] = 0;
         lineWidths[2*i+1] = 0;
-
-        shouldDrawLine[i] = true;
     }
 
     int loc;
@@ -158,12 +135,6 @@ void ofApp::setup(){
         loc = billboardShader.getAttributeLocation("lineWidth");
         lines.getVbo().setAttributeData(loc, lineWidths, 1, nsamples*2, GL_STREAM_DRAW);
     billboardShader.end();
-
-    simplePointShader.printActiveAttributes();
-    simplePointShader.begin();
-        loc = simplePointShader.getAttributeLocation("pointRadius");
-        points.getVbo().setAttributeData(loc, pointRadii, 1, nsamples*2, GL_STREAM_DRAW);
-    simplePointShader.end();
 }
 
 //--------------------------------------------------------------
@@ -377,6 +348,11 @@ void ofApp::setFlameParameters() {
 
 }
 
+bool pairCompareDesc(const pointPair& firstElem, pointPair& secondElem) {
+    return firstElem.ptSize > secondElem.ptSize;
+}
+
+
 //--------------------------------------------------------------
 void ofApp::draw(){
     visualsFbo.begin();
@@ -386,7 +362,7 @@ void ofApp::draw(){
 
     ofSetColor(255, 255);
     ofEnableAlphaBlending();
-    
+
     float startTime = ofGetElapsedTimef();
     float *sp = fftOutput;
 
@@ -470,9 +446,9 @@ void ofApp::draw(){
     ofFill();
     int max_line_length = 100 + ofGetWidth()/3 * mpy;  // good parameter to vary, should be connected to screen size too.
 
-    ofVec3f cpCenter(cp.center[0], cp.center[1], 0);
-    ofVec3f screenCenter(ofGetWidth()/2.0, ofGetHeight()/2.0, 0);
-    float screenScale = ofGetWidth() / 720.0;
+    const ofVec3f cpCenter(cp.center[0], cp.center[1], 0);
+    const ofVec3f screenCenter(ofGetWidth()/2.0, ofGetHeight()/2.0, 0);
+    const float screenScale = ofGetWidth() / 720.0;
 
     double totDotPixels = 0, totLinePixels = 0;
     for (int i = 0; i < nsamples-1; i++) {
@@ -495,97 +471,55 @@ void ofApp::draw(){
         ofVec3f pt1Screen = (pt1 - cpCenter) * cp.pixels_per_unit * screenScale + screenCenter;
         ofVec3f pt2Screen = (pt2 - cpCenter) * cp.pixels_per_unit * screenScale + screenCenter;
 
-        points.setVertex(2*i, pt1Screen);
-        points.setVertex(2*i+1, pt2Screen);
-        points.setColor(2*i, color);
-        points.setColor(2*i+1, color);
-        totDotPixels += radius * radius;
-
-        pointRadii[2*i] = radius;
-        pointRadii[2*i+1] = radius;
-
-        lines.setVertex(2*i, pt1Screen);
-        lines.setVertex(2*i+1, pt2Screen);
-        lines.setColor(2*i, color);
-        lines.setColor(2*i+1, color);
-
-        float lineWidth = ofClamp(radius/4, 0, 2);
-        lineWidths[2*i] = lineWidth;
-        lineWidths[2*i+1] = lineWidth;
-
         float dist = pt1Screen.distance(pt2Screen);
-        shouldDrawLine[i] = dist < max_line_length;
-        totLinePixels += shouldDrawLine[i] ? dist * lineWidth : 0;
+        bool drawLine = dist < max_line_length;
+
+        pointPairs[i].pt1 = pt1Screen;
+        pointPairs[i].pt2 = pt2Screen;
+        pointPairs[i].color = color;
+        pointPairs[i].ptSize = radius;
+
+        if (drawLine) {
+            pointPairs[i].lineWidth = ofClamp(radius/4, 0, 6);
+        } else {
+            pointPairs[i].lineWidth = 0;
+        }
+
+        totDotPixels += (radius * 2) * (radius * 2);
+        totLinePixels +=  dist * pointPairs[i].lineWidth;
     }
 
     const float maxDotPixels = gui->maxPixels; // 20 million
-    const float maxLinePixels = gui->maxPixels; // 10 million
-    const int frameNum = ofGetFrameNum();
-    const int random = ofRandomuf() * 100000;
-    const float pctDotsToSave = ofClamp(totDotPixels, 0, maxDotPixels) / totDotPixels;
-    const float pctLinesToSave = ofClamp(totLinePixels, 0, maxLinePixels) / totLinePixels;
+    const float maxLinePixels = gui->maxPixels / 2.0; // 10 million
+    const int nToAllowRandom = gui->pctToAllowRandom * 1000;
 
-    gui->pctParticles = pctDotsToSave;
+    // Sort big->small
+    std::sort(pointPairs.begin(), pointPairs.end(), pairCompareDesc);
 
-    const vector<ofVec3f> &verts = lines.getVertices();
-    const vector<ofFloatColor> &colors = lines.getColors();
+    int tippingPt = -1;;
+    double drawnSoFar = 0;
+    for (int i = pointPairs.size()-1; i >= 0; --i) {
+        const int idx = pointPairs[i].idx;
+        if (drawnSoFar < maxDotPixels || (i % 1000) < nToAllowRandom) {
+            const float sizesq = (pointPairs[i].ptSize * 2) * (pointPairs[i].ptSize * 2);
+            drawnSoFar += sizesq;
 
-    for (int i = 0; i < nsamples-1; i++) {
-        // Discard a bunch of particles
-        if (((i+frameNum) % 1000) > pctDotsToSave * 1000) {
-            pointRadii[2*i] = 0;
-            pointRadii[2*i+1] = 0;
-            shouldDrawLine[i] = false;
-        }
-
-        if (shouldDrawLine[i] && ((i+frameNum) % 1000) > pctLinesToSave * 1000) {
-            shouldDrawLine[i] = false;
-        }
-
-        if (!shouldDrawLine[i]) {
-            lineWidths[2*i] = 0;
-            lineWidths[2*i+1] = 0;
-        }
-
-        // For old time's sake, here's the oF naive code
-        if (gui->drawMode == 2) {
-            if (pointRadii[2*i] > 0.01) {
-                ofSetColor(colors[2*i]);
-                if (shouldDrawLine[2*i]) {
-                    ofSetLineWidth(pointRadii[2*i]);
-                    ofDrawLine(verts[2*i], verts[2*i+1]);
-                }
-                ofDrawCircle(verts[2*i], pointRadii[2*i]);
-                ofDrawCircle(verts[2*i+1], pointRadii[2*i+1]);
-            }
+            lines.setVertex(2*i, pointPairs[i].pt1);
+            lines.setVertex(2*i+1, pointPairs[i].pt2);
+            lines.setColor(2*i, pointPairs[i].color);
+            lines.setColor(2*i+1, pointPairs[i].color);
+            lineWidths[2*i] = lineWidths[2*i+1] = pointPairs[i].lineWidth;
+            pointRadii[2*i] = pointRadii[2*i+1] = pointPairs[i].ptSize;
+        } else {
+            if (tippingPt < 0) tippingPt = i;
+            pointRadii[2*i] = pointRadii[2*i+1] = pointPairs[i].ptSize = 0;
+            lineWidths[2*i] = lineWidths[2*i+1] = 0;
         }
     }
+    gui->pctParticles = tippingPt > 0 ? (1.0 - (float)tippingPt / nsamples) : 1;
 
-
-    // OLD: immediate-mode code
-//    for (int i = 0; i < verts.size(); ++i) {
-//        if (pointSizes[i] < 0.01) continue;
-//        glColor4f(colors[i].r, colors[i].g, colors[i].b, colors[i].a);
-//
-//        if (shouldDrawLine[i]) {
-//            glLineWidth(ofClamp(pointSizes[i], 0, 2.0));
-//            glBegin(GL_LINES);
-//                glVertex3f(verts[i].x, verts[i].y, -0.1);
-//                glVertex3f(prevVerts[i].x, prevVerts[i].y, -0.1);
-////                glVertex2f(verts[i].x, verts[i].y);
-////                glVertex2f(prevVerts[i].x, prevVerts[i].y);
-//            glEnd();
-//        }
-//
-//        glPointSize(pointSizes[i]);
-//        glBegin(GL_POINTS);
-//            glVertex3f(verts[i].x, verts[i].y, -0.1);
-//            glVertex3f(prevVerts[i].x, prevVerts[i].y, -0.1);
-//        glEnd();
-//    }
-
-    int loc;
     if (gui->drawMode == 0) {
+        int loc;
         billboardShader.begin();
             billboardShader.setUniform2f("screen", ofGetWidth(), ofGetHeight());
 
@@ -597,12 +531,19 @@ void ofApp::draw(){
             lines.draw();
         billboardShader.end();
     } else if (gui->drawMode == 1) {
-        simplePointShader.begin();
-            loc = simplePointShader.getAttributeLocation("pointRadius");
-            points.getVbo().updateAttributeData(loc, pointRadii, nsamples*2);
-            points.draw();
-        simplePointShader.end();
-        lines.draw();
+        // For old time's sake, here's the oF naive code
+
+        for (int i = pointPairs.size()-1; i >= 0; --i) {
+            if (pointPairs[i].ptSize > 0.01) {
+                ofSetColor(pointPairs[i].color);
+                if (pointPairs[i].lineWidth > 0.01) {
+                    ofSetLineWidth(pointPairs[i].lineWidth);
+                    ofDrawLine(pointPairs[i].pt1, pointPairs[i].pt2);
+                }
+                ofDrawCircle(pointPairs[i].pt1, pointPairs[i].ptSize);
+                ofDrawCircle(pointPairs[i].pt2, pointPairs[i].ptSize);
+            }
+        }
     }
 
     // Force finish rendering - just for better profiling

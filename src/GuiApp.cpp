@@ -34,8 +34,9 @@ void GuiApp::setup(){
     displayParameters.add(basePointRadius.set("basePointRadius", 10, 0, 50));
     displayParameters.add(baseSpeed.set("baseSpeed", 0, 0, 10));
     displayParameters.add(rmsSpeedMult.set("rmsSpeedMult", 30, 0, 100));
-    displayParameters.add(maxPixels.set("maxPixels", 5000000, 100000, 10000000));
-    displayParameters.add(drawMode.set("drawMode", 0, 0, 2));
+    displayParameters.add(maxPixels.set("maxPixels", 5000000, 10000, 20000000));
+    displayParameters.add(pctToAllowRandom.set("pctToAllowRandom", 0.02, 0, 0.1));
+    displayParameters.add(drawMode.set("drawMode", 0, 0, 1));
     displayGui.setup(displayParameters);
     
     inputGui.setPosition(10, 450);
