@@ -18,6 +18,11 @@ typedef struct pointPair {
     bool shouldDrawLine;
 } pointPair;
 
+typedef struct flameSeq {
+    int nFrames, totFrames;
+    unsigned short *xform_distribution;
+} flameSeq;
+
 class ofApp : public ofBaseApp{
     
 public:
@@ -35,24 +40,27 @@ public:
     void windowResized(int w, int h);
     void audioIn(float * input, int bufferSize, int nChannels);
     
-    void setFlameParameters();
-    
-    float curVol = 0.0;
-    
     void killCurrent();
     void mateCurrent();
     void mutateCurrent();
     void initrc(long sed);
     int randomi(int n);
+
+    void guiUpdate();
+    void setFlameParameters();
+    void flameUpdate();
     void handleKey(int key);
     
     float 	counter;
+    float curVol = 0.0;
     int wandering;
     int framecount;
     int fullscreen;
     float frameClearSpeed;
     int nsamples;
-    double *samples;
+
+    double *prevFlameSamples, *currFlameSamples;
+
     int parity;
     int seed;
     int momode;
@@ -64,6 +72,10 @@ public:
     flam3_genome *cps;
     flam3_genome *cpv;
     flam3_genome cp;
+
+    int frame, swapFrame, lastCP;
+    vector<flameSeq> flameSequences;
+
     int genomeIdx, gj;
     float mpx, mpy, mpxSmoothingFactor, mpySmoothingFactor;
     float mmpx, mmpy;
@@ -74,6 +86,7 @@ public:
     ofVboMesh lines;
     vector<pointPair> pointPairs;
     float *pointRadii, *lineWidths;
+    double totDotPixels, totLinePixels;
 
     float particleAlpha, basePointRadius;
 

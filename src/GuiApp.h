@@ -31,7 +31,7 @@ public:
     ofParameter<float> basePointRadius;
     ofParameter<float> overallScale;
     ofParameter<float> baseSpeed, rmsSpeedMult;
-    ofParameter<int> maxPixels, drawMode;
+    ofParameter<int> maxPixels, drawMode, nFlameSequences;
     ofParameter<float> pctToAllowRandom;
     
     ofxPanel analysisGui, inputGui, displayGui;

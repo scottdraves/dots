@@ -14,7 +14,10 @@ void ofApp::setup(){
     gj = 0;
     transp = 60;
     ofSetWindowTitle("D0TS");
-    samples= (double *) malloc(sizeof(double)*nsamples*8);
+
+    currFlameSamples = (double *)malloc(sizeof(double)*nsamples*4);
+    prevFlameSamples = (double *)malloc(sizeof(double)*nsamples*4);
+
     parity = 0;
     framecount = 0;
     fullscreen = 1;
@@ -107,11 +110,10 @@ void ofApp::setup(){
     glGetFloatv(GL_LINE_WIDTH_RANGE, lineWidthRange);
     cout << "GL line width range: " << lineWidthRange[0] << "-" << lineWidthRange[1] << endl;
 
-    pointRadii = (float *)malloc(sizeof(float) * nsamples * 2);
-    lineWidths = (float *)malloc(sizeof(float) * nsamples * 2);
-
     lines.setMode(OF_PRIMITIVE_LINES);
     lines.setUsage(GL_STREAM_DRAW);
+    pointRadii = (float *)malloc(sizeof(float) * nsamples * 2);
+    lineWidths = (float *)malloc(sizeof(float) * nsamples * 2);
 
     pointPairs.resize(nsamples);
 
@@ -135,6 +137,176 @@ void ofApp::setup(){
         loc = billboardShader.getAttributeLocation("lineWidth");
         lines.getVbo().setAttributeData(loc, lineWidths, 1, nsamples*2, GL_STREAM_DRAW);
     billboardShader.end();
+
+    frame = 0;
+    swapFrame = 0;
+    flameSequences.resize(5);
+    for (int i = 0; i < flameSequences.size(); ++i) {
+        flameSequences[i].nFrames = 0;
+        flameSequences[i].totFrames = flameSequences.size();
+        flameSequences[i].xform_distribution = NULL;
+    }
+}
+
+void ofApp::guiUpdate() {
+    // Copy data to gui
+    gui->frameRate = ofGetFrameRate();
+    gui->visuals = &visualsFbo.getTexture();
+    gui->mpx = mpx;
+    gui->mpy = mpy;
+    gui->audioCentroid = audioCentroid;
+    gui->audioRMS = audioRMS;
+
+    // Copy data from gui
+    wandering = gui->wandering;
+    fftDecayRate = gui->fftDecayRate;
+    rmsMultiple = gui->rmsMultiple;
+    centroidMaxBucket = gui->centroidMaxBucket;
+    mpxSmoothingFactor = gui->mpxSmoothingFactor;
+    mpySmoothingFactor = gui->mpySmoothingFactor;
+    baseSpeed = gui->baseSpeed;
+    rmsSpeedMult = gui->rmsSpeedMult;
+    frameClearSpeed = gui->clearSpeed;
+    particleAlpha = gui->particleAlpha;
+    basePointRadius = gui->basePointRadius;
+
+    if (audioMode != gui->audioMode) {
+        audioMode = gui->audioMode;
+        if (audioMode != AUDIO_MODE_MP3)
+            mySound.stop();
+    }
+
+    if (soundStreamDevice != gui->soundStreamDevice) {
+        soundStreamDevice = gui->soundStreamDevice;
+        soundStream.close();
+        soundStream.setDeviceID(soundStreamDevice);
+        bool streamStarted = soundStream.setup(this, 0, nChannels, 44100, 512, 4);
+        if (streamStarted) {
+            cout << "Started audio stream with device " << soundStreamDevice << endl;
+        } else {
+            cout << "Could not start audio stream with device " << soundStreamDevice << endl;
+        }
+    }
+
+    if (gui->nFlameSequences != flameSequences.size()) {
+        swapFrame = frame;
+        const int oldSize = flameSequences.size();
+
+        flameSequences.resize(gui->nFlameSequences);
+        for (int i = oldSize-1; i < flameSequences.size(); ++i) {
+            flameSequences[i].nFrames = 0;
+            flameSequences[i].totFrames = flameSequences.size();
+            flameSequences[i].xform_distribution = NULL;
+        }
+
+        cout << "Now using " << flameSequences.size() << " flame sequences." << endl;
+    }
+}
+
+void ofApp::flameUpdate() {
+    initrc(seed);
+
+    if (wandering) {
+        double ispeed = 800.0;
+        if (counter > (ncps * ispeed))
+            counter = 0;
+        for (int i = 0; i < ncps; i++) {
+            cps[i].time = (double) i;
+        }
+
+        int currCP = floor(counter/ispeed);
+        if (lastCP != currCP) {
+            swapFrame = frame;
+            lastCP = currCP;
+            cout << "Now on CP " << currCP << endl;
+        }
+
+        flam3_interpolate(cps, ncps, counter/ispeed, 0, &cp);
+    } else {
+        float speed = baseSpeed + smoothedAudioRMS * rmsSpeedMult;
+        flam3_rotate(&cp, speed, flam3_inttype_log);
+    }
+
+    if (prepare_precalc_flags2(&cp)) {
+        fprintf(stderr,"prepare xform pointers returned error: aborting.\n");
+        return;
+    }
+
+    const int flameSeqIdxToUpdate = (frame-swapFrame) % flameSequences.size();
+    flameSeq &seq = flameSequences[flameSeqIdxToUpdate];
+    if (seq.xform_distribution) {
+        free(seq.xform_distribution);
+    }
+    seq.xform_distribution = flam3_create_xform_distrib(&cp);
+
+    std::swap(prevFlameSamples, currFlameSamples);
+    setFlameParameters();
+
+    const int nFlameSeqs = MIN(flameSequences.size(), (frame-swapFrame)+1);
+    const int nSamplesPerSeq = nsamples / nFlameSeqs;
+    for (int i = nFlameSeqs-1; i >= 0 ; --i) {
+        double *flameSamples = currFlameSamples + nSamplesPerSeq * 4 * i;
+
+        flameSamples[0] = flam3_random_isaac_11(&rc);
+        flameSamples[1] = flam3_random_isaac_11(&rc);
+        flameSamples[2] = flam3_random_isaac_01(&rc);
+        flameSamples[3] = flam3_random_isaac_01(&rc);
+
+        flam3_iterate(&cp,
+                      nSamplesPerSeq,
+                      20,
+                      flameSamples,
+                      flameSequences[i].xform_distribution,
+                      &rc);
+    }
+
+    const int max_line_length = 100 + ofGetWidth()/3 * mpy;
+    const ofVec3f cpCenter(cp.center[0], cp.center[1], 0);
+    const ofVec3f screenCenter(ofGetWidth()/2.0, ofGetHeight()/2.0, 0);
+    const float screenScale = ofGetWidth() / 1024.0 * gui->overallScale;
+
+    totDotPixels = 0;
+    totLinePixels = 0;
+    for (int i = 0; i < nsamples-1; i++) {
+        // Radius depends on mpy
+        float radius = basePointRadius * mpy;
+        if (gj % 2 == 1) {
+            int bucket = ofMap(i, 0, nsamples-1, 0, nFftBuckets/5);
+            radius *= 10 * fftOutput[bucket];
+        }
+        // TODO: remove?
+        radius = ofClamp(radius, 0, 300);
+
+        int palleteIdx = (int)(currFlameSamples[4*i+2] * CMAP_SIZE);
+        palleteIdx = ofClamp(palleteIdx, 0, CMAP_SIZE-1);
+        double *cv = cp.palette[palleteIdx].color;
+        ofColor color(255*cv[0],255*cv[1],255*cv[2], particleAlpha);
+
+        ofVec3f pt1(currFlameSamples[4*i], currFlameSamples[4*i+1], 0.0);
+        ofVec3f pt2(prevFlameSamples[4*i], prevFlameSamples[4*i+1], 0.0);
+        ofVec3f pt1Screen = (pt1 - cpCenter) * cp.pixels_per_unit * screenScale + screenCenter;
+        ofVec3f pt2Screen = (pt2 - cpCenter) * cp.pixels_per_unit * screenScale + screenCenter;
+
+        float dist = pt1Screen.distance(pt2Screen);
+        bool drawLine = dist < max_line_length;
+
+        pointPairs[i].pt1 = pt1Screen;
+        pointPairs[i].pt2 = pt2Screen;
+        pointPairs[i].color = color;
+        pointPairs[i].ptSize = radius;
+
+        if (drawLine) {
+            pointPairs[i].lineWidth = ofClamp(radius/4, 0, 6);
+        } else {
+            pointPairs[i].lineWidth = 0;
+        }
+
+        totDotPixels += (radius * 2) * (radius * 2);
+        totLinePixels +=  dist * pointPairs[i].lineWidth;
+    }
+
+    ++frame;
+//    parity = !parity;
 }
 
 //--------------------------------------------------------------
@@ -152,45 +324,38 @@ void ofApp::update(){
         handleKey(gui->keyPresses.front());
         gui->keyPresses.pop();
     }
-    
-    // Copy data to gui
-    gui->frameRate = ofGetFrameRate();
-    gui->visuals = &visualsFbo.getTexture();
-    gui->mpx = mpx;
-    gui->mpy = mpy;
-    gui->audioCentroid = audioCentroid;
-    gui->audioRMS = audioRMS;
-    
-    // Copy data from gui
-    wandering = gui->wandering;
-    fftDecayRate = gui->fftDecayRate;
-    rmsMultiple = gui->rmsMultiple;
-    centroidMaxBucket = gui->centroidMaxBucket;
-    mpxSmoothingFactor = gui->mpxSmoothingFactor;
-    mpySmoothingFactor = gui->mpySmoothingFactor;
-    baseSpeed = gui->baseSpeed;
-    rmsSpeedMult = gui->rmsSpeedMult;
-    frameClearSpeed = gui->clearSpeed;
-    particleAlpha = gui->particleAlpha;
-    basePointRadius = gui->basePointRadius;
-    
-    if (audioMode != gui->audioMode) {
-        audioMode = gui->audioMode;
-        if (audioMode != AUDIO_MODE_MP3)
-            mySound.stop();
+
+    // Copy audio if needed
+    if (audioMode == AUDIO_MODE_MP3) {
+        float *ss = ofSoundGetSpectrum(nFftBuckets);
+        memcpy(fftOutput, ss, sizeof(float) * nFftBuckets);
+    } else if (audioMode == AUDIO_MODE_MIC || audioMode == AUDIO_MODE_NOISE) {
+        // No action needed
+    } else {
+        memset(fftOutput, 0, sizeof(float) * nFftBuckets);
     }
-    
-    if (soundStreamDevice != gui->soundStreamDevice) {
-        soundStreamDevice = gui->soundStreamDevice;
-        soundStream.close();
-        soundStream.setDeviceID(soundStreamDevice);
-        bool streamStarted = soundStream.setup(this, 0, nChannels, 44100, 512, 4);
-        if (streamStarted) {
-            cout << "Started audio stream with device " << soundStreamDevice << endl;
-        } else {
-            cout << "Could not start audio stream with device " << soundStreamDevice << endl;
-        }
+
+    // Compute audio centroid
+    float centroidN = 0, centroidD = 0;
+    for (int i = 0; i < nFftBuckets; ++i) {
+        centroidN += fftOutput[i] * i;
+        centroidD += fftOutput[i];
     }
+    float centroidBucket = centroidN / centroidD;
+    audioCentroid = fmin(centroidBucket / nFftBuckets, 1);
+
+    // Compute audio centroid mapping to useful space
+    float centroidMapped = sqrt(ofMap(audioCentroid, 0, centroidMaxBucket, 0, 1, true)); // TODO: should we use sqrt here?
+
+    // Compute audio RMS mapping to useful space
+    float audioRMSMapped = ofClamp(audioRMS * rmsMultiple, 0.0, 1.0);
+
+    // Note: this is very dependent on the tempo of the music.
+    mpx += (centroidMapped - mpx) * mpxSmoothingFactor;
+    mpy += (audioRMSMapped - mpy) * mpySmoothingFactor;
+
+    guiUpdate();
+    flameUpdate();
 }
 
 //--------------------------------------------------------------
@@ -352,7 +517,6 @@ bool pairCompareDesc(const pointPair& firstElem, pointPair& secondElem) {
     return firstElem.ptSize > secondElem.ptSize;
 }
 
-
 //--------------------------------------------------------------
 void ofApp::draw(){
     visualsFbo.begin();
@@ -362,132 +526,7 @@ void ofApp::draw(){
 
     ofSetColor(255, 255);
     ofEnableAlphaBlending();
-
-    float startTime = ofGetElapsedTimef();
-    float *sp = fftOutput;
-
-    if (audioMode == AUDIO_MODE_MP3) {
-        float *ss = ofSoundGetSpectrum(nFftBuckets);
-        memcpy(fftOutput, ss, sizeof(float) * nFftBuckets);
-    } else if (audioMode == AUDIO_MODE_MIC || audioMode == AUDIO_MODE_NOISE) {
-        // No action needed
-    } else {
-        memset(fftOutput, 0, sizeof(float) * nFftBuckets);
-    }
-
-    double t0, t1, t2;
-    
-    initrc(seed);
-    
-    if (wandering) {
-        double ispeed = 800.0;
-        if (counter > (ncps * ispeed))
-            counter = 0;
-        for (int i = 0; i < ncps; i++) {
-            cps[i].time = (double) i;
-        }
-        cout << counter << endl;
-        flam3_interpolate(cps, ncps, counter/ispeed, 0, &cp);
-    } else {
-        float speed = baseSpeed + smoothedAudioRMS * rmsSpeedMult;
-        flam3_rotate(&cp, speed, flam3_inttype_log);
-    }
-    
-    if (prepare_precalc_flags2(&cp)) {
-        fprintf(stderr,"prepare xform pointers returned error: aborting.\n");
-        return;
-    }
-    
-    unsigned short *xform_distrib;
-    xform_distrib = flam3_create_xform_distrib(&cp);
-    
-    double *s = samples + (parity?(4*nsamples):0);
-    
-    s[0] = flam3_random_isaac_11(&rc);
-    s[1] = flam3_random_isaac_11(&rc);
-    s[2] = flam3_random_isaac_01(&rc);
-    s[3] = flam3_random_isaac_01(&rc);
-    
-    setFlameParameters();
-    flam3_iterate(&cp, nsamples, 20, s, xform_distrib, &rc);
-    
-    double *s0, *s1;
-    
-    if (parity) {
-        s0 = samples;
-        s1 = samples + nsamples * 4;
-    } else {
-        s0 = samples + nsamples * 4;
-        s1 = samples;
-    }
-    
-    ofSetLineWidth(1);
-    ofSetColor(255, 255);
-    
-    // Compute audio centroid
-    float centroidN = 0, centroidD = 0;
-    for (int i = 0; i < nFftBuckets; ++i) {
-        centroidN += fftOutput[i] * i;
-        centroidD += fftOutput[i];
-    }
-    float centroidBucket = centroidN / centroidD;
-    audioCentroid = fmin(centroidBucket / nFftBuckets, 1);
-    
-    // Compute audio centroid mapping to useful space
-    float centroidMapped = sqrt(ofMap(audioCentroid, 0, centroidMaxBucket, 0, 1, true)); // TODO: should we use sqrt here?
-    
-    // Compute audio RMS mapping to useful space
-    float audioRMSMapped = ofClamp(audioRMS * rmsMultiple, 0.0, 1.0);
-    
-    // Note: this is very dependent on the tempo of the music.
-    mpx += (centroidMapped - mpx) * mpxSmoothingFactor;
-    mpy += (audioRMSMapped - mpy) * mpySmoothingFactor;
-    
     ofFill();
-    int max_line_length = 100 + ofGetWidth()/3 * mpy;  // good parameter to vary, should be connected to screen size too.
-
-    const ofVec3f cpCenter(cp.center[0], cp.center[1], 0);
-    const ofVec3f screenCenter(ofGetWidth()/2.0, ofGetHeight()/2.0, 0);
-    const float screenScale = ofGetWidth() / 1024.0 * gui->overallScale;
-
-    double totDotPixels = 0, totLinePixels = 0;
-    for (int i = 0; i < nsamples-1; i++) {
-        // Radius depends on mpy
-        float radius = basePointRadius * mpy;
-        if (gj % 2 == 1) {
-            int bucket = ofMap(i, 0, nsamples-1, 0, nFftBuckets/5);
-            radius *= 10 * sp[bucket];
-        }
-        // TODO: remove?
-        radius = ofClamp(radius, 0, 300);
-
-        int palleteIdx = (int)(s0[4*i+2] * CMAP_SIZE);
-        palleteIdx = ofClamp(palleteIdx, 0, CMAP_SIZE-1);
-        double *cv = cp.palette[palleteIdx].color;
-        ofColor color(255*cv[0],255*cv[1],255*cv[2], particleAlpha);
-
-        ofVec3f pt1(s0[4*i], s0[4*i+1], 0.0);
-        ofVec3f pt2(s1[4*i], s1[4*i+1], 0.0);
-        ofVec3f pt1Screen = (pt1 - cpCenter) * cp.pixels_per_unit * screenScale + screenCenter;
-        ofVec3f pt2Screen = (pt2 - cpCenter) * cp.pixels_per_unit * screenScale + screenCenter;
-
-        float dist = pt1Screen.distance(pt2Screen);
-        bool drawLine = dist < max_line_length;
-
-        pointPairs[i].pt1 = pt1Screen;
-        pointPairs[i].pt2 = pt2Screen;
-        pointPairs[i].color = color;
-        pointPairs[i].ptSize = radius;
-
-        if (drawLine) {
-            pointPairs[i].lineWidth = ofClamp(radius/4, 0, 6);
-        } else {
-            pointPairs[i].lineWidth = 0;
-        }
-
-        totDotPixels += (radius * 2) * (radius * 2);
-        totLinePixels +=  dist * pointPairs[i].lineWidth;
-    }
 
     const float maxDotPixels = gui->maxPixels; // 20 million
     const float maxLinePixels = gui->maxPixels / 2.0; // 10 million
@@ -496,7 +535,8 @@ void ofApp::draw(){
     // Sort big->small
     std::sort(pointPairs.begin(), pointPairs.end(), pairCompareDesc);
 
-    int tippingPt = -1;;
+    // Copy data into VBOs
+    int tippingPt = -1;
     double drawnSoFar = 0;
     for (int i = pointPairs.size()-1; i >= 0; --i) {
         const int idx = pointPairs[i].idx;
@@ -559,8 +599,6 @@ void ofApp::draw(){
     char str[25];
     sprintf(str, "%.2f fps", ofGetFrameRate());
     ofDrawBitmapString(str, 10, 15);
-
-    parity = !parity;
 }
 
 void ofApp::handleKey(int key) {

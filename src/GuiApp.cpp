@@ -38,6 +38,7 @@ void GuiApp::setup(){
     displayParameters.add(maxPixels.set("maxPixels", 5000000, 10000, 100000000));
     displayParameters.add(pctToAllowRandom.set("pctToAllowRandom", 0.02, 0, 0.1));
     displayParameters.add(drawMode.set("drawMode", 0, 0, 1));
+    displayParameters.add(nFlameSequences.set("nFlameSequences", 5, 1, 10));
     displayGui.setup(displayParameters);
     
     inputGui.setPosition(10, 450);
