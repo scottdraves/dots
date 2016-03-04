@@ -23,7 +23,7 @@ void main() {
 
     vec4 ar = vec4(1.0, screen.x/screen.y, 1.0, 1.0);
 
-    if (lineWidth > 0.001) {
+    if (lineWidth > 0.5) {
         vec2 oneToTwo = (pt2-pt1).xy;
         vec2 perp = normalize(vec2(-oneToTwo.y, oneToTwo.x)) * lineWidth;
 
@@ -50,7 +50,7 @@ void main() {
         EndPrimitive();
     }
 
-    if (size1 > 0.001) {
+    if (size1 > 0.5) {
         gl_Position = pt1 + vec4(size1, -size1, 0, 0) * ar;
         fragColor = vertexColor[0];
         texCoord = vec2(1, 0);
@@ -74,7 +74,7 @@ void main() {
         EndPrimitive();
     }
 
-    if (size2 > 0.001) {
+    if (size2 > 0.5) {
         gl_Position = pt2 + vec4(size2, -size2, 0, 0) * ar;
         fragColor = vertexColor[1];
         texCoord = vec2(1, 0);

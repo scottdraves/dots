@@ -29,6 +29,7 @@ public:
     ofParameter<float> clearSpeed;
     ofParameter<float> particleAlpha;
     ofParameter<float> basePointRadius;
+    ofParameter<float> overallScale;
     ofParameter<float> baseSpeed, rmsSpeedMult;
     ofParameter<int> maxPixels, drawMode;
     ofParameter<float> pctToAllowRandom;

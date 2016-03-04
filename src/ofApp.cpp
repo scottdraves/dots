@@ -448,7 +448,7 @@ void ofApp::draw(){
 
     const ofVec3f cpCenter(cp.center[0], cp.center[1], 0);
     const ofVec3f screenCenter(ofGetWidth()/2.0, ofGetHeight()/2.0, 0);
-    const float screenScale = ofGetWidth() / 720.0;
+    const float screenScale = ofGetWidth() / 1024.0 * gui->overallScale;
 
     double totDotPixels = 0, totLinePixels = 0;
     for (int i = 0; i < nsamples-1; i++) {
