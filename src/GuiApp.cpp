@@ -29,6 +29,7 @@ void GuiApp::setup(){
     
     displayParameters.setName("Display");
     displayParameters.add(wandering.set("wandering", false));
+    displayParameters.add(dotSizeUsesAudio.set("dotSizeUsesAudio", true));
     displayParameters.add(clearSpeed.set("clearSpeed", 50, 0, 255));
     displayParameters.add(particleAlpha.set("particleAlpha", 50, 0, 255));
     displayParameters.add(basePointRadius.set("basePointRadius", 10, 0, 50));
@@ -51,6 +52,7 @@ void GuiApp::setup(){
     nAudioBuckets = 0;
     frameRate = 0;
     pctParticles = 0;
+    genomeIdx = 0;
     mpx = 0;
     mpy = 0;
     
@@ -88,6 +90,9 @@ void GuiApp::draw() {
         sprintf(s, "%d%% particles", (int)(pctParticles*100));
         ofDrawBitmapString(s, 150, 15);
     }
+
+    sprintf(s, "genome: %d", genomeIdx);
+    ofDrawBitmapString(s, 300, 15);
 
     ofTranslate(0, 17);
 

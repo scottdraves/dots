@@ -52,7 +52,7 @@ public:
     
     float 	counter;
     float curVol = 0.0;
-    int wandering;
+    bool wandering;
     int framecount;
     int fullscreen;
     float frameClearSpeed;
@@ -75,7 +75,8 @@ public:
     int frame, swapFrame, lastCP;
     vector<flameSeq> flameSequences;
 
-    int genomeIdx, gj;
+    int genomeIdx;
+    bool dotSizeUsesAudio;
     float mpx, mpy, mpxSmoothingFactor, mpySmoothingFactor;
     float mmpx, mmpy;
     float baseSpeed, rmsSpeedMult;

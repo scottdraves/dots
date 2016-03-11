@@ -25,7 +25,7 @@ public:
     ofParameter<int> soundStreamDevice;
     
     ofParameterGroup displayParameters;
-    ofParameter<bool> wandering;
+    ofParameter<bool> wandering, dotSizeUsesAudio;
     ofParameter<float> clearSpeed;
     ofParameter<float> particleAlpha;
     ofParameter<float> basePointRadius, maxLineLength;
@@ -40,6 +40,7 @@ public:
     float frameRate, pctParticles;
     ofTexture* visuals;
     float *audioBuckets;
+    int genomeIdx;
     int nAudioBuckets;
     float mpx, mpy;
     float audioCentroid, audioRMS;

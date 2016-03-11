@@ -11,7 +11,7 @@ void ofApp::setup(){
     counter = 0;
     nsamples = 25000;	seed = 0;
     genomeIdx = 0;
-    gj = 0;
+    dotSizeUsesAudio = true;
     transp = 60;
     ofSetWindowTitle("D0TS");
 
@@ -34,7 +34,7 @@ void ofApp::setup(){
     mpySmoothingFactor = 0.1;
     centroidMaxBucket = 0.35;
     rmsMultiple = 5;
-    wandering = 0;
+    wandering = false;
     frameClearSpeed = 50;
     
     ofHideCursor();
@@ -158,6 +158,7 @@ void ofApp::guiUpdate() {
     // Copy data to gui
     gui->frameRate = ofGetFrameRate();
     gui->visuals = &visualsFbo.getTexture();
+    gui->genomeIdx = genomeIdx;
     gui->mpx = mpx;
     gui->mpy = mpy;
     gui->audioCentroid = audioCentroid;
@@ -165,6 +166,7 @@ void ofApp::guiUpdate() {
 
     // Copy data from gui
     wandering = gui->wandering;
+    dotSizeUsesAudio = gui->dotSizeUsesAudio;
     fftDecayRate = gui->fftDecayRate;
     rmsMultiple = gui->rmsMultiple;
     centroidMaxBucket = gui->centroidMaxBucket;
@@ -224,8 +226,9 @@ void ofApp::flameUpdate() {
         int currCP = floor(counter/ispeed);
         if (lastCP != currCP) {
             swapFrame = frame;
+
             lastCP = currCP;
-            cout << "Now on CP " << currCP << endl;
+            genomeIdx = currCP;
         }
 
         flam3_interpolate(cps, ncps, counter/ispeed, 0, &cp);
@@ -273,7 +276,7 @@ void ofApp::flameUpdate() {
     for (int i = 0; i < nsamples-1; i++) {
         // Radius depends on mpy
         float radius = basePointRadius * mpy;
-        if (gj % 2 == 1) {
+        if (dotSizeUsesAudio) {
             int bucket = ofMap(i, 0, nsamples-1, 0, nFftBuckets/5);
             radius *= 10 * fftOutput[bucket];
         }
@@ -612,7 +615,7 @@ void ofApp::handleKey(int key) {
         if (++genomeIdx >= ncps) genomeIdx = 0;
         flam3_copy(&cp, &cps[genomeIdx]);
     } else if (key == 'd') {
-        gj = (gj+1) % ncps;
+        gui->dotSizeUsesAudio.set(!gui->dotSizeUsesAudio.get());
     } else if (key == 'a') {
         momode++;
     } else if (key == 's') {
