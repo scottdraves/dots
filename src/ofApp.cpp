@@ -400,12 +400,10 @@ void ofApp::setFlameParameters() {
         case 0:
             cp.xform[4].var[5] = mpx;
             cp.xform[3].var[8] = mpy;
-            
         case 1:
             cp.xform[5].var[1] = mpx;
             cp.xform[12].c[2][0] = mpy;
             break;
-            
         case 2:
             cp.xform[8].var[1] = mpx;
             cp.xform[8].julian_power = mpy + 0.5;
@@ -491,6 +489,7 @@ void ofApp::setFlameParameters() {
             cp.xform[2].julian_dist = mpy + 0.5;
             break;
         case 16:
+        {
             int b = 0;
             float lz = 0;
             for (int i = 0; i < cp.num_xforms; i++) {
@@ -505,6 +504,11 @@ void ofApp::setFlameParameters() {
                 cp.xform[i].c[2][1] += mpy;
             }
             break;
+        }
+        case 21:
+            cp.xform[0].julian_power = 10*mpy;
+            break;
+
     }
 
 }
