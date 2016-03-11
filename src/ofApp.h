@@ -88,6 +88,7 @@ public:
     double totDotPixels, totLinePixels;
 
     float particleAlpha, basePointRadius;
+    float maxLineLength;
 
     float * left;
     float * right;

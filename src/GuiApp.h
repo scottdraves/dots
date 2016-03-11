@@ -28,7 +28,7 @@ public:
     ofParameter<bool> wandering;
     ofParameter<float> clearSpeed;
     ofParameter<float> particleAlpha;
-    ofParameter<float> basePointRadius;
+    ofParameter<float> basePointRadius, maxLineLength;
     ofParameter<float> overallScale;
     ofParameter<float> baseSpeed, rmsSpeedMult;
     ofParameter<int> maxPixels, drawMode, nFlameSequences;

@@ -175,6 +175,7 @@ void ofApp::guiUpdate() {
     frameClearSpeed = gui->clearSpeed;
     particleAlpha = gui->particleAlpha;
     basePointRadius = gui->basePointRadius;
+    maxLineLength = gui->maxLineLength;
 
     if (audioMode != gui->audioMode) {
         audioMode = gui->audioMode;
@@ -552,7 +553,6 @@ void ofApp::draw(){
     if (gui->drawMode == 0) {
         int loc;
         billboardShader.begin();
-            const int maxLineLength = 100 + ofGetWidth()/3 * mpy;
             const int screenScale = ofGetWidth() / 1024.0 * gui->overallScale;
 
             billboardShader.setUniform2f("screen", ofGetWidth(), ofGetHeight());
