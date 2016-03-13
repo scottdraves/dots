@@ -507,8 +507,34 @@ void ofApp::setFlameParameters() {
         }
         case 21:
             cp.xform[0].julian_power = 10*mpy;
+            cp.xform[1].radial_blur_angle = mpx;
+            cp.xform[2].julian_power = 10+10*mpx;
             break;
-
+        case 22:
+            cp.xform[0].var[VAR_SPHERICAL] = mpy;
+            cp.xform[2].var[VAR_JULIAN] = mpx;
+            cp.xform[0].c[0][0] = mpy/10;
+            cp.xform[3].c[0][0] = 0.5+mpx/3;
+            cp.xform[7].c[2][0] = mpx*3;
+            cp.xform[7].c[2][1] = mpy*3;
+            break;
+        case 23:
+            cp.xform[0].var[VAR_SPHERICAL] = mpy;
+            cp.xform[0].var[VAR_DISC] = mpx + 1;
+            cp.xform[1].var[VAR_SPHERICAL] = mpx/2;
+            cp.xform[1].var[VAR_DISC] = mpy/2;
+            cp.xform[2].var[VAR_RECTANGLES] = mpy/2;
+            break;
+        case 24:
+            cp.xform[0].c[0][0] = -2*mpx;
+            cp.xform[1].c[1][1] = -2*mpy;
+            break;
+        case 25:
+            break;
+        case 26:
+            break;
+        case 27:
+            break;
     }
 
 }
