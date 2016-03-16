@@ -586,7 +586,7 @@ void ofApp::draw(){
     if (gui->drawMode == 0) {
         int loc;
         billboardShader.begin();
-            const int screenScale = ofGetWidth() / 1024.0 * gui->overallScale;
+            const float screenScale = ofGetWidth() / 1024.0 * gui->overallScale;
 
             billboardShader.setUniform2f("screen", ofGetWidth(), ofGetHeight());
             billboardShader.setUniform2f("cpCenter", cp.center[0], cp.center[1]);
