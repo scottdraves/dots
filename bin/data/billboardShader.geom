@@ -25,7 +25,7 @@ void main() {
 
     vec4 ar = vec4(1.0, screen.x/screen.y, 1.0, 1.0);
 
-    if (lineWidth > 0.5) {
+    if (lineWidth > 0.001) {
         float dist = length(pt2 - pt1);
         if (dist < maxLineLength) {
             vec2 oneToTwo = (pt2-pt1).xy;
@@ -55,7 +55,7 @@ void main() {
         }
     }
 
-    if (size1 > 0.5) {
+    if (size1 > 0.001) {
         gl_Position = pt1 + vec4(size1, -size1, 0, 0) * ar;
         fragColor = vertexColor[0];
         texCoord = vec2(1, 0);
@@ -79,7 +79,7 @@ void main() {
         EndPrimitive();
     }
 
-    if (size2 > 0.5) {
+    if (size2 > 0.001) {
         gl_Position = pt2 + vec4(size2, -size2, 0, 0) * ar;
         fragColor = vertexColor[1];
         texCoord = vec2(1, 0);
