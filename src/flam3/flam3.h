@@ -20,8 +20,7 @@
 #ifndef flam3_included
 #define flam3_included
 
-#define SVN_REV "3.0hack"
-#define PACKAGE_DATA_DIR "/home/scottdraves"
+#define PACKAGE_DATA_DIR "/dev/null"
 
 #include <stdio.h>
 #include <libxml/parser.h>
@@ -77,6 +76,8 @@ extern char *flam3_variation_names[];
 
 #define flam3_palette_interpolation_hsv   0
 #define flam3_palette_interpolation_sweep 1
+#define flam3_palette_interpolation_rgb   2
+#define flam3_palette_interpolation_hsv_circular  3
 
 #define flam3_max_action_length 10000
 
@@ -454,6 +455,7 @@ typedef struct {
    int interpolation;
    int interpolation_type;
    int palette_interpolation;
+   double hsv_rgb_palette_blend;
    int num_xforms;
    int final_xform_index;
    int final_xform_enable;

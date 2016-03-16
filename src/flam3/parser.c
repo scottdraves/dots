@@ -142,7 +142,8 @@ int flam3_interp_missing_colors(flam3_genome *cp) {
     int str,enr;
     int i,j,k;
     double prcr;
-      
+    
+    minix = 0;  
     for (i=0; i<256; i++) {
         if (cp->palette[i].index >= 0) {
             minix = i;
@@ -158,7 +159,8 @@ int flam3_interp_missing_colors(flam3_genome *cp) {
     }
     
     wrapmin = minix + 256;
-      
+    
+    maxix = 255;  
     for (i=255;i>=0;i--) {
         if (cp->palette[i].index >= 0) {
             maxix = i;
@@ -176,7 +178,9 @@ int flam3_interp_missing_colors(flam3_genome *cp) {
             /* Start of a range of negs */
             str = i;
             intl = i-1;
+            intr = i+1;
             colorli = intl;
+            colorri = intr;
             while (cp->palette[i].index<0 && i<256) {
                 enr = i;
                 intr = i+1;
@@ -290,7 +294,7 @@ int parse_flame_element(xmlNode *flame_node, flam3_genome *loc_current_cp) {
    char *att_str;
    int num_std_xforms=-1;
    char tmps[2];
-   int i,j;
+   int i;
    flam3_xform tmpcpy;
    flam3_chaos_entry *xaos=NULL;
    int num_xaos=0;
@@ -328,6 +332,8 @@ int parse_flame_element(xmlNode *flame_node, flam3_genome *loc_current_cp) {
       /* Compare attribute names */
       if (!xmlStrcmp(cur_att->name, (const xmlChar *)"time")) {
          cp->time = flam3_atof(att_str);
+      } else if (!xmlStrcmp(cur_att->name, (const xmlChar *)"hsv_rgb_palette_blend")) {
+         cp->hsv_rgb_palette_blend = flam3_atof(att_str);
       } else if (!xmlStrcmp(cur_att->name, (const xmlChar *)"interpolation")) {
      if (!strcmp("linear", att_str)) {
          cp->interpolation = flam3_interpolation_linear;
@@ -341,6 +347,10 @@ int parse_flame_element(xmlNode *flame_node, flam3_genome *loc_current_cp) {
          cp->palette_interpolation = flam3_palette_interpolation_hsv;
      } else if  (!strcmp("sweep", att_str)) {
          cp->palette_interpolation = flam3_palette_interpolation_sweep;
+     } else if  (!strcmp("hsv_circular", att_str)) {
+         cp->palette_interpolation = flam3_palette_interpolation_hsv_circular;
+     } else if  (!strcmp("rgb", att_str)) {
+         cp->palette_interpolation = flam3_palette_interpolation_rgb;
      } else {
          fprintf(stderr, "warning: unrecognized palette interpolation type %s.\n", att_str);
      }
@@ -550,7 +560,7 @@ int parse_flame_element(xmlNode *flame_node, flam3_genome *loc_current_cp) {
          }
       } else if (!xmlStrcmp(chld_node->name, (const xmlChar *)"colors")) {
 
-         int count;
+         int count = 0;
 
          /* Loop through the attributes of the colors element */
          att_ptr = chld_node->properties;
@@ -1251,14 +1261,14 @@ void flam3_edit_print(FILE *f, xmlNodePtr editNode, int tabs, int formatting) {
    int ti,strl;
    xmlAttrPtr att_ptr=NULL,cur_att=NULL;
    xmlNodePtr chld_ptr=NULL, cur_chld=NULL;
-   int edit_or_sheep = 0, indent_printed = 0;
+   int indent_printed = 0;
    char *ai;
    int tablim = argi("print_edit_depth",0);
 
    char *att_str,*cont_str,*cpy_string;
 
    if (tablim>0 && tabs>tablim)
-   return;
+      return;
 
    /* If this node is an XML_ELEMENT_NODE, print it and it's attributes */
    if (editNode->type==XML_ELEMENT_NODE) {
@@ -1274,13 +1284,8 @@ void flam3_edit_print(FILE *f, xmlNodePtr editNode, int tabs, int formatting) {
       /* This can either be an edit node or a sheep node */
       /* If it's an edit node, add one to the tab        */
       if (!xmlStrcmp(editNode->name, (const xmlChar *)"edit")) {
-         edit_or_sheep = 1;
          tabs ++;
-      } else if (!xmlStrcmp(editNode->name, (const xmlChar *)"sheep"))
-         edit_or_sheep = 2;
-      else
-         edit_or_sheep = 0;
-
+      }
 
       /* Print the attributes */
       att_ptr = editNode->properties;

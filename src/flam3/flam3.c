@@ -61,8 +61,10 @@
 
 char *flam3_version() {
 
-  if (strcmp(SVN_REV, "exported"))
-    return flam3_os "-" VERSION "." SVN_REV;
+#ifdef GIT_REV
+  if (strcmp(GIT_REV, ""))
+    return flam3_os "-" GIT_REV;
+#endif
   return flam3_os "-" VERSION;
 }
 
@@ -208,7 +210,7 @@ int flam3_create_chaos_distrib(flam3_genome *cp, int xi, unsigned short *xform_d
       while (r >= t) {
          j++;
 
-         if (xi>=0)	
+         if (xi>=0)
             t += cp->xform[j].density*cp->chaos[xi][j];
          else
             t += cp->xform[j].density;
@@ -299,7 +301,7 @@ int flam3_iterate(flam3_genome *cp, int n, int fuse,  double *samples, unsigned 
 }
 
 int prepare_precalc_flags2(flam3_genome *cp) {
-  return prepare_precalc_flags(cp);
+    return prepare_precalc_flags(cp);
 }
 
 int flam3_xform_preview(flam3_genome *cp, int xi, double range, int numvals, int depth, double *result, randctx *rc) {
@@ -483,6 +485,8 @@ flam3_genome *sheep_edge(flam3_genome *cp, double blend, int seqflag, double sta
       /* Rotate the aligned xforms */
       flam3_rotate(&spun[0], blend*360.0, spun[0].interpolation_type);
       flam3_rotate(&spun[1], blend*360.0, spun[0].interpolation_type);
+
+      //fprintf(stderr, "xyzzy %d %d\n", spun[0].palette_interpolation, spun[1].palette_interpolation);
 
       /* Now call the interpolation */
       if (argi("unsmoother",0) == 0)
@@ -787,7 +791,8 @@ void flam3_interpolate(flam3_genome cps[], int ncps,
    result->time = time;
    result->interpolation = flam3_interpolation_linear;
    result->interpolation_type = cpi[0].interpolation_type;
-   result->palette_interpolation = flam3_palette_interpolation_hsv;
+   result->palette_interpolation = flam3_palette_interpolation_hsv_circular;
+   result->hsv_rgb_palette_blend = 0.0;
 
    if (!smoothflag) {
        flam3_interpolate_n(result, 2, cpi, c, stagger);
@@ -1283,7 +1288,8 @@ void clear_cp(flam3_genome *cp, int default_flag) {
     cp->rotate = 0.0;
     cp->pixels_per_unit = 50;
     cp->interpolation = flam3_interpolation_linear;
-    cp->palette_interpolation = flam3_palette_interpolation_hsv;
+    cp->palette_interpolation = flam3_palette_interpolation_hsv_circular;
+    cp->hsv_rgb_palette_blend = 0.0;
 
     cp->genome_index = 0;
     memset(cp->parent_fname,0,flam3_parent_fn_len);
@@ -1584,7 +1590,8 @@ void flam3_apply_template(flam3_genome *cp, flam3_genome *templ) {
       cp->ntemporal_samples = templ->ntemporal_samples;
    if (templ->width > 0) {
       /* preserving scale should be an option */
-      cp->pixels_per_unit = cp->pixels_per_unit * templ->width / cp->width;
+      // cp->pixels_per_unit = cp->pixels_per_unit * templ->width / cp->width;
+      cp->pixels_per_unit = cp->pixels_per_unit * templ->height / cp->height;
       cp->width = templ->width;
    }
    if (templ->height > 0)
@@ -1617,6 +1624,10 @@ void flam3_apply_template(flam3_genome *cp, flam3_genome *templ) {
       cp->highlight_power = templ->highlight_power;
    if (templ->palette_mode >= 0)
       cp->palette_mode = templ->palette_mode;
+   if (templ->palette_interpolation >= 0)
+      cp->palette_interpolation = templ->palette_interpolation;
+   if (templ->hsv_rgb_palette_blend >= 0)
+      cp->hsv_rgb_palette_blend = templ->hsv_rgb_palette_blend;
 
 }
 
@@ -1627,7 +1638,6 @@ char *flam3_print_to_string(flam3_genome *cp) {
    char *genome_string;
    
    int using_tmpdir = 0;
-   char *tmp_path;
    char tmpnam[256];
    
    tmpflame = tmpfile();
@@ -1635,7 +1645,7 @@ char *flam3_print_to_string(flam3_genome *cp) {
 #ifdef _WIN32       
        // This might be a permissions problem, so let's try to open a
        // tempfile in the env var TEMP's area instead
-       tmp_path = getenv("TEMP");
+       char* tmp_path = getenv("TEMP");
 
        if (tmp_path != NULL) {
           strcpy(tmpnam, tmp_path);
@@ -1781,8 +1791,17 @@ void flam3_print(FILE *f, flam3_genome *cp, char *extra_attributes, int print_ed
        fprintf(f, " interpolation_type=\"older\"");
 
 
-   if (flam3_palette_interpolation_hsv != cp->palette_interpolation)
+   if (flam3_palette_interpolation_sweep == cp->palette_interpolation)
        fprintf(f, " palette_interpolation=\"sweep\"");
+   else if (flam3_palette_interpolation_rgb == cp->palette_interpolation)
+       fprintf(f, " palette_interpolation=\"rgb\"");
+   else if (flam3_palette_interpolation_hsv == cp->palette_interpolation)
+       fprintf(f, " palette_interpolation=\"hsv\"");
+   else if (flam3_palette_interpolation_hsv_circular == cp->palette_interpolation) {
+       fprintf(f, " palette_interpolation=\"hsv_circular\"");
+       if (cp->hsv_rgb_palette_blend > 0.0)
+           fprintf(f, " hsv_rgb_palette_blend=\"%g\"", cp->hsv_rgb_palette_blend);
+   }
 
    if (extra_attributes)
       fprintf(f, " %s", extra_attributes);
@@ -1934,6 +1953,7 @@ void flam3_print_xform(FILE *f, flam3_xform *x, int final_flag, int numstd, doub
 
    for (j = 0; j < lnv; j++) {
       double v = x->var[j];
+      if (j == VAR_TWINTRIAN) continue;
       if (0.0 != v) {
          fprintf(f, "%s=\"%g\" ", flam3_variation_names[j], v);
          if (j==VAR_BLOB)
@@ -2644,7 +2664,7 @@ void add_to_action(char *action, char *addtoaction) {
 
 void flam3_cross(flam3_genome *cp0, flam3_genome *cp1, flam3_genome *out, int cross_mode, randctx *rc, char *action) {
 
-   int i0,i1, i,j, rb;
+   int i,j, rb;
    char ministr[10];   
 
    if (cross_mode == CROSS_NOT_SPECIFIED) {
@@ -3058,7 +3078,7 @@ static int random_varn(int n) {
 
 void flam3_random(flam3_genome *cp, int *ivars, int ivars_n, int sym, int spec_xforms) {
 
-   int i, j, nxforms, var, samed, multid, samepost, postid, addfinal=0;
+   int i, nxforms, var, samed, multid, samepost, postid, addfinal=0;
    int finum = -1;
    int n;
    char *ai;
@@ -3082,7 +3102,8 @@ void flam3_random(flam3_genome *cp, int *ivars, int ivars_n, int sym, int spec_x
       fprintf(stderr,"error getting palette from xml file, setting to all white\n");
    cp->time = 0.0;
    cp->interpolation = flam3_interpolation_linear;
-   cp->palette_interpolation = flam3_palette_interpolation_hsv;
+   cp->palette_interpolation = flam3_palette_interpolation_hsv_circular;
+   cp->hsv_rgb_palette_blend = 0.0;
 
    /* Choose the number of xforms */
    if (spec_xforms>0) {

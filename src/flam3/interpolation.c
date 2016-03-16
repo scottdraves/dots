@@ -170,6 +170,17 @@ void interpolate_cmap(flam3_palette cmap, double blend,
       
       s[4] = p0[i].index;
       t[4] = p1[i].index;
+
+      /* take the shorter way around the hue circle */
+//      if (0 == i) {
+//	fprintf(stderr, "xxx interpolating between hues, %g %g\n", s[0], t[0]);
+ //     }
+      
+      /* Correct the first hue to go the short way around */
+      if ((s[0] - t[0]) > 3.0)  /* first hue much bigger than second hue */
+        s[0] -= 6.0;
+      if ((s[0] - t[0]) < -3.0)  /* first hue much smaller than second hue */
+	s[0] += 6.0;
     
       for (j = 0; j < 5; j++)
          t[j] = ((1.0-blend) * s[j]) + (blend * t[j]);
@@ -361,35 +372,75 @@ double get_stagger_coef(double t, double stagger_prc, int num_xforms, int this_x
    and have final xform in the same slot) */
 void flam3_interpolate_n(flam3_genome *result, int ncp,
           flam3_genome *cpi, double *c, double stagger) {
-   int i, j, k, numstd;
-   
-   if (flam3_palette_interpolation_hsv == cpi[0].palette_interpolation) {
-   
-      for (i = 0; i < 256; i++) {
-         double t[3], s[5];
-         int alpha1 = 1;
+   int i, j, k, l, numstd;
 
-         s[0] = s[1] = s[2] = s[3] = s[4] = 0.0;
+   if (flam3_palette_interpolation_sweep != cpi[0].palette_interpolation) {
+
+      /* rgb, hsv or hsv_circular modes. */
+      double rgb_fraction = 0.0;  /* Assume that we are in plain hsv mode */
+      if (flam3_palette_interpolation_rgb == cpi[0].palette_interpolation)
+         rgb_fraction = 1.0;  /* All RGB output */
+      else if (flam3_palette_interpolation_hsv_circular == cpi[0].palette_interpolation)
+         rgb_fraction = cpi[0].hsv_rgb_palette_blend;
+
+      for (i = 0; i < 256; i++) {
+         double col_rgb[3], col_hsv[3];
+         double new_rgb[3] = {0, 0, 0};
+         double new_hsv[3] = {0, 0, 0};
+         double new_count = 0, new_index = 0;
+         int alpha1 = 1;
          
+         /* Loop over each control point's color at this index */
          for (k = 0; k < ncp; k++) {
-            rgb2hsv(cpi[k].palette[i].color, t);
-            for (j = 0; j < 3; j++)
-               s[j] += c[k] * t[j];
-            
-            s[3] += c[k] * cpi[k].palette[i].color[3];
+
+            /* Convert to hsv */
+            rgb2hsv(cpi[k].palette[i].color, col_hsv);
+	    
+	    /* Store the rgb */
+            for (l = 0; l < 3; l++)
+               col_rgb[l] = cpi[k].palette[i].color[l];
+
+	    if (2 == ncp && k == 0 && cpi[0].palette_interpolation == flam3_palette_interpolation_hsv_circular) {
+               /* only adjust the first coordinate based on the other control point's hue */
+               double second_color[3];
+               rgb2hsv(cpi[1].palette[i].color, second_color);
+
+               /* Adjust the hue so that we go the shorter direction around the circle */
+               if ((second_color[0] - col_hsv[0]) > 3.0) {
+                  col_hsv[0] += 6.0;
+               } else if ((second_color[0] - col_hsv[0]) < -3.0) {
+                  col_hsv[0] -= 6.0;	          
+               }
+            }
+
+            for (j = 0; j < 3; j++) {
+               new_rgb[j] += c[k] * col_rgb[j];
+               new_hsv[j] += c[k] * col_hsv[j];
+            }
+               
+            /* Compute the other two components of the color (count and index) */            
+            new_count += c[k] * cpi[k].palette[i].color[3];
             if (cpi[k].palette[i].color[3] != 1.0)
                alpha1 = 0;
-            s[4] += c[k] * cpi[k].palette[i].index;
+            new_index += c[k] * cpi[k].palette[i].index;
             
          }
 
          if (alpha1 == 1)
-            s[3] = 1.0;
-       
-         hsv2rgb(s, result->palette[i].color);
-         result->palette[i].color[3] = s[3];
-         result->palette[i].index = s[4];
-       
+            new_count = 1.0;
+
+         /* Convert the new hsv coord to back rgb */
+         double new_hsv_rgb[3];
+         hsv2rgb(new_hsv, new_hsv_rgb);
+
+         /* Store the interpolated color in the new palette */
+         for (l = 0; l < 3; l++)
+            result->palette[i].color[l] = rgb_fraction * new_rgb[l] + (1.0-rgb_fraction) * new_hsv_rgb[l];
+            
+         result->palette[i].color[3] = new_count;
+         result->palette[i].index = new_index;
+
+         /* Clip the new color appropriately */
          for (j = 0; j < 4; j++) {
             if (result->palette[i].color[j] < 0.0)
                result->palette[i].color[j] = 0.0;
@@ -417,6 +468,8 @@ void flam3_interpolate_n(flam3_genome *result, int ncp,
    result->palette_mode = cpi[0].palette_mode;
 
    result->interpolation_type = cpi[0].interpolation_type;
+   result->palette_interpolation = cpi[0].palette_interpolation;
+   result->hsv_rgb_palette_blend = cpi[0].hsv_rgb_palette_blend;
    INTERP(brightness);
    INTERP(contrast);
    INTERP(highlight_power);
@@ -461,7 +514,7 @@ void flam3_interpolate_n(flam3_genome *result, int ncp,
    /* Interpolate each xform */
    for (i = 0; i < cpi[0].num_xforms; i++) {
    
-      double csave[2];     
+      double csave[2] = {0, 0};     
       double td;
       int all_id;
       int nx = cpi[0].num_xforms-(cpi[0].final_xform_index>=0);
