@@ -540,11 +540,17 @@ void ofApp::setFlameParameters() {
             renderCp.xform[0].c[0][0] = -2*mpx;
             renderCp.xform[1].c[1][1] = -2*mpy;
             break;
-        case 25:
-            break;
-        case 26:
-            break;
-        case 27:
+        case 35:
+            renderCp.xform[0].c[2][0] = cp.xform[0].c[2][0] + audioEffectSize * mpx;
+            renderCp.xform[0].c[2][1] = cp.xform[0].c[2][1] + audioEffectSize * mpy;
+            renderCp.xform[1].c[2][0] = cp.xform[1].c[2][0] + audioEffectSize * mpx;
+            renderCp.xform[1].c[2][1] = cp.xform[1].c[2][1] + audioEffectSize * mpy;
+
+            renderCp.xform[4].post[2][0] = cp.xform[4].post[2][0] + audioEffectSize * mpx;
+            renderCp.xform[4].post[2][1] = cp.xform[4].post[2][1] + audioEffectSize * mpy;
+
+            renderCp.xform[6].c[2][0] = cp.xform[4].c[2][0] + audioEffectSize * mpx;
+            renderCp.xform[6].c[2][1] = cp.xform[4].c[2][1] + audioEffectSize * mpy;
             break;
     }
 
