@@ -33,6 +33,7 @@ public:
     ofParameter<float> baseSpeed, rmsSpeedMult;
     ofParameter<int> maxPixels, drawMode, nFlameSequences;
     ofParameter<float> pctToAllowRandom;
+    ofParameter<float> audioEffectSize;
     
     ofxPanel analysisGui, inputGui, displayGui;
     

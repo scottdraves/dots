@@ -78,6 +78,7 @@ public:
     int genomeIdx;
     bool dotSizeUsesAudio;
     float mpx, mpy, mpxSmoothingFactor, mpySmoothingFactor;
+    float audioEffectSize;
     float mmpx, mmpy;
     float baseSpeed, rmsSpeedMult;
 

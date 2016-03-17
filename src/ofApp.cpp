@@ -26,6 +26,7 @@ void ofApp::setup(){
     // GUI-displayed
     mpx = mpy = 0.0;
     mmpx = mmpy = 0.0;
+    audioEffectSize = 1.0;
 
     // GUI-controlled
     baseSpeed = 0.25;
@@ -178,6 +179,7 @@ void ofApp::guiUpdate() {
     particleAlpha = gui->particleAlpha;
     basePointRadius = gui->basePointRadius;
     maxLineLength = gui->maxLineLength;
+    audioEffectSize = gui->audioEffectSize;
 
     if (audioMode != gui->audioMode) {
         audioMode = gui->audioMode;
