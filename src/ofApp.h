@@ -70,7 +70,7 @@ public:
     flam3_genome *genebank;
     flam3_genome *cps;
     flam3_genome *cpv;
-    flam3_genome cp;
+    flam3_genome cp, renderCp;
 
     int frame, swapFrame, lastCP;
     vector<flameSeq> flameSequences;

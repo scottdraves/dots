@@ -71,6 +71,7 @@ void ofApp::setup(){
         genebank = flam3_parse_from_file(in, inf, flam3_defaults_on, &ngenebank);
     }
     memset(&cp, 0, sizeof(flam3_genome));
+    memset(&renderCp, 0, sizeof(flam3_genome));
     flam3_copy(&cp, &cps[genomeIdx]);
 	   
     audioMode = AUDIO_MODE_MIC;
@@ -244,17 +245,23 @@ void ofApp::flameUpdate() {
         return;
     }
 
+    // Copy the true cp to a renderable version we'll animate
+    flam3_copy(&renderCp, &cp);
+
+    // Update flam3 parameters to animate
+    setFlameParameters();
+
+    // Update xform_distribution using renderable xform
     const int flameSeqIdxToUpdate = (frame-swapFrame) % flameSequences.size();
     flameSeq &seqToUpdate = flameSequences[flameSeqIdxToUpdate];
     if (seqToUpdate.xform_distribution) {
         free(seqToUpdate.xform_distribution);
     }
     seqToUpdate.frameUpdated = frame;
-    seqToUpdate.xform_distribution = flam3_create_xform_distrib(&cp);
+    seqToUpdate.xform_distribution = flam3_create_xform_distrib(&renderCp);
 
+    // Render points
     std::swap(prevFlameSamples, currFlameSamples);
-    setFlameParameters();
-
     const int nFlameSeqs = MIN(flameSequences.size(), (frame-swapFrame)+1);
     const int nSamplesPerSeq = nsamples / nFlameSeqs;
     for (int i = nFlameSeqs-1; i >= 0 ; --i) {
@@ -265,7 +272,7 @@ void ofApp::flameUpdate() {
         flameSamples[2] = flam3_random_isaac_01(&rc);
         flameSamples[3] = flam3_random_isaac_01(&rc);
 
-        flam3_iterate(&cp,
+        flam3_iterate(&renderCp,
                       nSamplesPerSeq,
                       20,
                       flameSamples,
@@ -400,136 +407,138 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels){
 void ofApp::setFlameParameters() {
     switch (genomeIdx) {
         case 0:
-            cp.xform[4].var[5] = mpx;
-            cp.xform[3].var[8] = mpy;
+            renderCp.xform[4].var[5] = mpx;
+            renderCp.xform[3].var[8] = mpy;
+            renderCp.xform[5].var[1] = mpx;
+            break;
         case 1:
-            cp.xform[5].var[1] = mpx;
-            cp.xform[12].c[2][0] = mpy;
+            renderCp.xform[5].var[1] = mpx;
+            renderCp.xform[12].c[2][0] = mpy;
             break;
         case 2:
-            cp.xform[8].var[1] = mpx;
-            cp.xform[8].julian_power = mpy + 0.5;
+            renderCp.xform[8].var[1] = mpx;
+            renderCp.xform[8].julian_power = mpy + 0.5;
             break;
         case 3:
-            cp.xform[0].c[0][0] = -mpx+0.5;
-            cp.xform[0].c[1][1] = -mpy+0.5;
+            renderCp.xform[0].c[0][0] = -mpx+0.5;
+            renderCp.xform[0].c[1][1] = -mpy+0.5;
             break;
         case 4:
-            cp.xform[2].color = 0.2;
-            cp.xform[2].c[2][0] = mpy;
-            cp.xform[3].var[1] = -mpx;
-            cp.xform[2].c[1][0] = 1/(mpx+0.1);
+            renderCp.xform[2].color = 0.2;
+            renderCp.xform[2].c[2][0] = mpy;
+            renderCp.xform[3].var[1] = -mpx;
+            renderCp.xform[2].c[1][0] = 1/(mpx+0.1);
             break;
         case 5:
-            cp.xform[0].var[VAR_DISC] = mpx;
-            cp.xform[1].c[2][0] = 2*(mpx-0.5);
-            cp.xform[1].c[2][1] = 2*(mpy-0.5);
+            renderCp.xform[0].var[VAR_DISC] = mpx;
+            renderCp.xform[1].c[2][0] = 2*(mpx-0.5);
+            renderCp.xform[1].c[2][1] = 2*(mpy-0.5);
             break;
         case 6:
-            cp.xform[0].rectangles_x = mpx;
-            cp.xform[0].rectangles_y = mpy;
-            cp.xform[0].c[0][0] = mpx + 0.5;
-            cp.xform[0].c[1][1] = mpy - 1.5;
-            cp.xform[10].c[0][0] = mpx/2 - 1.0;
-            cp.xform[10].c[1][1] = mpy/2 - 1.0;
+            renderCp.xform[0].rectangles_x = mpx;
+            renderCp.xform[0].rectangles_y = mpy;
+            renderCp.xform[0].c[0][0] = mpx + 0.5;
+            renderCp.xform[0].c[1][1] = mpy - 1.5;
+            renderCp.xform[10].c[0][0] = mpx/2 - 1.0;
+            renderCp.xform[10].c[1][1] = mpy/2 - 1.0;
             break;
         case 7:
-            cp.xform[3].c[2][0] = mpx;
-            cp.xform[3].c[2][1] = mpy;
-            cp.xform[3].c[0][0] = mpx - 1.5;
-            cp.xform[3].c[1][1] = mpy;
-            cp.xform[3].var[0] = mpx;
-            cp.xform[3].var[1] = mpy;
+            renderCp.xform[3].c[2][0] = mpx;
+            renderCp.xform[3].c[2][1] = mpy;
+            renderCp.xform[3].c[0][0] = mpx - 1.5;
+            renderCp.xform[3].c[1][1] = mpy;
+            renderCp.xform[3].var[0] = mpx;
+            renderCp.xform[3].var[1] = mpy;
             break;
         case 8:
-            cp.xform[0].c[2][0] = mpx - 0.5;
-            cp.xform[0].c[2][1] = mpy - 0.5;
-            cp.xform[1].c[0][0] = mpx - 0.5;
-            cp.xform[1].c[1][1] = mpy - 0.5;
-            cp.xform[2].c[2][0] = mpx - 0.5;
-            cp.xform[2].c[2][1] = mpy - 0.5;
-            cp.xform[4].julian_dist = 1 - mpx;
-            cp.xform[5].julian_dist = 1 - mpy;
+            renderCp.xform[0].c[2][0] = mpx - 0.5;
+            renderCp.xform[0].c[2][1] = mpy - 0.5;
+            renderCp.xform[1].c[0][0] = mpx - 0.5;
+            renderCp.xform[1].c[1][1] = mpy - 0.5;
+            renderCp.xform[2].c[2][0] = mpx - 0.5;
+            renderCp.xform[2].c[2][1] = mpy - 0.5;
+            renderCp.xform[4].julian_dist = 1 - mpx;
+            renderCp.xform[5].julian_dist = 1 - mpy;
             break;
         case 9:
-            cp.xform[0].var[VAR_WAVES] = mpx*2 + 0.2;
-            cp.xform[1].var[VAR_DISC] = mpy*2 + 0.1;
+            renderCp.xform[0].var[VAR_WAVES] = mpx*2 + 0.2;
+            renderCp.xform[1].var[VAR_DISC] = mpy*2 + 0.1;
             break;
         case 10:
-            cp.xform[1].juliascope_power = 1/(mpx + 0.1);
-            cp.xform[1].julian_power = 1/(mpy + 0.1);
+            renderCp.xform[1].juliascope_power = 1/(mpx + 0.1);
+            renderCp.xform[1].julian_power = 1/(mpy + 0.1);
             break;
         case 11:
-            cp.xform[0].rectangles_x = mpx;
-            cp.xform[0].rectangles_y = mpy;
-            cp.xform[1].var[VAR_SPHERICAL] = 0.02 + mpx / 10;
-            cp.xform[2].var[VAR_SPHERICAL] = 0.02 + mpy / 10;
-            cp.xform[4].c[0][0] = 1.5 + mpx;
+            renderCp.xform[0].rectangles_x = mpx;
+            renderCp.xform[0].rectangles_y = mpy;
+            renderCp.xform[1].var[VAR_SPHERICAL] = 0.02 + mpx / 10;
+            renderCp.xform[2].var[VAR_SPHERICAL] = 0.02 + mpy / 10;
+            renderCp.xform[4].c[0][0] = 1.5 + mpx;
             break;
         case 12:
-            cp.xform[0].c[0][0] = 1.5 + mpx;
-            cp.xform[1].var[VAR_DISC] = 0.5 + mpy/3.0;
+            renderCp.xform[0].c[0][0] = 1.5 + mpx;
+            renderCp.xform[1].var[VAR_DISC] = 0.5 + mpy/3.0;
             break;
         case 13:
-            cp.xform[0].c[0][0] = 0.4 + mpy;
-            cp.xform[0].var[VAR_GAUSSIAN_BLUR] = 0.1 + mpx/2;
-            cp.xform[1].rectangles_x = mpx;
-            cp.xform[1].rectangles_y = mpy;
-            cp.xform[4].curl_c2 = mpx;
+            renderCp.xform[0].c[0][0] = 0.4 + mpy;
+            renderCp.xform[0].var[VAR_GAUSSIAN_BLUR] = 0.1 + mpx/2;
+            renderCp.xform[1].rectangles_x = mpx;
+            renderCp.xform[1].rectangles_y = mpy;
+            renderCp.xform[4].curl_c2 = mpx;
             break;
         case 14:
-            cp.xform[0].julian_power = 8.5 + mpx;
-            cp.xform[1].c[1][1] = mpy;
+            renderCp.xform[0].julian_power = 8.5 + mpx;
+            renderCp.xform[1].c[1][1] = mpy;
             break;
         case 15:
-            cp.xform[0].c[0][0] = -0.6 + mpx;
-            cp.xform[0].c[1][1] = -0.5 + mpy;
-            cp.xform[1].var[VAR_SINUSOIDAL] = 0.05 + mpx / 4;
-            cp.xform[1].c[2][0] = - mpx;
-            cp.xform[1].c[2][1] = mpy;
-            cp.xform[2].julian_power = 2 * mpx + 0.5;
-            cp.xform[2].julian_dist = mpy + 0.5;
+            renderCp.xform[0].c[0][0] = -0.6 + mpx;
+            renderCp.xform[0].c[1][1] = -0.5 + mpy;
+            renderCp.xform[1].var[VAR_SINUSOIDAL] = 0.05 + mpx / 4;
+            renderCp.xform[1].c[2][0] = - mpx;
+            renderCp.xform[1].c[2][1] = mpy;
+            renderCp.xform[2].julian_power = 2 * mpx + 0.5;
+            renderCp.xform[2].julian_dist = mpy + 0.5;
             break;
         case 16:
         {
             int b = 0;
             float lz = 0;
-            for (int i = 0; i < cp.num_xforms; i++) {
+            for (int i = 0; i < renderCp.num_xforms; i++) {
                 for (int j = 0; j < 3; j++) {
                     for (int k = 0; k < 2; k++) {
                         float nz = fftOutput[(5*b++)%nFftBuckets];
-                        cp.xform[i].c[j][k] = 5 * (nz - lz);
+                        renderCp.xform[i].c[j][k] = 5 * (nz - lz);
                         lz = nz;
                     }
                 }
-                cp.xform[i].c[2][0] += mpx;
-                cp.xform[i].c[2][1] += mpy;
+                renderCp.xform[i].c[2][0] += mpx;
+                renderCp.xform[i].c[2][1] += mpy;
             }
             break;
         }
         case 21:
-            cp.xform[0].julian_power = 10*mpy;
-            cp.xform[1].radial_blur_angle = mpx;
-            cp.xform[2].julian_power = 10+10*mpx;
+            renderCp.xform[0].julian_power = 10*mpy;
+            renderCp.xform[1].radial_blur_angle = mpx;
+            renderCp.xform[2].julian_power = 10+10*mpx;
             break;
         case 22:
-            cp.xform[0].var[VAR_SPHERICAL] = mpy;
-            cp.xform[2].var[VAR_JULIAN] = mpx;
-            cp.xform[0].c[0][0] = mpy/10;
-            cp.xform[3].c[0][0] = 0.5+mpx/3;
-            cp.xform[7].c[2][0] = mpx*3;
-            cp.xform[7].c[2][1] = mpy*3;
+            renderCp.xform[0].var[VAR_SPHERICAL] = mpy;
+            renderCp.xform[2].var[VAR_JULIAN] = mpx;
+            renderCp.xform[0].c[0][0] = mpy/10;
+            renderCp.xform[3].c[0][0] = 0.5+mpx/3;
+            renderCp.xform[7].c[2][0] = mpx*3;
+            renderCp.xform[7].c[2][1] = mpy*3;
             break;
         case 23:
-            cp.xform[0].var[VAR_SPHERICAL] = mpy;
-            cp.xform[0].var[VAR_DISC] = mpx + 1;
-            cp.xform[1].var[VAR_SPHERICAL] = mpx/2;
-            cp.xform[1].var[VAR_DISC] = mpy/2;
-            cp.xform[2].var[VAR_RECTANGLES] = mpy/2;
+            renderCp.xform[0].var[VAR_SPHERICAL] = mpy;
+            renderCp.xform[0].var[VAR_DISC] = mpx + 1;
+            renderCp.xform[1].var[VAR_SPHERICAL] = mpx/2;
+            renderCp.xform[1].var[VAR_DISC] = mpy/2;
+            renderCp.xform[2].var[VAR_RECTANGLES] = mpy/2;
             break;
         case 24:
-            cp.xform[0].c[0][0] = -2*mpx;
-            cp.xform[1].c[1][1] = -2*mpy;
+            renderCp.xform[0].c[0][0] = -2*mpx;
+            renderCp.xform[1].c[1][1] = -2*mpy;
             break;
         case 25:
             break;
@@ -710,31 +719,38 @@ int ofApp::randomi(int n) {
 
 void ofApp::killCurrent() {
     flam3_genome result;
+    memset(&result, 0, sizeof(flam3_genome));
     initrc(time(NULL));
     if (randomi(2)) {
+        cout << "Crossing random with random" << endl;
         int parent0 = randomi(ncps);
         int parent1 = randomi(ncps);
         flam3_cross(&cps[parent0], &cps[parent1], &result, CROSS_NOT_SPECIFIED, &rc, NULL);
     } else {
+        cout << "Crossing random with genebank" << endl;
         int parent0 = randomi(ncps);
         int parent1 = randomi(ngenebank);
         flam3_cross(&cps[parent0], &genebank[parent1], &result, CROSS_NOT_SPECIFIED, &rc, NULL);
     }
     flam3_copy(&cp, &result);
     flam3_copy(&cps[genomeIdx], &result);
+    swapFrame = frame;
 }
 
 void ofApp::mateCurrent() {
     flam3_genome result;
+    memset(&result, 0, sizeof(flam3_genome));
     initrc(time(NULL));
     int parent1 = random()%ncps;
     flam3_cross(&cps[genomeIdx], &cps[parent1], &result, CROSS_NOT_SPECIFIED, &rc, NULL);
     flam3_copy(&cp, &result);
     flam3_copy(&cps[genomeIdx], &result);
+    swapFrame = frame;
 }
 
 void ofApp::mutateCurrent() {
     flam3_genome result;
+    memset(&result, 0, sizeof(flam3_genome));
     initrc(time(NULL));
     int ivars[flam3_nvariations];
     for (int i = 0; i < flam3_nvariations; i++)
@@ -742,6 +758,7 @@ void ofApp::mutateCurrent() {
     
     flam3_mutate(&cps[genomeIdx], MUTATE_NOT_SPECIFIED, ivars, flam3_nvariations, 0, 0.2, &rc, NULL);
     flam3_copy(&cp, &cps[genomeIdx]);
+    swapFrame = frame;
 }
 
 void ofApp::initrc(long sed) {
