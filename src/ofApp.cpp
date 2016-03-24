@@ -11,7 +11,6 @@ void ofApp::setup(){
     counter = 0;
     nsamples = 25000;	seed = 0;
     genomeIdx = 0;
-    dotSizeUsesAudio = true;
     transp = 60;
     ofSetWindowTitle("D0TS");
 
@@ -26,7 +25,6 @@ void ofApp::setup(){
     // GUI-displayed
     mpx = mpy = 0.0;
     mmpx = mmpy = 0.0;
-    audioEffectSize = 1.0;
 
     // GUI-controlled
     baseSpeed = 0.25;
@@ -36,7 +34,13 @@ void ofApp::setup(){
     centroidMaxBucket = 0.35;
     rmsMultiple = 5;
     wandering = false;
+    pointRadiusUsesAudio = true;
+    pointRadiusAudioScale = 10.0;
     frameClearSpeed = 50;
+    audioEffectSize1 = 1.0;
+    audioEffectSize2 = 1.0;
+    audioEffectSize3 = 1.0;
+    audioEffectSize4 = 1.0;
     
     ofHideCursor();
     
@@ -168,7 +172,8 @@ void ofApp::guiUpdate() {
 
     // Copy data from gui
     wandering = gui->wandering;
-    dotSizeUsesAudio = gui->dotSizeUsesAudio;
+    pointRadiusUsesAudio = gui->pointRadiusUsesAudio;
+    pointRadiusAudioScale = gui->pointRadiusAudioScale;
     fftDecayRate = gui->fftDecayRate;
     rmsMultiple = gui->rmsMultiple;
     centroidMaxBucket = gui->centroidMaxBucket;
@@ -180,7 +185,12 @@ void ofApp::guiUpdate() {
     particleAlpha = gui->particleAlpha;
     basePointRadius = gui->basePointRadius;
     maxLineLength = gui->maxLineLength;
-    audioEffectSize = gui->audioEffectSize;
+
+    // TODO: use array?
+    audioEffectSize1 = gui->audioEffectSize1;
+    audioEffectSize2 = gui->audioEffectSize2;
+    audioEffectSize3 = gui->audioEffectSize3;
+    audioEffectSize4 = gui->audioEffectSize4;
 
     if (audioMode != gui->audioMode) {
         audioMode = gui->audioMode;
@@ -285,12 +295,13 @@ void ofApp::flameUpdate() {
     for (int i = 0; i < nsamples-1; i++) {
         // Radius depends on mpy
         float radius = basePointRadius * mpy;
-        if (dotSizeUsesAudio) {
-            int bucket = ofMap(i, 0, nsamples-1, 0, nFftBuckets/5);
-            radius *= 10 * fftOutput[bucket];
+        if (pointRadiusUsesAudio) {
+            const int bucket = ofMap(i, 0, nsamples-1, 0, nFftBuckets * centroidMaxBucket);
+            const float scale = pointRadiusAudioScale * fftOutput[bucket];
+            radius *= scale;
         }
         // TODO: remove?
-        radius = ofClamp(radius, 0, 300);
+        radius = ofClamp(radius, 0, 100);
 
         int palleteIdx = (int)(currFlameSamples[4*i+2] * CMAP_SIZE);
         palleteIdx = ofClamp(palleteIdx, 0, CMAP_SIZE-1);
@@ -541,16 +552,16 @@ void ofApp::setFlameParameters() {
             renderCp.xform[1].c[1][1] = -2*mpy;
             break;
         case 35:
-            renderCp.xform[0].c[2][0] = cp.xform[0].c[2][0] + audioEffectSize * mpx;
-            renderCp.xform[0].c[2][1] = cp.xform[0].c[2][1] + audioEffectSize * mpy;
-            renderCp.xform[1].c[2][0] = cp.xform[1].c[2][0] + audioEffectSize * mpx;
-            renderCp.xform[1].c[2][1] = cp.xform[1].c[2][1] + audioEffectSize * mpy;
+            renderCp.xform[0].c[2][0] = cp.xform[0].c[2][0] + audioEffectSize1 * mpx;
+            renderCp.xform[0].c[2][1] = cp.xform[0].c[2][1] + audioEffectSize1 * mpy;
+            renderCp.xform[1].c[2][0] = cp.xform[1].c[2][0] + audioEffectSize2 * mpx;
+            renderCp.xform[1].c[2][1] = cp.xform[1].c[2][1] + audioEffectSize2 * mpy;
 
-            renderCp.xform[4].post[2][0] = cp.xform[4].post[2][0] + audioEffectSize * mpx;
-            renderCp.xform[4].post[2][1] = cp.xform[4].post[2][1] + audioEffectSize * mpy;
+            renderCp.xform[4].post[2][0] = cp.xform[4].post[2][0] + audioEffectSize3 * mpx;
+            renderCp.xform[4].post[2][1] = cp.xform[4].post[2][1] + audioEffectSize3 * mpy;
 
-            renderCp.xform[6].c[2][0] = cp.xform[4].c[2][0] + audioEffectSize * mpx;
-            renderCp.xform[6].c[2][1] = cp.xform[4].c[2][1] + audioEffectSize * mpy;
+            renderCp.xform[6].c[2][0] = cp.xform[4].c[2][0] + audioEffectSize4 * mpx;
+            renderCp.xform[6].c[2][1] = cp.xform[4].c[2][1] + audioEffectSize4 * mpy;
             break;
     }
 
@@ -662,7 +673,7 @@ void ofApp::handleKey(int key) {
         if (++genomeIdx >= ncps) genomeIdx = 0;
         flam3_copy(&cp, &cps[genomeIdx]);
     } else if (key == 'd') {
-        gui->dotSizeUsesAudio.set(!gui->dotSizeUsesAudio.get());
+        gui->pointRadiusUsesAudio.set(!gui->pointRadiusUsesAudio.get());
     } else if (key == 'a') {
         momode++;
     } else if (key == 's') {

@@ -25,17 +25,23 @@ public:
     ofParameter<int> soundStreamDevice;
     
     ofParameterGroup displayParameters;
-    ofParameter<bool> wandering, dotSizeUsesAudio;
+    ofParameterGroup metaParams, drawingParams, speedParams, dotParams, lineParams, audioEffectParams;
+
+    ofParameter<bool> wandering;
     ofParameter<float> clearSpeed;
     ofParameter<float> particleAlpha;
-    ofParameter<float> basePointRadius, maxLineLength;
+    ofParameter<bool> pointRadiusUsesAudio;
+    ofParameter<float> basePointRadius, pointRadiusAudioScale;
+    ofParameter<float> maxLineLength;
     ofParameter<float> overallScale;
     ofParameter<float> baseSpeed, rmsSpeedMult;
+    ofParameter<float> audioEffectSize1, audioEffectSize2, audioEffectSize3, audioEffectSize4;
+
+    ofParameterGroup debugParameters;
     ofParameter<int> maxPixels, drawMode, nFlameSequences;
     ofParameter<float> pctToAllowRandom;
-    ofParameter<float> audioEffectSize;
-    
-    ofxPanel analysisGui, inputGui, displayGui;
+
+    ofxPanel analysisGui, inputGui, displayGui, debugGui;
     
     // To mirror from ofApp
     float frameRate, pctParticles;

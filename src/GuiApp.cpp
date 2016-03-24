@@ -18,35 +18,72 @@ void GuiApp::setup(){
             soundStreamDevice.set(i);
         }
     }
-    
+
+    // Debug
+    debugParameters.setName("Debug");
+    debugParameters.add(drawMode.set("drawMode", 0, 0, 1));
+    debugParameters.add(nFlameSequences.set("nFlameSequences", 5, 1, 10));
+    debugParameters.add(maxPixels.set("maxPixels", 5000000, 10000, 100000000));
+    debugParameters.add(pctToAllowRandom.set("pctToAllowRandom", 0.02, 0, 0.1));
+    debugGui.setup(debugParameters);
+
+    // Meta
+    metaParams.setName("Meta");
+    metaParams.add(wandering.set("wandering", false));
+    displayParameters.add(metaParams);
+
+    // Audio analysis
     audioAnalysisParameters.setName("Audio Analysis");
     audioAnalysisParameters.add(fftDecayRate.set("fftDecayRate", 0.9, 0, 1));
     audioAnalysisParameters.add(centroidMaxBucket.set("centroidMax (mpx)", 0.35, 0, 1));
     audioAnalysisParameters.add(rmsMultiple.set("rmsMult (mpy)", 5, 0, 15));
     audioAnalysisParameters.add(mpxSmoothingFactor.set("mpxSmoothingFactor", 0.4, 0, 1));
     audioAnalysisParameters.add(mpySmoothingFactor.set("mpySmoothingFactor", 0.1, 0, 1));
-    analysisGui.setup(audioAnalysisParameters);
-    
+    displayParameters.add(audioAnalysisParameters);
+
+    // Drawing
+    drawingParams.setName("Drawing");
+    drawingParams.add(clearSpeed.set("clearSpeed", 50, 0, 255));
+    drawingParams.add(particleAlpha.set("particleAlpha", 50, 0, 255));
+    drawingParams.add(overallScale.set("overallScale", 1, 0.1, 3.0));
+    displayParameters.add(drawingParams);
+
+    // Rotation / Interpolation speed
+    speedParams.setName("Speed");
+    speedParams.add(baseSpeed.set("baseSpeed", 0, 0, 10));
+    speedParams.add(rmsSpeedMult.set("rmsSpeedMult", 30, 0, 100));
+    displayParameters.add(speedParams);
+
+    // Dot size
+    dotParams.setName("Dots");
+    dotParams.add(pointRadiusUsesAudio.set("dotSizeUsesAudio", true));
+    dotParams.add(pointRadiusAudioScale.set("dotAudioScale", 10, 0, 50));
+    dotParams.add(basePointRadius.set("baseDotRadius", 10, 0, 50));
+    displayParameters.add(dotParams);
+
+    // Line size
+    lineParams.setName("Lines");
+    lineParams.add(maxLineLength.set("maxLineLength", 100, 0, 3000));
+    displayParameters.add(lineParams);
+
+    // Audio effects
+    audioEffectParams.setName("Audio Effect Sizes");
+    audioEffectParams.add(audioEffectSize1.set("audioEffectSize1", 1, 0, 1));
+    audioEffectParams.add(audioEffectSize2.set("audioEffectSize2", 1, 0, 1));
+    audioEffectParams.add(audioEffectSize3.set("audioEffectSize3", 1, 0, 1));
+    audioEffectParams.add(audioEffectSize4.set("audioEffectSize4", 1, 0, 1));
+    displayParameters.add(audioEffectParams);
+
     displayParameters.setName("Display");
-    displayParameters.add(wandering.set("wandering", false));
-    displayParameters.add(dotSizeUsesAudio.set("dotSizeUsesAudio", true));
-    displayParameters.add(clearSpeed.set("clearSpeed", 50, 0, 255));
-    displayParameters.add(particleAlpha.set("particleAlpha", 50, 0, 255));
-    displayParameters.add(basePointRadius.set("basePointRadius", 10, 0, 50));
-    displayParameters.add(baseSpeed.set("baseSpeed", 0, 0, 10));
-    displayParameters.add(rmsSpeedMult.set("rmsSpeedMult", 30, 0, 100));
-    displayParameters.add(overallScale.set("overallScale", 1, 0.1, 3.0));
-    displayParameters.add(maxPixels.set("maxPixels", 5000000, 10000, 100000000));
-    displayParameters.add(pctToAllowRandom.set("pctToAllowRandom", 0.02, 0, 0.1));
-    displayParameters.add(drawMode.set("drawMode", 0, 0, 1));
-    displayParameters.add(nFlameSequences.set("nFlameSequences", 5, 1, 10));
-    displayParameters.add(maxLineLength.set("maxLineLength", 100, 0, 3000));
-    displayParameters.add(audioEffectSize.set("audioEffectSize", 1, 0, 1));
     displayGui.setup(displayParameters);
-    
+
     inputGui.setPosition(10, 450);
-    analysisGui.setPosition(inputGui.getPosition().x + inputGui.getWidth() + 10, inputGui.getPosition().y);
-    displayGui.setPosition(analysisGui.getPosition().x + analysisGui.getWidth() + 10, analysisGui.getPosition().y);
+    analysisGui.setPosition(inputGui.getPosition().x, inputGui.getPosition().y + inputGui.getHeight() + 10);
+    debugGui.setPosition(inputGui.getPosition().x + inputGui.getWidth() + 10, inputGui.getPosition().y);
+    
+    displayGui.setPosition(580, 15);
+    ofSetWindowShape(displayGui.getPosition().x + displayGui.getWidth() + 10,
+                     displayGui.getPosition().y + displayGui.getHeight() + 10);
     
     visuals = NULL;
     audioBuckets = NULL;
@@ -181,6 +218,7 @@ void GuiApp::draw() {
     ofPopMatrix();
 
     inputGui.draw();
+    debugGui.draw();
     analysisGui.draw();
     displayGui.draw();
 }
