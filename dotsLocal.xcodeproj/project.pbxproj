@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		71012CFB1CA42AFC00E483F9 /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 71012CF41CA42AFC00E483F9 /* ofxXmlSettings.cpp */; };
+		71012CFC1CA42AFC00E483F9 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 71012CF71CA42AFC00E483F9 /* tinyxml.cpp */; };
+		71012CFD1CA42AFC00E483F9 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 71012CF91CA42AFC00E483F9 /* tinyxmlerror.cpp */; };
+		71012CFE1CA42AFC00E483F9 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 71012CFA1CA42AFC00E483F9 /* tinyxmlparser.cpp */; };
 		711EDDAE1C2C65F500D4FA8A /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 711EDDAD1C2C65F500D4FA8A /* CoreAudio.framework */; };
 		711EDDB01C2C67B200D4FA8A /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 711EDDAF1C2C67B200D4FA8A /* libxml2.tbd */; };
 		7135FDB31C529C9500FC877B /* GuiApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7135FDB11C529C9500FC877B /* GuiApp.cpp */; };
@@ -68,6 +72,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		71012CF41CA42AFC00E483F9 /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxXmlSettings.cpp; sourceTree = "<group>"; };
+		71012CF51CA42AFC00E483F9 /* ofxXmlSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxXmlSettings.h; sourceTree = "<group>"; };
+		71012CF71CA42AFC00E483F9 /* tinyxml.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml.cpp; sourceTree = "<group>"; };
+		71012CF81CA42AFC00E483F9 /* tinyxml.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tinyxml.h; sourceTree = "<group>"; };
+		71012CF91CA42AFC00E483F9 /* tinyxmlerror.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
+		71012CFA1CA42AFC00E483F9 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
 		711EDDAD1C2C65F500D4FA8A /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		711EDDAF1C2C67B200D4FA8A /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		7135FDB11C529C9500FC877B /* GuiApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuiApp.cpp; sourceTree = "<group>"; };
@@ -165,6 +175,37 @@
 			children = (
 			);
 			name = local_addons;
+			sourceTree = "<group>";
+		};
+		71012CF21CA42AFC00E483F9 /* ofxXmlSettings */ = {
+			isa = PBXGroup;
+			children = (
+				71012CF31CA42AFC00E483F9 /* src */,
+				71012CF61CA42AFC00E483F9 /* libs */,
+			);
+			name = ofxXmlSettings;
+			sourceTree = "<group>";
+		};
+		71012CF31CA42AFC00E483F9 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				71012CF41CA42AFC00E483F9 /* ofxXmlSettings.cpp */,
+				71012CF51CA42AFC00E483F9 /* ofxXmlSettings.h */,
+			);
+			name = src;
+			path = ../../../addons/ofxXmlSettings/src;
+			sourceTree = "<group>";
+		};
+		71012CF61CA42AFC00E483F9 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				71012CF71CA42AFC00E483F9 /* tinyxml.cpp */,
+				71012CF81CA42AFC00E483F9 /* tinyxml.h */,
+				71012CF91CA42AFC00E483F9 /* tinyxmlerror.cpp */,
+				71012CFA1CA42AFC00E483F9 /* tinyxmlparser.cpp */,
+			);
+			name = libs;
+			path = ../../../addons/ofxXmlSettings/libs;
 			sourceTree = "<group>";
 		};
 		7135FDB41C529EC500FC877B /* ofxGui */ = {
@@ -339,6 +380,7 @@
 			children = (
 				71D2D0691C4D6D1100F9113F /* ofxFft */,
 				7135FDB41C529EC500FC877B /* ofxGui */,
+				71012CF21CA42AFC00E483F9 /* ofxXmlSettings */,
 			);
 			name = addons;
 			sourceTree = "<group>";
@@ -477,8 +519,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71012CFB1CA42AFC00E483F9 /* ofxXmlSettings.cpp in Sources */,
 				714EF6F91C2C635000C9D231 /* parser.c in Sources */,
 				7135FDCB1C529EC500FC877B /* ofxPanel.cpp in Sources */,
+				71012CFD1CA42AFC00E483F9 /* tinyxmlerror.cpp in Sources */,
 				7135FDC71C529EC500FC877B /* ofxBaseGui.cpp in Sources */,
 				71D2D08A1C4D6D1100F9113F /* ofxFftBasic.cpp in Sources */,
 				714EF6F51C2C635000C9D231 /* interpolation.c in Sources */,
@@ -501,7 +545,9 @@
 				714EF6F41C2C635000C9D231 /* flam3.c in Sources */,
 				714EF6F81C2C635000C9D231 /* palettes.c in Sources */,
 				7135FDB31C529C9500FC877B /* GuiApp.cpp in Sources */,
+				71012CFC1CA42AFC00E483F9 /* tinyxml.cpp in Sources */,
 				7135FDCC1C529EC500FC877B /* ofxSlider.cpp in Sources */,
+				71012CFE1CA42AFC00E483F9 /* tinyxmlparser.cpp in Sources */,
 				7135FDC81C529EC500FC877B /* ofxButton.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
