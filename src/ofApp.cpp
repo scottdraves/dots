@@ -101,6 +101,7 @@ void ofApp::setup(){
     
     gui->nAudioBuckets = nFftBuckets;
     gui->audioBuckets = fftOutput;
+    gui->setupControls(ncps);
 
     billboardShader.setGeometryInputType(GL_LINES);
     billboardShader.setGeometryOutputType(GL_TRIANGLE_STRIP);
@@ -164,33 +165,36 @@ void ofApp::guiUpdate() {
     // Copy data to gui
     gui->frameRate = ofGetFrameRate();
     gui->visuals = &visualsFbo.getTexture();
-    gui->genomeIdx = genomeIdx;
     gui->mpx = mpx;
     gui->mpy = mpy;
     gui->audioCentroid = audioCentroid;
     gui->audioRMS = audioRMS;
 
+    if (gui->genomeIdx != genomeIdx) {
+        gui->setGenomeIdx(genomeIdx);
+    }
+
     // Copy data from gui
-    wandering = gui->wandering;
-    pointRadiusUsesAudio = gui->pointRadiusUsesAudio;
-    pointRadiusAudioScale = gui->pointRadiusAudioScale;
-    fftDecayRate = gui->fftDecayRate;
-    rmsMultiple = gui->rmsMultiple;
-    centroidMaxBucket = gui->centroidMaxBucket;
-    mpxSmoothingFactor = gui->mpxSmoothingFactor;
-    mpySmoothingFactor = gui->mpySmoothingFactor;
-    baseSpeed = gui->baseSpeed;
-    rmsSpeedMult = gui->rmsSpeedMult;
-    frameClearSpeed = gui->clearSpeed;
-    particleAlpha = gui->particleAlpha;
-    basePointRadius = gui->basePointRadius;
-    maxLineLength = gui->maxLineLength;
+    wandering = gui->currParams.wandering;
+    pointRadiusUsesAudio = gui->currParams.pointRadiusUsesAudio;
+    pointRadiusAudioScale = gui->currParams.pointRadiusAudioScale;
+    fftDecayRate = gui->currParams.fftDecayRate;
+    rmsMultiple = gui->currParams.rmsMultiple;
+    centroidMaxBucket = gui->currParams.centroidMaxBucket;
+    mpxSmoothingFactor = gui->currParams.mpxSmoothingFactor;
+    mpySmoothingFactor = gui->currParams.mpySmoothingFactor;
+    baseSpeed = gui->currParams.baseSpeed;
+    rmsSpeedMult = gui->currParams.rmsSpeedMult;
+    frameClearSpeed = gui->currParams.clearSpeed;
+    particleAlpha = gui->currParams.particleAlpha;
+    basePointRadius = gui->currParams.basePointRadius;
+    maxLineLength = gui->currParams.maxLineLength;
 
     // TODO: use array?
-    audioEffectSize1 = gui->audioEffectSize1;
-    audioEffectSize2 = gui->audioEffectSize2;
-    audioEffectSize3 = gui->audioEffectSize3;
-    audioEffectSize4 = gui->audioEffectSize4;
+    audioEffectSize1 = gui->currParams.audioEffectSize1;
+    audioEffectSize2 = gui->currParams.audioEffectSize2;
+    audioEffectSize3 = gui->currParams.audioEffectSize3;
+    audioEffectSize4 = gui->currParams.audioEffectSize4;
 
     if (audioMode != gui->audioMode) {
         audioMode = gui->audioMode;
@@ -614,7 +618,7 @@ void ofApp::draw(){
     if (gui->drawMode == 0) {
         int loc;
         billboardShader.begin();
-            const float screenScale = ofGetWidth() / 1024.0 * gui->overallScale;
+            const float screenScale = ofGetWidth() / 1024.0 * gui->currParams.overallScale;
 
             billboardShader.setUniform2f("screen", ofGetWidth(), ofGetHeight());
             billboardShader.setUniform2f("cpCenter", cp.center[0], cp.center[1]);
@@ -663,7 +667,7 @@ void ofApp::draw(){
 void ofApp::handleKey(int key) {
     if (key == ' ') {
         swapFrame = frame;
-        gui->wandering.set(!gui->wandering.get());
+        gui->currParams.wandering.set(!gui->currParams.wandering.get());
     } else if (key == OF_KEY_LEFT) {
         swapFrame = frame;
         if (--genomeIdx < 0) genomeIdx = ncps-1;
@@ -673,7 +677,7 @@ void ofApp::handleKey(int key) {
         if (++genomeIdx >= ncps) genomeIdx = 0;
         flam3_copy(&cp, &cps[genomeIdx]);
     } else if (key == 'd') {
-        gui->pointRadiusUsesAudio.set(!gui->pointRadiusUsesAudio.get());
+        gui->currParams.pointRadiusUsesAudio.set(!gui->currParams.pointRadiusUsesAudio.get());
     } else if (key == 'a') {
         momode++;
     } else if (key == 's') {
@@ -691,9 +695,9 @@ void ofApp::handleKey(int key) {
     } else if (key == OF_KEY_DOWN) {
         killCurrent();
     } else if (key == ',') {
-        gui->baseSpeed *= 0.80;
+        gui->currParams.baseSpeed *= 0.80;
     } else if (key == '.') {
-        gui->baseSpeed *= 1.2;
+        gui->currParams.baseSpeed *= 1.2;
     } else if (key == '0') {
         mySound.setPosition(mySound.getPosition()-0.02);
         ofSoundStreamSetup(0, 1, this);

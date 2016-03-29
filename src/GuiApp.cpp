@@ -1,5 +1,90 @@
 #include "GuiApp.h"
 
+void copyParameters(const ofParameterGroup &from, const ofParameterGroup &to) {
+    for(std::size_t i = 0; i < from.size(); i++){
+        string type = from.getType(i);
+        if(type == typeid(ofParameter <int32_t> ).name()){
+            auto fromParam = from.getInt(i);
+            auto toParam = to.getInt(i);
+            toParam.set(fromParam.get());
+        }else if(type == typeid(ofParameter <uint32_t> ).name()){
+            auto fromParam = from.get<uint32_t>(i);
+            auto toParam = to.get<uint32_t>(i);
+            toParam.set(fromParam.get());
+        }else if(type == typeid(ofParameter <int64_t> ).name()){
+            auto fromParam = from.get<int64_t>(i);
+            auto toParam = to.get<int64_t>(i);
+            toParam.set(fromParam.get());
+        }else if(type == typeid(ofParameter <uint64_t> ).name()){
+            auto fromParam = from.get<uint64_t>(i);
+            auto toParam = to.get<uint64_t>(i);
+            toParam.set(fromParam.get());
+        }else if(type == typeid(ofParameter <int8_t> ).name()){
+            auto fromParam = from.get<int8_t>(i);
+            auto toParam = to.get<int8_t>(i);
+            toParam.set(fromParam.get());
+        }else if(type == typeid(ofParameter <uint8_t> ).name()){
+            auto fromParam = from.get<uint8_t>(i);
+            auto toParam = to.get<uint8_t>(i);
+            toParam.set(fromParam.get());
+        }else if(type == typeid(ofParameter <int16_t> ).name()){
+            auto fromParam = from.get<int16_t>(i);
+            auto toParam = to.get<int16_t>(i);
+            toParam.set(fromParam.get());
+        }else if(type == typeid(ofParameter <uint16_t> ).name()){
+            auto fromParam = from.get<uint16_t>(i);
+            auto toParam = to.get<uint16_t>(i);
+            toParam.set(fromParam.get());
+        }else if(type == typeid(ofParameter <float> ).name()){
+            auto fromParam = from.getFloat(i);
+            auto toParam = to.getFloat(i);
+            toParam.set(fromParam.get());
+        }else if(type == typeid(ofParameter <double> ).name()){
+            auto fromParam = from.get<double>(i);
+            auto toParam = to.get<double>(i);
+            toParam.set(fromParam.get());
+        }else if(type == typeid(ofParameter <bool> ).name()){
+            auto fromParam = from.getBool(i);
+            auto toParam = to.getBool(i);
+            toParam.set(fromParam.get());
+        }else if(type == typeid(ofParameter <ofVec2f> ).name()){
+            auto fromParam = from.getVec2f(i);
+            auto toParam = to.getVec2f(i);
+            toParam.set(fromParam.get());
+        }else if(type == typeid(ofParameter <ofVec3f> ).name()){
+            auto fromParam = from.getVec3f(i);
+            auto toParam = to.getVec3f(i);
+            toParam.set(fromParam.get());
+        }else if(type == typeid(ofParameter <ofVec4f> ).name()){
+            auto fromParam = from.getVec4f(i);
+            auto toParam = to.getVec4f(i);
+            toParam.set(fromParam.get());
+        }else if(type == typeid(ofParameter <ofColor> ).name()){
+            auto fromParam = from.getColor(i);
+            auto toParam = to.getColor(i);
+            toParam.set(fromParam.get());
+        }else if(type == typeid(ofParameter <ofShortColor> ).name()){
+            auto fromParam = from.getShortColor(i);
+            auto toParam = to.getShortColor(i);
+            toParam.set(fromParam.get());
+        }else if(type == typeid(ofParameter <ofFloatColor> ).name()){
+            auto fromParam = from.getFloatColor(i);
+            auto toParam = to.getFloatColor(i);
+            toParam.set(fromParam.get());
+        }else if(type == typeid(ofParameter <string> ).name()){
+            auto fromParam = from.getString(i);
+            auto toParam = to.getString(i);
+            toParam.set(fromParam.get());
+        }else if(type == typeid(ofParameterGroup).name()){
+            auto fromParam = from.getGroup(i);
+            auto toParam = to.getGroup(i);
+            copyParameters(fromParam, toParam);
+        }else{
+            ofLogWarning() << "ofxBaseGroup; no control for parameter of type " << type;
+        }
+    }
+}
+
 void GuiApp::setup(){
 
     ofSoundStream ss;
@@ -25,78 +110,108 @@ void GuiApp::setup(){
     debugParameters.add(nFlameSequences.set("nFlameSequences", 5, 1, 10));
     debugParameters.add(maxPixels.set("maxPixels", 5000000, 10000, 100000000));
     debugParameters.add(pctToAllowRandom.set("pctToAllowRandom", 0.02, 0, 0.1));
+    debugParameters.add(useSavedParams.set("Use saved params", true));
     debugGui.setup(debugParameters);
 
-    // Meta
-    metaParams.setName("Meta");
-    metaParams.add(wandering.set("wandering", false));
-    displayParameters.add(metaParams);
-
-    // Audio analysis
-    audioAnalysisParameters.setName("Audio Analysis");
-    audioAnalysisParameters.add(fftDecayRate.set("fftDecayRate", 0.9, 0, 1));
-    audioAnalysisParameters.add(centroidMaxBucket.set("centroidMax (mpx)", 0.35, 0, 1));
-    audioAnalysisParameters.add(rmsMultiple.set("rmsMult (mpy)", 5, 0, 15));
-    audioAnalysisParameters.add(mpxSmoothingFactor.set("mpxSmoothingFactor", 0.4, 0, 1));
-    audioAnalysisParameters.add(mpySmoothingFactor.set("mpySmoothingFactor", 0.1, 0, 1));
-    displayParameters.add(audioAnalysisParameters);
-
-    // Drawing
-    drawingParams.setName("Drawing");
-    drawingParams.add(clearSpeed.set("clearSpeed", 50, 0, 255));
-    drawingParams.add(particleAlpha.set("particleAlpha", 50, 0, 255));
-    drawingParams.add(overallScale.set("overallScale", 1, 0.1, 3.0));
-    displayParameters.add(drawingParams);
-
-    // Rotation / Interpolation speed
-    speedParams.setName("Speed");
-    speedParams.add(baseSpeed.set("baseSpeed", 0, 0, 10));
-    speedParams.add(rmsSpeedMult.set("rmsSpeedMult", 30, 0, 100));
-    displayParameters.add(speedParams);
-
-    // Dot size
-    dotParams.setName("Dots");
-    dotParams.add(pointRadiusUsesAudio.set("dotSizeUsesAudio", true));
-    dotParams.add(pointRadiusAudioScale.set("dotAudioScale", 10, 0, 50));
-    dotParams.add(basePointRadius.set("baseDotRadius", 10, 0, 50));
-    displayParameters.add(dotParams);
-
-    // Line size
-    lineParams.setName("Lines");
-    lineParams.add(maxLineLength.set("maxLineLength", 100, 0, 3000));
-    displayParameters.add(lineParams);
-
-    // Audio effects
-    audioEffectParams.setName("Audio Effect Sizes");
-    audioEffectParams.add(audioEffectSize1.set("audioEffectSize1", 1, 0, 1));
-    audioEffectParams.add(audioEffectSize2.set("audioEffectSize2", 1, 0, 1));
-    audioEffectParams.add(audioEffectSize3.set("audioEffectSize3", 1, 0, 1));
-    audioEffectParams.add(audioEffectSize4.set("audioEffectSize4", 1, 0, 1));
-    displayParameters.add(audioEffectParams);
-
-    displayParameters.setName("Display");
-    displayGui.setup(displayParameters);
-
     inputGui.setPosition(10, 450);
-    analysisGui.setPosition(inputGui.getPosition().x, inputGui.getPosition().y + inputGui.getHeight() + 10);
     debugGui.setPosition(inputGui.getPosition().x + inputGui.getWidth() + 10, inputGui.getPosition().y);
-    
+
+    loadAllParamsFromFile();
+    setupDefaultParams(defaultParams);
+    setupDefaultParams(currParams);
+    copyParameters(defaultParams.displayParameters, currParams.displayParameters);
+
+    displayGui.setup(currParams.displayParameters);
     displayGui.setPosition(580, 15);
+    ofAddListener(displayGui.savePressedE, this, &GuiApp::saveClicked);
+    ofAddListener(displayGui.loadPressedE, this, &GuiApp::loadClicked);
+
     ofSetWindowShape(displayGui.getPosition().x + displayGui.getWidth() + 10,
                      displayGui.getPosition().y + displayGui.getHeight() + 10);
-    
+
     visuals = NULL;
     audioBuckets = NULL;
     nAudioBuckets = 0;
     frameRate = 0;
     pctParticles = 0;
-    genomeIdx = 0;
+    genomeIdx = -1;
     mpx = 0;
     mpy = 0;
-    
+
     ofBackground(0);
     ofSetVerticalSync(false);
 }
+
+void GuiApp::setupDefaultParams(dotsParams &params) {
+    params.displayParameters.clear();
+    params.metaParams.clear();
+    params.audioAnalysisParameters.clear();
+    params.drawingParams.clear();
+    params.speedParams.clear();
+    params.dotParams.clear();
+    params.lineParams.clear();
+    params.audioEffectParams.clear();
+
+    // Meta
+    params.metaParams.setName("Meta");
+    params.metaParams.add(params.wandering.set("wandering", false));
+    params.displayParameters.add(params.metaParams);
+
+    // Audio analysis
+    params.audioAnalysisParameters.setName("Audio Analysis");
+    params.audioAnalysisParameters.add(params.fftDecayRate.set("fftDecayRate", 0.9, 0, 1));
+    params.audioAnalysisParameters.add(params.centroidMaxBucket.set("centroidMax (mpx)", 0.35, 0, 1));
+    params.audioAnalysisParameters.add(params.rmsMultiple.set("rmsMult (mpy)", 5, 0, 15));
+    params.audioAnalysisParameters.add(params.mpxSmoothingFactor.set("mpxSmoothingFactor", 0.4, 0, 1));
+    params.audioAnalysisParameters.add(params.mpySmoothingFactor.set("mpySmoothingFactor", 0.1, 0, 1));
+    params.displayParameters.add(params.audioAnalysisParameters);
+
+    // Drawing
+    params.drawingParams.setName("Drawing");
+    params.drawingParams.add(params.clearSpeed.set("clearSpeed", 50, 0, 255));
+    params.drawingParams.add(params.particleAlpha.set("particleAlpha", 50, 0, 255));
+    params.drawingParams.add(params.overallScale.set("overallScale", 1, 0.1, 3.0));
+    params.displayParameters.add(params.drawingParams);
+
+    // Rotation / Interpolation speed
+    params.speedParams.setName("Speed");
+    params.speedParams.add(params.baseSpeed.set("baseSpeed", 0, 0, 10));
+    params.speedParams.add(params.rmsSpeedMult.set("rmsSpeedMult", 30, 0, 100));
+    params.displayParameters.add(params.speedParams);
+
+    // Dot size
+    params.dotParams.setName("Dots");
+    params.dotParams.add(params.pointRadiusUsesAudio.set("dotSizeUsesAudio", true));
+    params.dotParams.add(params.pointRadiusAudioScale.set("dotAudioScale", 10, 0, 50));
+    params.dotParams.add(params.basePointRadius.set("baseDotRadius", 10, 0, 50));
+    params.displayParameters.add(params.dotParams);
+
+    // Line size
+    params.lineParams.setName("Lines");
+    params.lineParams.add(params.maxLineLength.set("maxLineLength", 100, 0, 3000));
+    params.displayParameters.add(params.lineParams);
+
+    // Audio effects
+    params.audioEffectParams.setName("Audio Effect Sizes");
+    params.audioEffectParams.add(params.audioEffectSize1.set("audioEffectSize1", 1, 0, 1));
+    params.audioEffectParams.add(params.audioEffectSize2.set("audioEffectSize2", 1, 0, 1));
+    params.audioEffectParams.add(params.audioEffectSize3.set("audioEffectSize3", 1, 0, 1));
+    params.audioEffectParams.add(params.audioEffectSize4.set("audioEffectSize4", 1, 0, 1));
+    params.displayParameters.add(params.audioEffectParams);
+
+    params.displayParameters.setName("Display");
+}
+
+void GuiApp::saveClicked() {
+    cout << "Pushed save." << endl;
+    serializeCurrentParamsToFile();
+}
+
+void GuiApp::loadClicked() {
+    cout << "Pushed load." << endl;
+    copyGenomeParams(genomeIdx);
+}
+
 
 void GuiApp::update(){
     if (ofGetFrameNum() % 30 == 0) {
@@ -196,7 +311,7 @@ void GuiApp::draw() {
         ofSetColor(200, 0, 0);
         ofDrawLine(mappedCentroid, 0, mappedCentroid, -fftHeight);
         ofDrawBitmapString("centroid", mappedCentroid + 4, -30);
-        float mappedCentroidMax = fftWidth * centroidMaxBucket;
+        float mappedCentroidMax = fftWidth * currParams.centroidMaxBucket;
         ofSetColor(125, 0, 0);
         ofDrawLine(mappedCentroidMax, 0, mappedCentroidMax, -fftHeight);
         ofDrawBitmapString("centroidMax", mappedCentroidMax + 4, -30);
@@ -219,7 +334,6 @@ void GuiApp::draw() {
 
     inputGui.draw();
     debugGui.draw();
-    analysisGui.draw();
     displayGui.draw();
 }
 
@@ -230,3 +344,65 @@ void GuiApp::handleKey(int key) {
 void GuiApp::keyPressed(int key) {
     keyPresses.push(key);
 }
+
+void GuiApp::copyGenomeParams(int idx) {
+    if (paramsMap.count(idx) > 0) {
+        cout << "Genome is now " << idx << ", we have settings saved." << endl;
+        copyParameters(paramsMap[idx]->displayParameters, currParams.displayParameters);
+    } else {
+        cout << "Genome is now " << idx << ", no settings saved." << endl;
+        copyParameters(defaultParams.displayParameters, currParams.displayParameters);
+    }
+}
+
+void GuiApp::setGenomeIdx(int newIdx) {
+    if (useSavedParams.get()) {
+        if (paramsMap.count(genomeIdx) > 0) {
+            cout << "Saved params from " << genomeIdx << "." << endl;
+            copyParameters(currParams.displayParameters, paramsMap[genomeIdx]->displayParameters);
+        }
+        copyGenomeParams(newIdx);
+    }
+
+    genomeIdx = newIdx;
+}
+
+void GuiApp::setupControls(int numCPs) {
+    for (int i = 0; i < numCPs; ++i) {
+        if (paramsMap.count(i) == 0) {
+            dotsParams *params = new dotsParams;
+            setupDefaultParams(*params);
+            paramsMap[i] = params;
+        }
+    }
+}
+
+void GuiApp::serializeCurrentParamsToFile() {
+    cout << "Saving " << genomeIdx << " to file." << endl;
+    char filename[255];
+    sprintf(filename, "genomeSettings/cp-%03d.xml", genomeIdx);
+
+    settings.clear();
+    settings.serialize(currParams.displayParameters);
+    settings.save(filename);
+}
+
+void GuiApp::loadAllParamsFromFile() {
+    ofDirectory dir("genomeSettings");
+    for (auto &file : dir.getFiles()) {
+        settings.clear();
+        settings.load(file.path());
+
+        dotsParams *params = new dotsParams;
+        setupDefaultParams(*params);
+        settings.deserialize(params->displayParameters);
+
+        string filename = file.getFileName();
+        int idx = stoi(filename.substr(3, 6));
+        cout << "Loading " << idx << " from file." << endl;
+
+        paramsMap[idx] = params;
+    }
+}
+
+
