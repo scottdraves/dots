@@ -5,6 +5,7 @@
 #include "fmod.h"
 #include "GuiApp.h"
 #include "appConstants.h"
+#include "ofxSyphon.h"
 
 extern "C" {
 #include "flam3.h"
@@ -117,6 +118,7 @@ public:
     shared_ptr<GuiApp> gui;
     ofFbo visualsFbo;
     shared_ptr<ofTexture> visuals;
+    ofxSyphonServer syphonServer;
 
     queue<int> keyPresses;
 };
