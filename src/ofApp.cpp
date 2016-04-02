@@ -254,16 +254,16 @@ void ofApp::flameUpdate() {
         flam3_rotate(&cp, speed, flam3_inttype_log);
     }
 
-    if (prepare_precalc_flags2(&cp)) {
-        fprintf(stderr,"prepare xform pointers returned error: aborting.\n");
-        return;
-    }
-
     // Copy the true cp to a renderable version we'll animate
     flam3_copy(&renderCp, &cp);
 
     // Update flam3 parameters to animate
     setFlameParameters();
+
+    if (prepare_precalc_flags2(&renderCp)) {
+        fprintf(stderr,"prepare xform pointers returned error: aborting.\n");
+        return;
+    }
 
     // Update xform_distribution using renderable xform
     const int flameSeqIdxToUpdate = (frame-swapFrame) % flameSequences.size();
