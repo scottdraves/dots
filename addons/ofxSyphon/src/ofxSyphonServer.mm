@@ -20,8 +20,10 @@ ofxSyphonServer::~ofxSyphonServer()
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     
     [(SyphonServer *)mSyphon stop];
-    [(SyphonServer *)mSyphon release];
-    
+
+    // DELIBERATELY LEAK TO PREVENT CRASH
+    //[(SyphonServer *)mSyphon release];
+
     [pool drain];
 }
 
