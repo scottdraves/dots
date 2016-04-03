@@ -555,6 +555,84 @@ void ofApp::setFlameParameters() {
             renderCp.xform[0].c[0][0] = -2*mpx;
             renderCp.xform[1].c[1][1] = -2*mpy;
             break;
+        case 25:
+            for (int i = 0; i < renderCp.num_xforms; i++) {
+	      renderCp.xform[i].c[0][0] = cp.xform[i].c[0][0] + audioEffectSize1 * mpy;
+	      renderCp.xform[i].c[1][1] = cp.xform[i].c[1][1] + audioEffectSize2 * mpx;
+	      renderCp.xform[i].c[0][1] = cp.xform[i].c[0][1] + audioEffectSize3 * mpy;
+	      renderCp.xform[i].c[1][0] = cp.xform[i].c[1][0] + audioEffectSize4 * mpx;
+	    }
+            break;
+        case 26:
+	    renderCp.xform[2].julian_power = cp.xform[2].julian_power + audioEffectSize3 * mpy * 10;
+	    renderCp.xform[2].julian_dist = cp.xform[2].julian_dist + audioEffectSize4 * mpx * 3;
+            for (int i = 0; i < renderCp.num_xforms; i++) {
+	      renderCp.xform[i].c[0][0] = cp.xform[i].c[0][0] + audioEffectSize1 * mpy;
+	      renderCp.xform[i].c[1][1] = cp.xform[i].c[1][1] + audioEffectSize2 * mpx;
+	    }
+            break;
+        case 27:
+            for (int i = 2; i < renderCp.num_xforms; i++) {
+	      renderCp.xform[i].c[0][0] = cp.xform[i].c[0][0] + audioEffectSize1 * mpy;
+	      renderCp.xform[i].var[VAR_SWIRL] = cp.xform[i].var[VAR_SWIRL] + audioEffectSize2 * mpy / 10;
+	      renderCp.xform[i].var[VAR_POLAR] = cp.xform[i].var[VAR_POLAR] + audioEffectSize3 * mpy / 10;
+	      renderCp.xform[i].var[VAR_SPHERICAL] = cp.xform[i].var[VAR_SPHERICAL] + audioEffectSize4 * mpy / 10;
+	    }
+            break;
+        case 28:
+            for (int i = 0; i < renderCp.num_xforms; i++) {
+	      renderCp.xform[i].var[VAR_JULIA] = cp.xform[i].var[VAR_JULIA] + audioEffectSize1 * mpy;
+	      renderCp.xform[i].c[0][0] = cp.xform[i].c[0][0] + audioEffectSize1 * mpy;
+	      renderCp.xform[i].c[1][1] = cp.xform[i].c[1][1] + audioEffectSize2 * mpx;
+	      renderCp.xform[i].c[2][0] = cp.xform[i].c[2][0] + audioEffectSize3 * mpy;
+	      renderCp.xform[i].c[2][1] = cp.xform[i].c[2][1] + audioEffectSize4 * mpx;
+	    }
+            break;
+        case 29:
+	    renderCp.xform[1].ngon_power = cp.xform[1].ngon_power + audioEffectSize1 * mpy;
+            for (int i = 0; i < renderCp.num_xforms; i++) {
+	      renderCp.xform[i].c[0][0] = cp.xform[i].c[0][0] + audioEffectSize1 * mpy;
+	      renderCp.xform[i].c[1][1] = cp.xform[i].c[1][1] + audioEffectSize2 * mpx;
+	      renderCp.xform[i].c[2][0] = cp.xform[i].c[2][0] + audioEffectSize3 * mpy;
+	      renderCp.xform[i].c[2][1] = cp.xform[i].c[2][1] + audioEffectSize4 * mpx;
+	    }
+            break;
+        case 30:
+	    renderCp.xform[0].var[VAR_DISC] = cp.xform[0].var[VAR_DISC] + audioEffectSize3 * mpy;
+	    renderCp.xform[0].rectangles_x = cp.xform[0].rectangles_x + audioEffectSize1 * mpy;
+	    renderCp.xform[0].rectangles_y = cp.xform[0].rectangles_y + audioEffectSize2 * mpx;
+	    renderCp.xform[4].c[0][0] = cp.xform[4].c[0][0] + audioEffectSize4 * mpy;
+	    renderCp.xform[4].c[1][1] = cp.xform[0].c[1][1] + audioEffectSize3 * mpx;
+            break;
+        case 31:
+            for (int i = 0; i < renderCp.num_xforms; i++) {
+	      renderCp.xform[i].c[0][0] = cp.xform[i].c[0][0] + audioEffectSize1 * mpy;
+	      renderCp.xform[i].c[1][1] = cp.xform[i].c[1][1] + audioEffectSize2 * mpx;
+	      renderCp.xform[i].c[2][0] = cp.xform[i].c[2][0] + audioEffectSize3 * mpy;
+	      renderCp.xform[i].c[2][1] = cp.xform[i].c[2][1] + audioEffectSize4 * mpx;
+	    }
+            break;
+        case 32:
+            renderCp.xform[0].c[0][0] = cp.xform[0].c[0][0] + audioEffectSize1 * mpy;
+            renderCp.xform[0].c[1][1] = cp.xform[0].c[1][1] + audioEffectSize2 * mpx;
+            renderCp.xform[3].c[1][0] = cp.xform[3].c[1][0] + audioEffectSize1 * mpy;
+            renderCp.xform[3].c[0][1] = cp.xform[3].c[0][1] + audioEffectSize2 * mpx;
+            renderCp.xform[10].c[2][1] = cp.xform[10].c[2][1] + audioEffectSize3 * mpy;
+            renderCp.xform[10].c[2][0] = cp.xform[10].c[2][0] + audioEffectSize4 * mpx;
+            break;
+        case 33:
+            renderCp.xform[0].c[0][0] = cp.xform[0].c[0][0] + audioEffectSize1 * mpy;
+            renderCp.xform[0].c[1][1] = cp.xform[0].c[1][1] + audioEffectSize2 * mpx;
+            renderCp.xform[1].c[2][0] = cp.xform[1].c[2][0] + audioEffectSize3 * mpy;
+            renderCp.xform[1].c[2][1] = cp.xform[1].c[2][1] + audioEffectSize4 * mpx;
+            renderCp.xform[2].c[1][0] = cp.xform[2].c[1][0] + audioEffectSize3 * mpy;
+            renderCp.xform[2].c[0][1] = cp.xform[2].c[0][1] + audioEffectSize4 * mpx;
+            break;
+        case 34:
+            renderCp.xform[1].var[VAR_JULIA] = cp.xform[1].var[VAR_JULIA] + audioEffectSize1 * mpx;
+            renderCp.xform[3].c[0][0] = cp.xform[3].c[0][0] + audioEffectSize2 * mpy;
+            renderCp.xform[3].c[1][1] = cp.xform[3].c[1][1] + audioEffectSize3 * mpx;
+            break;
         case 35:
             renderCp.xform[0].c[2][0] = cp.xform[0].c[2][0] + audioEffectSize1 * mpx;
             renderCp.xform[0].c[2][1] = cp.xform[0].c[2][1] + audioEffectSize1 * mpy;
