@@ -8,6 +8,8 @@ void ofApp::setup(){
     ofSetVerticalSync(false);
     ofSetLogLevel(OF_LOG_VERBOSE);
 
+    syphonServer.setName("dots");
+
     counter = 0;
     nsamples = 25000;	seed = 0;
     genomeIdx = 0;
@@ -735,6 +737,8 @@ void ofApp::draw(){
 
     ofSetColor(255);
     visualsFbo.draw(0, 0);
+
+    syphonServer.publishFBO(&visualsFbo);
 
     // TODO: disable later
     char str[25];

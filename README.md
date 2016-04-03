@@ -1,6 +1,7 @@
 ### Requirements
 
-- ofxFFT addon: https://github.com/kylemcdonald/ofxFft (disable FFTW)
+- ofxFFT: https://github.com/kylemcdonald/ofxFft (disable FFTW)
+- ofxSyphon: https://github.com/astellato/ofxSyphon (packaged in the repo for 64bit OSX)
 
 ### Running multiple screens
 

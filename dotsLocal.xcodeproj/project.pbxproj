@@ -37,6 +37,13 @@
 		71D2D08C1C4D6D1100F9113F /* ofxProcessFFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 71D2D0731C4D6D1100F9113F /* ofxProcessFFT.cpp */; };
 		71D2D08E1C4D6D1100F9113F /* kiss_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = 71D2D0841C4D6D1100F9113F /* kiss_fft.c */; };
 		71D2D08F1C4D6D1100F9113F /* kiss_fftr.c in Sources */ = {isa = PBXBuildFile; fileRef = 71D2D0861C4D6D1100F9113F /* kiss_fftr.c */; };
+		71F8DF091CAA319700777EBC /* SyphonNameboundClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 71F8DEFA1CAA319700777EBC /* SyphonNameboundClient.m */; };
+		71F8DF0B1CAA319700777EBC /* ofxSyphonClient.mm in Sources */ = {isa = PBXBuildFile; fileRef = 71F8DEFF1CAA319700777EBC /* ofxSyphonClient.mm */; };
+		71F8DF0C1CAA319700777EBC /* ofxSyphonServer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 71F8DF011CAA319700777EBC /* ofxSyphonServer.mm */; };
+		71F8DF0D1CAA319700777EBC /* ofxSyphonServerDirectory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 71F8DF031CAA319700777EBC /* ofxSyphonServerDirectory.mm */; };
+		71F8DF161CAA330B00777EBC /* Syphon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71F8DEF71CAA319700777EBC /* Syphon.framework */; };
+		71F8DF171CAA331100777EBC /* Syphon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71F8DEF71CAA319700777EBC /* Syphon.framework */; };
+		71F8DF181CAA331100777EBC /* Syphon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 71F8DEF71CAA319700777EBC /* Syphon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
 		E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */; };
@@ -60,13 +67,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		E4C2427710CC5ABF004149E2 /* CopyFiles */ = {
+		71F8DF191CAA331100777EBC /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				71F8DF181CAA331100777EBC /* Syphon.framework in Embed Frameworks */,
 			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -146,6 +155,16 @@
 		71E4A2AA1C825F380074EA5B /* billboardShader.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = billboardShader.vert; sourceTree = "<group>"; };
 		71E4A2AB1C825F5F0074EA5B /* billboardShader.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = billboardShader.frag; sourceTree = "<group>"; };
 		71F4F6751C57B1BA007709A9 /* appConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appConstants.h; sourceTree = "<group>"; };
+		71F8DEF71CAA319700777EBC /* Syphon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Syphon.framework; sourceTree = "<group>"; };
+		71F8DEF91CAA319700777EBC /* SyphonNameboundClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyphonNameboundClient.h; sourceTree = "<group>"; };
+		71F8DEFA1CAA319700777EBC /* SyphonNameboundClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyphonNameboundClient.m; sourceTree = "<group>"; };
+		71F8DEFD1CAA319700777EBC /* ofxSyphon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSyphon.h; sourceTree = "<group>"; };
+		71F8DEFE1CAA319700777EBC /* ofxSyphonClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSyphonClient.h; sourceTree = "<group>"; };
+		71F8DEFF1CAA319700777EBC /* ofxSyphonClient.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ofxSyphonClient.mm; sourceTree = "<group>"; };
+		71F8DF001CAA319700777EBC /* ofxSyphonServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSyphonServer.h; sourceTree = "<group>"; };
+		71F8DF011CAA319700777EBC /* ofxSyphonServer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ofxSyphonServer.mm; sourceTree = "<group>"; };
+		71F8DF021CAA319700777EBC /* ofxSyphonServerDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSyphonServerDirectory.h; sourceTree = "<group>"; };
+		71F8DF031CAA319700777EBC /* ofxSyphonServerDirectory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ofxSyphonServerDirectory.mm; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E4B69B5B0A3A1756003C02F2 /* dotsLocalDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dotsLocalDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
@@ -161,8 +180,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71F8DF161CAA330B00777EBC /* Syphon.framework in Frameworks */,
 				711EDDB01C2C67B200D4FA8A /* libxml2.tbd in Frameworks */,
 				711EDDAE1C2C65F500D4FA8A /* CoreAudio.framework in Frameworks */,
+				71F8DF171CAA331100777EBC /* Syphon.framework in Frameworks */,
 				E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -173,6 +194,7 @@
 		6948EE371B920CB800B5AC1A /* local_addons */ = {
 			isa = PBXGroup;
 			children = (
+				71F8DEDA1CAA319700777EBC /* ofxSyphon */,
 			);
 			name = local_addons;
 			sourceTree = "<group>";
@@ -375,6 +397,81 @@
 			path = audio;
 			sourceTree = "<group>";
 		};
+		71F8DED91CAA2E0D00777EBC /* frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				711EDDAD1C2C65F500D4FA8A /* CoreAudio.framework */,
+				711EDDAF1C2C67B200D4FA8A /* libxml2.tbd */,
+			);
+			name = frameworks;
+			sourceTree = "<group>";
+		};
+		71F8DEDA1CAA319700777EBC /* ofxSyphon */ = {
+			isa = PBXGroup;
+			children = (
+				71F8DEF31CAA319700777EBC /* libs */,
+				71F8DEFC1CAA319700777EBC /* src */,
+			);
+			name = ofxSyphon;
+			path = addons/ofxSyphon;
+			sourceTree = "<group>";
+		};
+		71F8DEF31CAA319700777EBC /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				71F8DEF41CAA319700777EBC /* Syphon */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		71F8DEF41CAA319700777EBC /* Syphon */ = {
+			isa = PBXGroup;
+			children = (
+				71F8DEF51CAA319700777EBC /* lib */,
+				71F8DEF81CAA319700777EBC /* src */,
+			);
+			path = Syphon;
+			sourceTree = "<group>";
+		};
+		71F8DEF51CAA319700777EBC /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				71F8DEF61CAA319700777EBC /* osx */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		71F8DEF61CAA319700777EBC /* osx */ = {
+			isa = PBXGroup;
+			children = (
+				71F8DEF71CAA319700777EBC /* Syphon.framework */,
+			);
+			path = osx;
+			sourceTree = "<group>";
+		};
+		71F8DEF81CAA319700777EBC /* src */ = {
+			isa = PBXGroup;
+			children = (
+				71F8DEF91CAA319700777EBC /* SyphonNameboundClient.h */,
+				71F8DEFA1CAA319700777EBC /* SyphonNameboundClient.m */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		71F8DEFC1CAA319700777EBC /* src */ = {
+			isa = PBXGroup;
+			children = (
+				71F8DEFD1CAA319700777EBC /* ofxSyphon.h */,
+				71F8DEFE1CAA319700777EBC /* ofxSyphonClient.h */,
+				71F8DEFF1CAA319700777EBC /* ofxSyphonClient.mm */,
+				71F8DF001CAA319700777EBC /* ofxSyphonServer.h */,
+				71F8DF011CAA319700777EBC /* ofxSyphonServer.mm */,
+				71F8DF021CAA319700777EBC /* ofxSyphonServerDirectory.h */,
+				71F8DF031CAA319700777EBC /* ofxSyphonServerDirectory.mm */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
@@ -396,13 +493,12 @@
 		E4B69B4A0A3A1720003C02F2 = {
 			isa = PBXGroup;
 			children = (
-				711EDDAF1C2C67B200D4FA8A /* libxml2.tbd */,
-				711EDDAD1C2C65F500D4FA8A /* CoreAudio.framework */,
 				E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */,
 				E4EB6923138AFD0F00A09F29 /* Project.xcconfig */,
 				71D8215C1C80E2B800EA6CBB /* data */,
 				E4B69E1C0A3A1BDC003C02F2 /* src */,
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
+				71F8DED91CAA2E0D00777EBC /* frameworks */,
 				BB4B014C10F69532006C3DED /* addons */,
 				6948EE371B920CB800B5AC1A /* local_addons */,
 				E4B69B5B0A3A1756003C02F2 /* dotsLocalDebug.app */,
@@ -442,7 +538,7 @@
 				E4B69B580A3A1756003C02F2 /* Sources */,
 				E4B69B590A3A1756003C02F2 /* Frameworks */,
 				E4B6FFFD0C3F9AB9008CF71C /* ShellScript */,
-				E4C2427710CC5ABF004149E2 /* CopyFiles */,
+				71F8DF191CAA331100777EBC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -523,6 +619,7 @@
 				714EF6F91C2C635000C9D231 /* parser.c in Sources */,
 				7135FDCB1C529EC500FC877B /* ofxPanel.cpp in Sources */,
 				71012CFD1CA42AFC00E483F9 /* tinyxmlerror.cpp in Sources */,
+				71F8DF091CAA319700777EBC /* SyphonNameboundClient.m in Sources */,
 				7135FDC71C529EC500FC877B /* ofxBaseGui.cpp in Sources */,
 				71D2D08A1C4D6D1100F9113F /* ofxFftBasic.cpp in Sources */,
 				714EF6F51C2C635000C9D231 /* interpolation.c in Sources */,
@@ -541,13 +638,16 @@
 				714EF6FC1C2C635000C9D231 /* variations.c in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				714EF6EF1C2C635000C9D231 /* filters.c in Sources */,
+				71F8DF0D1CAA319700777EBC /* ofxSyphonServerDirectory.mm in Sources */,
 				714EF6F61C2C635000C9D231 /* isaac.c in Sources */,
 				714EF6F41C2C635000C9D231 /* flam3.c in Sources */,
+				71F8DF0C1CAA319700777EBC /* ofxSyphonServer.mm in Sources */,
 				714EF6F81C2C635000C9D231 /* palettes.c in Sources */,
 				7135FDB31C529C9500FC877B /* GuiApp.cpp in Sources */,
 				71012CFC1CA42AFC00E483F9 /* tinyxml.cpp in Sources */,
 				7135FDCC1C529EC500FC877B /* ofxSlider.cpp in Sources */,
 				71012CFE1CA42AFC00E483F9 /* tinyxmlparser.cpp in Sources */,
+				71F8DF0B1CAA319700777EBC /* ofxSyphonClient.mm in Sources */,
 				7135FDC81C529EC500FC877B /* ofxButton.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -630,6 +730,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/addons/ofxSyphon/libs/Syphon/lib/osx",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/glut/lib/osx\"";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -645,6 +747,7 @@
 				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)Debug";
 				USER_HEADER_SEARCH_PATHS = ../../../addons/ofxFft/libs/fftw/include/;
 				WRAPPER_EXTENSION = app;
@@ -660,6 +763,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/addons/ofxSyphon/libs/Syphon/lib/osx",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/glut/lib/osx\"";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -674,6 +779,7 @@
 				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = ../../../addons/ofxFft/libs/fftw/include/;
 				WRAPPER_EXTENSION = app;
