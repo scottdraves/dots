@@ -50,70 +50,73 @@ public:
     void setFlameParameters();
     void flameUpdate();
     void handleKey(int key);
-    
-    float 	counter;
-    float curVol = 0.0;
-    bool wandering;
-    int framecount;
-    int fullscreen;
-    float frameClearSpeed;
-    int nsamples;
 
+    // Interpolation
+    int genomeIdx;
+    float counter;
+    bool wandering;
+
+    // Fixed randomness for flam3
+    int seed;
+    randctx rc;
+
+    // Geneback for mutation
+    int ngenebank;
+    flam3_genome *genebank;
+
+    // Base control points
+    int ncps;
+    flam3_genome *cps;
+
+    // Copied into cpOrder
+    int nCPsInTrack;
+    flam3_genome *cpTrackOrder;
+    vector<int> cpIdxTrackOrder;
+
+    // After interpolation and to render
+    flam3_genome cp, renderCp;
+    int nsamples;
     double *prevFlameSamples, *currFlameSamples;
 
-    int parity;
-    int seed;
-    int momode;
-    FILE *out;
-    int ncps;
-    int ngenebank;
-    int transp;
-    flam3_genome *genebank;
-    flam3_genome *cps;
-    flam3_genome *cpv;
-    flam3_genome cp, renderCp;
-
+    // Interpolate between flam3 cps smoothly
     int frame, swapFrame, lastCP;
     vector<flameSeq> flameSequences;
 
-    int genomeIdx;
-
-    float mpx, mpy, mpxSmoothingFactor, mpySmoothingFactor;
-    float audioEffectSize1, audioEffectSize2, audioEffectSize3, audioEffectSize4;
-    float mmpx, mmpy;
-    float baseSpeed, rmsSpeedMult;
-    float wanderSpeed;
-
+    // Dot shader
     ofShader billboardShader;
 
+    // To draw
     ofVboMesh lines;
     vector<pointPair> pointPairs;
     float *pointRadii, *lineWidths;
     double totDotPixels, totLinePixels;
 
+    // Display Paremters
+    int fullscreen;
+    float mpx, mpy, mpxSmoothingFactor, mpySmoothingFactor;
+    float audioEffectSize1, audioEffectSize2, audioEffectSize3, audioEffectSize4;
+    float mmpx, mmpy;
+    float baseSpeed, rmsSpeedMult;
+    float wanderSpeed;
     bool pointRadiusUsesAudio;
+    float frameClearSpeed;
     float particleAlpha, basePointRadius, pointRadiusAudioScale;
     float maxLineLength;
 
-    float * left;
-    float * right;
-    
+    // Audio mode
     int audioMode;
     ofSoundPlayer mySound;
     int soundStreamDevice, nChannels;
     ofSoundStream soundStream;  // for input
 
+    // Audio analysis
     int nFftBuckets;
-    float* audioInput;
-    float* fftOutput;
+    float *audioInput;
+    float *fftOutput;
     float audioRMS, smoothedAudioRMS, rmsMultiple;
     float audioCentroid, centroidMaxBucket;
-    ofxFft* fft;
+    ofxFft *fft;
     float fftDecayRate;
-    
-    randctx rc;
-
-    ofEasyCam cam;
 
     // The GUI window
     shared_ptr<GuiApp> gui;

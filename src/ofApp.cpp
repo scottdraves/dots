@@ -13,16 +13,12 @@ void ofApp::setup(){
     counter = 0;
     nsamples = 25000;	seed = 0;
     genomeIdx = 0;
-    transp = 60;
     ofSetWindowTitle("D0TS");
 
     currFlameSamples = (double *)malloc(sizeof(double)*nsamples*4);
     prevFlameSamples = (double *)malloc(sizeof(double)*nsamples*4);
 
-    parity = 0;
-    framecount = 0;
     fullscreen = 1;
-    momode = 1;
 
     // GUI-displayed
     mpx = mpy = 0.0;
@@ -48,8 +44,7 @@ void ofApp::setup(){
     ofHideCursor();
     
     visualsFbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA, 4);
-    
-    // cpv = (flam3_genome *) malloc(sizeof(flam3_genome)*2);
+
     {
         FILE *in;
         char *inf = "../../../data/live.flam3";
@@ -331,11 +326,10 @@ void ofApp::flameUpdate() {
         pointPairs[i].lineWidth = ofClamp(radius/4, 0, 6);
 
         totDotPixels += (radius * 2) * (radius * 2);
-//        totLinePixels +=  pointPairs[i].lineWidth;
+        totLinePixels +=  pointPairs[i].lineWidth;
     }
 
     ++frame;
-//    parity = !parity;
 }
 
 //--------------------------------------------------------------
@@ -767,8 +761,6 @@ void ofApp::handleKey(int key) {
         flam3_copy(&cp, &cps[genomeIdx]);
     } else if (key == 'd') {
         gui->activeParams.pointRadiusUsesAudio.set(!gui->activeParams.pointRadiusUsesAudio.get());
-    } else if (key == 'a') {
-        momode++;
     } else if (key == 's') {
         gui->audioMode.set(gui->audioMode.get() + 1);
         if (audioMode >= N_AUDIO_MODES)
