@@ -85,6 +85,111 @@ void copyParameters(const ofParameterGroup &from, const ofParameterGroup &to) {
     }
 }
 
+void interpolateParameters(const ofParameterGroup &from, const ofParameterGroup &to,
+                           const ofParameterGroup &ret, float t) {
+    for(std::size_t i = 0; i < from.size(); i++){
+        string type = from.getType(i);
+        if(type == typeid(ofParameter <int32_t> ).name()){
+            auto fromParam = from.getInt(i);
+            auto toParam = to.getInt(i);
+            auto retParam = ret.getInt(i);
+            retParam.set((toParam.get() - fromParam.get()) * t + fromParam.get());
+        }else if(type == typeid(ofParameter <uint32_t> ).name()){
+            auto fromParam = from.get<uint32_t>(i);
+            auto toParam = to.get<uint32_t>(i);
+            auto retParam = ret.get<uint32_t>(i);
+            retParam.set((toParam.get() - fromParam.get()) * t + fromParam.get());
+        }else if(type == typeid(ofParameter <int64_t> ).name()){
+            auto fromParam = from.get<int64_t>(i);
+            auto toParam = to.get<int64_t>(i);
+            auto retParam = ret.get<int64_t>(i);
+            retParam.set((toParam.get() - fromParam.get()) * t + fromParam.get());
+        }else if(type == typeid(ofParameter <uint64_t> ).name()){
+            auto fromParam = from.get<uint64_t>(i);
+            auto toParam = to.get<uint64_t>(i);
+            auto retParam = ret.get<uint64_t>(i);
+            retParam.set((toParam.get() - fromParam.get()) * t + fromParam.get());
+        }else if(type == typeid(ofParameter <int8_t> ).name()){
+            auto fromParam = from.get<int8_t>(i);
+            auto toParam = to.get<int8_t>(i);
+            auto retParam = ret.get<int8_t>(i);
+            retParam.set((toParam.get() - fromParam.get()) * t + fromParam.get());
+        }else if(type == typeid(ofParameter <uint8_t> ).name()){
+            auto fromParam = from.get<uint8_t>(i);
+            auto toParam = to.get<uint8_t>(i);
+            auto retParam = ret.get<uint8_t>(i);
+            retParam.set((toParam.get() - fromParam.get()) * t + fromParam.get());
+        }else if(type == typeid(ofParameter <int16_t> ).name()){
+            auto fromParam = from.get<int16_t>(i);
+            auto toParam = to.get<int16_t>(i);
+            auto retParam = ret.get<int16_t>(i);
+            retParam.set((toParam.get() - fromParam.get()) * t + fromParam.get());
+        }else if(type == typeid(ofParameter <uint16_t> ).name()){
+            auto fromParam = from.get<uint16_t>(i);
+            auto toParam = to.get<uint16_t>(i);
+            auto retParam = ret.get<uint16_t>(i);
+            retParam.set((toParam.get() - fromParam.get()) * t + fromParam.get());
+        }else if(type == typeid(ofParameter <float> ).name()){
+            auto fromParam = from.getFloat(i);
+            auto toParam = to.getFloat(i);
+            auto retParam = ret.getFloat(i);
+            retParam.set((toParam.get() - fromParam.get()) * t + fromParam.get());
+        }else if(type == typeid(ofParameter <double> ).name()){
+            auto fromParam = from.get<double>(i);
+            auto toParam = to.get<double>(i);
+            auto retParam = ret.get<double>(i);
+            retParam.set((toParam.get() - fromParam.get()) * t + fromParam.get());
+        }else if(type == typeid(ofParameter <bool> ).name()){
+            auto fromParam = from.getBool(i);
+            auto toParam = to.getBool(i);
+            auto retParam = ret.get<bool>(i);
+            retParam.set(t > 0.5 ? toParam.get() : fromParam.get());
+        }else if(type == typeid(ofParameter <ofVec2f> ).name()){
+            auto fromParam = from.getVec2f(i);
+            auto toParam = to.getVec2f(i);
+            auto retParam = ret.getVec2f(i);
+            retParam.set((toParam.get() - fromParam.get()) * t + fromParam.get());
+        }else if(type == typeid(ofParameter <ofVec3f> ).name()){
+            auto fromParam = from.getVec3f(i);
+            auto toParam = to.getVec3f(i);
+            auto retParam = ret.getVec3f(i);
+            retParam.set((toParam.get() - fromParam.get()) * t + fromParam.get());
+        }else if(type == typeid(ofParameter <ofVec4f> ).name()){
+            auto fromParam = from.getVec4f(i);
+            auto toParam = to.getVec4f(i);
+            auto retParam = ret.getVec4f(i);
+            retParam.set((toParam.get() - fromParam.get()) * t + fromParam.get());
+        }else if(type == typeid(ofParameter <ofColor> ).name()){
+            auto fromParam = from.getColor(i);
+            auto toParam = to.getColor(i);
+            auto retParam = ret.getColor(i);
+            retParam.set(fromParam.get().getLerped(toParam.get(), t));
+        }else if(type == typeid(ofParameter <ofShortColor> ).name()){
+            auto fromParam = from.getShortColor(i);
+            auto toParam = to.getShortColor(i);
+            auto retParam = ret.getShortColor(i);
+            retParam.set(fromParam.get().getLerped(toParam.get(), t));
+        }else if(type == typeid(ofParameter <ofFloatColor> ).name()){
+            auto fromParam = from.getFloatColor(i);
+            auto toParam = to.getFloatColor(i);
+            auto retParam = ret.getFloatColor(i);
+            retParam.set(fromParam.get().getLerped(toParam.get(), t));
+        }else if(type == typeid(ofParameter <string> ).name()){
+            auto fromParam = from.getString(i);
+            auto toParam = to.getString(i);
+            auto retParam = ret.getString(i);
+            retParam.set(t > 0.5 ? toParam.get() : fromParam.get());
+        }else if(type == typeid(ofParameterGroup).name()){
+            auto fromParam = from.getGroup(i);
+            auto toParam = to.getGroup(i);
+            auto retParam = ret.getGroup(i);
+            interpolateParameters(fromParam, toParam, retParam, t);
+        }else{
+            ofLogWarning() << "ofxBaseGroup; no control for parameter of type " << type;
+        }
+    }
+}
+
 void GuiApp::setup(){
 
     ofSoundStream ss;
@@ -113,21 +218,34 @@ void GuiApp::setup(){
     debugParameters.add(useSavedParams.set("Use saved params", true));
     debugGui.setup(debugParameters);
 
+    // Meta
+    metaParams.setName("Meta");
+    metaParams.add(wandering.set("wandering", false));
+    metaParams.add(wanderSpeed.set("wanderSpeed", 0, 0, 20));
+    metaParams.add(genomeInterpolationAmt.set("interpolate", 0, 0, 1));
+    metaGui.setup(metaParams);
+
     inputGui.setPosition(10, 450);
     debugGui.setPosition(inputGui.getPosition().x + inputGui.getWidth() + 10, inputGui.getPosition().y);
+    metaGui.setPosition(debugGui.getPosition().x, debugGui.getPosition().y + debugGui.getHeight() + 10);
 
     loadAllParamsFromFile();
     setupDefaultParams(defaultParams);
-    setupDefaultParams(currParams);
-    copyParameters(defaultParams.displayParameters, currParams.displayParameters);
+    setupDefaultParams(activeParams);
+    copyParameters(defaultParams.displayParameters, activeParams.displayParameters);
 
-    displayGui.setup(currParams.displayParameters);
+    displayGui.setup(activeParams.displayParameters);
     displayGui.setPosition(580, 15);
     ofAddListener(displayGui.savePressedE, this, &GuiApp::saveClicked);
     ofAddListener(displayGui.loadPressedE, this, &GuiApp::loadClicked);
 
+    float height = MAX(MAX(MAX(inputGui.getPosition().y + inputGui.getHeight(),
+                       debugGui.getPosition().y + inputGui.getHeight()),
+                       metaGui.getPosition().y + metaGui.getHeight()),
+                       displayGui.getPosition().y + displayGui.getHeight());
+
     ofSetWindowShape(displayGui.getPosition().x + displayGui.getWidth() + 10,
-                     displayGui.getPosition().y + displayGui.getHeight() + 10);
+                     height + 10);
 
     visuals = NULL;
     audioBuckets = NULL;
@@ -144,18 +262,12 @@ void GuiApp::setup(){
 
 void GuiApp::setupDefaultParams(dotsParams &params) {
     params.displayParameters.clear();
-    params.metaParams.clear();
     params.audioAnalysisParameters.clear();
     params.drawingParams.clear();
     params.speedParams.clear();
     params.dotParams.clear();
     params.lineParams.clear();
     params.audioEffectParams.clear();
-
-    // Meta
-    params.metaParams.setName("Meta");
-    params.metaParams.add(params.wandering.set("wandering", false));
-    params.displayParameters.add(params.metaParams);
 
     // Audio analysis
     params.audioAnalysisParameters.setName("Audio Analysis");
@@ -225,6 +337,10 @@ void GuiApp::update(){
             nSoundDevices = soundDevices.size();
             soundStreamDevice.setMax(nSoundDevices);
         }
+    }
+
+    if (currParams && nextParams) {
+        applyParameterInterpolation(genomeInterpolationAmt);
     }
 }
 
@@ -311,7 +427,7 @@ void GuiApp::draw() {
         ofSetColor(200, 0, 0);
         ofDrawLine(mappedCentroid, 0, mappedCentroid, -fftHeight);
         ofDrawBitmapString("centroid", mappedCentroid + 4, -30);
-        float mappedCentroidMax = fftWidth * currParams.centroidMaxBucket;
+        float mappedCentroidMax = fftWidth * activeParams.centroidMaxBucket;
         ofSetColor(125, 0, 0);
         ofDrawLine(mappedCentroidMax, 0, mappedCentroidMax, -fftHeight);
         ofDrawBitmapString("centroidMax", mappedCentroidMax + 4, -30);
@@ -335,6 +451,7 @@ void GuiApp::draw() {
     inputGui.draw();
     debugGui.draw();
     displayGui.draw();
+    metaGui.draw();
 }
 
 void GuiApp::handleKey(int key) {
@@ -348,20 +465,32 @@ void GuiApp::keyPressed(int key) {
 void GuiApp::copyGenomeParams(int idx) {
     if (paramsMap.count(idx) > 0) {
         cout << "Genome is now " << idx << ", we have settings saved." << endl;
-        copyParameters(paramsMap[idx]->displayParameters, currParams.displayParameters);
+        copyParameters(paramsMap[idx]->displayParameters, activeParams.displayParameters);
     } else {
         cout << "Genome is now " << idx << ", no settings saved." << endl;
-        copyParameters(defaultParams.displayParameters, currParams.displayParameters);
+        copyParameters(defaultParams.displayParameters, activeParams.displayParameters);
     }
 }
 
 void GuiApp::setGenomeIdx(int newIdx) {
     if (useSavedParams.get()) {
+        // Save params in case someone set them
         if (paramsMap.count(genomeIdx) > 0) {
             cout << "Saved params from " << genomeIdx << "." << endl;
-            copyParameters(currParams.displayParameters, paramsMap[genomeIdx]->displayParameters);
+            copyParameters(activeParams.displayParameters, paramsMap[genomeIdx]->displayParameters);
         }
+        
         copyGenomeParams(newIdx);
+
+        // TODO: merge into tracks
+        if (paramsMap.count(newIdx) > 0) {
+            currParams = paramsMap[newIdx];
+            if (paramsMap.count(newIdx+1) > 0) {
+                nextParams = paramsMap[genomeIdx+1];
+            } else {
+                nextParams = paramsMap[0];
+            }
+        }
     }
 
     genomeIdx = newIdx;
@@ -377,13 +506,68 @@ void GuiApp::setupControls(int numCPs) {
     }
 }
 
+// TODO: clean up if possible
+void GuiApp::applyParameterInterpolation(float t) {
+    activeParams.pointRadiusUsesAudio.set(ofLerp(currParams->pointRadiusUsesAudio.get(),
+                                                 nextParams->pointRadiusUsesAudio.get(),
+                                                 t));
+    activeParams.pointRadiusAudioScale.set(ofLerp(currParams->pointRadiusAudioScale.get(),
+                                                  nextParams->pointRadiusAudioScale.get(),
+                                                  t));
+    activeParams.fftDecayRate.set(ofLerp(currParams->fftDecayRate.get(),
+                                         nextParams->fftDecayRate.get(),
+                                         t));
+    activeParams.rmsMultiple.set(ofLerp(currParams->rmsMultiple.get(),
+                                        nextParams->rmsMultiple.get(),
+                                        t));
+    activeParams.centroidMaxBucket.set(ofLerp(currParams->centroidMaxBucket.get(),
+                                              nextParams->centroidMaxBucket.get(),
+                                              t));
+    activeParams.mpxSmoothingFactor.set(ofLerp(currParams->mpxSmoothingFactor.get(),
+                                               nextParams->mpxSmoothingFactor.get(),
+                                               t));
+    activeParams.mpySmoothingFactor.set(ofLerp(currParams->mpySmoothingFactor.get(),
+                                               nextParams->mpySmoothingFactor.get(),
+                                               t));
+    activeParams.baseSpeed.set(ofLerp(currParams->baseSpeed.get(),
+                                      nextParams->baseSpeed.get(),
+                                      t));
+    activeParams.rmsSpeedMult.set(ofLerp(currParams->rmsSpeedMult.get(),
+                                         nextParams->rmsSpeedMult.get(),
+                                         t));
+    activeParams.clearSpeed.set(ofLerp(currParams->clearSpeed.get(),
+                                       nextParams->clearSpeed.get(),
+                                       t));
+    activeParams.particleAlpha.set(ofLerp(currParams->particleAlpha.get(),
+                                          nextParams->particleAlpha.get(),
+                                          t));
+    activeParams.basePointRadius.set(ofLerp(currParams->basePointRadius.get(),
+                                            nextParams->basePointRadius.get(),
+                                            t));
+    activeParams.maxLineLength.set(ofLerp(currParams->maxLineLength.get(),
+                                          nextParams->maxLineLength.get(),
+                                          t));
+    activeParams.audioEffectSize1.set(ofLerp(currParams->audioEffectSize1.get(),
+                                             nextParams->audioEffectSize1.get(),
+                                             t));
+    activeParams.audioEffectSize2.set(ofLerp(currParams->audioEffectSize2.get(),
+                                             nextParams->audioEffectSize2.get(),
+                                             t));
+    activeParams.audioEffectSize3.set(ofLerp(currParams->audioEffectSize3.get(),
+                                             nextParams->audioEffectSize3.get(),
+                                             t));
+    activeParams.audioEffectSize4.set(ofLerp(currParams->audioEffectSize4.get(),
+                                             nextParams->audioEffectSize4.get(),
+                                             t));
+}
+
 void GuiApp::serializeCurrentParamsToFile() {
     cout << "Saving " << genomeIdx << " to file." << endl;
     char filename[255];
     sprintf(filename, "genomeSettings/cp-%03d.xml", genomeIdx);
 
     settings.clear();
-    settings.serialize(currParams.displayParameters);
+    settings.serialize(activeParams.displayParameters);
     settings.save(filename);
 }
 

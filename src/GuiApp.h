@@ -14,9 +14,6 @@ typedef struct dotsParams {
     ofParameter<float> rmsMultiple;
     ofParameter<float> mpxSmoothingFactor, mpySmoothingFactor;
 
-    ofParameterGroup metaParams;
-    ofParameter<bool> wandering;
-
     ofParameterGroup drawingParams;
     ofParameter<float> clearSpeed;
     ofParameter<float> particleAlpha;
@@ -61,6 +58,9 @@ public:
     void loadAllParamsFromFile();
     void setupControls(int numCPs);
     void serializeCurrentParamsToFile();
+
+    void applyParameterInterpolation(float t);
+
     ofxXmlSettings settings;
 
     // Patameters that don't need to be serialized/unserialized
@@ -75,11 +75,20 @@ public:
     ofParameter<float> pctToAllowRandom;
     ofParameter<bool> useSavedParams;
 
-    dotsParams currParams;
+    ofParameterGroup metaParams;
+    ofParameter<bool> wandering;
+    ofParameter<float> wanderSpeed;
+    ofParameter<float> genomeInterpolationAmt;
+
+    dotsParams activeParams;
+
+    dotsParams *currParams;
+    dotsParams *nextParams;
+
     dotsParams defaultParams;
     map<int, dotsParams *> paramsMap;
 
-    ofxPanel analysisGui, inputGui, debugGui, displayGui;
+    ofxPanel analysisGui, inputGui, debugGui, metaGui, displayGui;
     
     // To mirror from ofApp
     int genomeIdx; // only set using setGenomeIdx()

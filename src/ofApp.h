@@ -82,6 +82,7 @@ public:
     float audioEffectSize1, audioEffectSize2, audioEffectSize3, audioEffectSize4;
     float mmpx, mmpy;
     float baseSpeed, rmsSpeedMult;
+    float wanderSpeed;
 
     ofShader billboardShader;
 

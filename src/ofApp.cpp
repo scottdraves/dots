@@ -30,6 +30,7 @@ void ofApp::setup(){
 
     // GUI-controlled
     baseSpeed = 0.25;
+    wanderSpeed = 0;
     rmsSpeedMult = 0;
     mpxSmoothingFactor = 0.4;
     mpySmoothingFactor = 0.1;
@@ -177,26 +178,27 @@ void ofApp::guiUpdate() {
     }
 
     // Copy data from gui
-    wandering = gui->currParams.wandering;
-    pointRadiusUsesAudio = gui->currParams.pointRadiusUsesAudio;
-    pointRadiusAudioScale = gui->currParams.pointRadiusAudioScale;
-    fftDecayRate = gui->currParams.fftDecayRate;
-    rmsMultiple = gui->currParams.rmsMultiple;
-    centroidMaxBucket = gui->currParams.centroidMaxBucket;
-    mpxSmoothingFactor = gui->currParams.mpxSmoothingFactor;
-    mpySmoothingFactor = gui->currParams.mpySmoothingFactor;
-    baseSpeed = gui->currParams.baseSpeed;
-    rmsSpeedMult = gui->currParams.rmsSpeedMult;
-    frameClearSpeed = gui->currParams.clearSpeed;
-    particleAlpha = gui->currParams.particleAlpha;
-    basePointRadius = gui->currParams.basePointRadius;
-    maxLineLength = gui->currParams.maxLineLength;
+    wandering = gui->wandering.get();
+    wanderSpeed = gui->wanderSpeed;
+    pointRadiusUsesAudio = gui->activeParams.pointRadiusUsesAudio;
+    pointRadiusAudioScale = gui->activeParams.pointRadiusAudioScale;
+    fftDecayRate = gui->activeParams.fftDecayRate;
+    rmsMultiple = gui->activeParams.rmsMultiple;
+    centroidMaxBucket = gui->activeParams.centroidMaxBucket;
+    mpxSmoothingFactor = gui->activeParams.mpxSmoothingFactor;
+    mpySmoothingFactor = gui->activeParams.mpySmoothingFactor;
+    baseSpeed = gui->activeParams.baseSpeed;
+    rmsSpeedMult = gui->activeParams.rmsSpeedMult;
+    frameClearSpeed = gui->activeParams.clearSpeed;
+    particleAlpha = gui->activeParams.particleAlpha;
+    basePointRadius = gui->activeParams.basePointRadius;
+    maxLineLength = gui->activeParams.maxLineLength;
 
     // TODO: use array?
-    audioEffectSize1 = gui->currParams.audioEffectSize1;
-    audioEffectSize2 = gui->currParams.audioEffectSize2;
-    audioEffectSize3 = gui->currParams.audioEffectSize3;
-    audioEffectSize4 = gui->currParams.audioEffectSize4;
+    audioEffectSize1 = gui->activeParams.audioEffectSize1;
+    audioEffectSize2 = gui->activeParams.audioEffectSize2;
+    audioEffectSize3 = gui->activeParams.audioEffectSize3;
+    audioEffectSize4 = gui->activeParams.audioEffectSize4;
 
     if (audioMode != gui->audioMode) {
         audioMode = gui->audioMode;
@@ -250,8 +252,13 @@ void ofApp::flameUpdate() {
             genomeIdx = currCP;
         }
 
-        flam3_interpolate(cps, ncps, counter/ispeed, 0, &cp);
+        float newIdx = counter/ispeed;
+        gui->genomeInterpolationAmt = newIdx - (int)newIdx;
+
+        flam3_interpolate(cps, ncps, newIdx, 0, &cp);
     } else {
+        gui->genomeInterpolationAmt = 0;
+
         float speed = baseSpeed + smoothedAudioRMS * rmsSpeedMult;
         flam3_rotate(&cp, speed, flam3_inttype_log);
     }
@@ -333,7 +340,7 @@ void ofApp::flameUpdate() {
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    counter += baseSpeed;
+    counter += wanderSpeed;
     
     // Handle our keypresses
     while (!keyPresses.empty()) {
@@ -698,7 +705,7 @@ void ofApp::draw(){
     if (gui->drawMode == 0) {
         int loc;
         billboardShader.begin();
-            const float screenScale = ofGetWidth() / 1024.0 * gui->currParams.overallScale;
+            const float screenScale = ofGetWidth() / 1024.0 * gui->activeParams.overallScale;
 
             billboardShader.setUniform2f("screen", ofGetWidth(), ofGetHeight());
             billboardShader.setUniform2f("cpCenter", cp.center[0], cp.center[1]);
@@ -749,7 +756,7 @@ void ofApp::draw(){
 void ofApp::handleKey(int key) {
     if (key == ' ') {
         swapFrame = frame;
-        gui->currParams.wandering.set(!gui->currParams.wandering.get());
+        gui->wandering.set(!gui->wandering.get());
     } else if (key == OF_KEY_LEFT) {
         swapFrame = frame;
         if (--genomeIdx < 0) genomeIdx = ncps-1;
@@ -759,7 +766,7 @@ void ofApp::handleKey(int key) {
         if (++genomeIdx >= ncps) genomeIdx = 0;
         flam3_copy(&cp, &cps[genomeIdx]);
     } else if (key == 'd') {
-        gui->currParams.pointRadiusUsesAudio.set(!gui->currParams.pointRadiusUsesAudio.get());
+        gui->activeParams.pointRadiusUsesAudio.set(!gui->activeParams.pointRadiusUsesAudio.get());
     } else if (key == 'a') {
         momode++;
     } else if (key == 's') {
@@ -777,9 +784,9 @@ void ofApp::handleKey(int key) {
     } else if (key == OF_KEY_DOWN) {
         killCurrent();
     } else if (key == ',') {
-        gui->currParams.baseSpeed *= 0.80;
+        gui->activeParams.baseSpeed *= 0.80;
     } else if (key == '.') {
-        gui->currParams.baseSpeed *= 1.2;
+        gui->activeParams.baseSpeed *= 1.2;
     } else if (key == '0') {
         mySound.setPosition(mySound.getPosition()-0.02);
         ofSoundStreamSetup(0, 1, this);
