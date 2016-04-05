@@ -39,6 +39,8 @@ public:
     void mouseReleased(int x, int y, int button);
     void windowResized(int w, int h);
     void audioIn(float * input, int bufferSize, int nChannels);
+
+    void setAlbumCPOrder(const vector<int> &cpOrder);
     
     void killCurrent();
     void mateCurrent();
@@ -69,9 +71,9 @@ public:
     flam3_genome *cps;
 
     // Copied into cpOrder
-    int nCPsInTrack;
-    flam3_genome *cpTrackOrder;
-    vector<int> cpIdxTrackOrder;
+    int albumIdx, trackIdx;
+    int nCPsInAlbum;
+    flam3_genome *cpAlbumOrder;
 
     // After interpolation and to render
     flam3_genome cp, renderCp;

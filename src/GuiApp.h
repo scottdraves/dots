@@ -5,8 +5,12 @@
 #include "ofxXmlSettings.h"
 #include "appConstants.h"
 
-typedef struct dotsParams {
+typedef struct dotsTrack {
     ofParameterGroup displayParameters;
+
+    ofParameterGroup trackParams;
+    ofParameter<int> genomeIdx;
+    // TODO: duration?
 
     ofParameterGroup audioAnalysisParameters;
     ofParameter<float> fftDecayRate;
@@ -31,7 +35,12 @@ typedef struct dotsParams {
 
     ofParameterGroup audioEffectParams;
     ofParameter<float> audioEffectSize1, audioEffectSize2, audioEffectSize3, audioEffectSize4;
-} dotsParams;
+} dotsTrack;
+
+typedef struct dotsAlbum {
+    int albumIdx;
+    vector<dotsTrack *> trackList;
+} dotsAlbum;
 
 class ReplaceablePanel : public ofxPanel {
 public:
@@ -50,14 +59,28 @@ public:
     void handleKey(int key);
     void buttonPressed(const void * sender);
 
-    void copyGenomeParams(int idx);
     void saveClicked();
     void loadClicked();
 
-    void setGenomeIdx(int idx);
+    vector<int> getAlbumGenomeIndices();
+
+    void advanceAlbum();
+    void regressAlbum();
+    void saveAlbum();
+    void createAlbum();
+
+    void regressTrack();
+    void advanceTrack();
+    void reloadTrack();
+    void deleteTrack();
+    void copyTrack();
+
+    void destAlbumIdxChanged(int & albumIdx);
+    void genomeModified(int & genome);
+
     void loadAllParamsFromFile();
     void setupControls(int numCPs);
-    void serializeCurrentParamsToFile();
+    void serializeCurrentAlbumToFile();
 
     void applyParameterInterpolation(float t);
 
@@ -80,27 +103,41 @@ public:
     ofParameter<float> wanderSpeed;
     ofParameter<float> genomeInterpolationAmt;
 
-    dotsParams activeParams;
-
-    dotsParams *currParams;
-    dotsParams *nextParams;
-
-    dotsParams defaultParams;
-    map<int, dotsParams *> paramsMap;
+    ofxPanel albumGui;
+    ofxGuiGroup albumControls;
+    ofxButton prevAlbumBtn, nextAlbumBtn;
+    ofxButton newAlbumBtn, saveAlbumBtn;
+    ofxGuiGroup trackControls;
+    ofxButton deleteTrackBtn, reloadTrackBtn;
+    ofxGuiGroup albumCopyControls;
+    ofParameter<int> destAlbumIdx;
+    ofParameter<int> destTrackIdx;
+    ofxButton copyToAlbumBtn;
 
     ofxPanel analysisGui, inputGui, debugGui, metaGui, displayGui;
-    
+
+    // Parameters
+    dotsTrack activeTrack;
+    dotsTrack *currTrack;
+    dotsTrack *nextTrack;
+    dotsTrack defaultTrack;
+
+    // Albums and tracks
+    int albumIdx, trackIdx;
+    bool albumDirty;
+    vector<dotsAlbum> albums;
+
     // To mirror from ofApp
-    int genomeIdx; // only set using setGenomeIdx()
     float frameRate, pctParticles;
     ofTexture* visuals;
     float *audioBuckets;
     int nAudioBuckets;
     float mpx, mpy;
     float audioCentroid, audioRMS;
+    int numCPs;
     
     queue<int> keyPresses;
 
 private:
-    void setupDefaultParams(dotsParams &params);
+    void setupDefaultParams(dotsTrack &track);
 };
