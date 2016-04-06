@@ -190,7 +190,13 @@ void interpolateParameters(const ofParameterGroup &from, const ofParameterGroup 
     }
 }
 
-void GuiApp::setup(){
+template <typename ParameterType>
+void setParam(ofParameter<ParameterType>& param, float t) {
+    param.set(ofLerp(param.getMin(), param.getMax(), t));
+}
+
+void GuiApp::setup() {
+    midi.setup();
 
     ofSoundStream ss;
     soundDevices = ss.getDeviceList();
@@ -393,6 +399,23 @@ void GuiApp::update(){
     if ((wandering || genomeInterpolationAmt > 0.0001) && currTrack && nextTrack) {
         applyParameterInterpolation(genomeInterpolationAmt);
     }
+
+    if (!wandering) {
+        midiToTrackParams();
+    } else {
+        // TODO: apply to midi adjust
+    }
+}
+
+void GuiApp::midiToTrackParams() {
+    if (midi.sliders[0] > 0) setParam(activeTrack.clearSpeed, midi.sliders[0]);
+    if (midi.sliders[1] > 0) setParam(activeTrack.overallScale, midi.sliders[1]);
+    if (midi.sliders[2] > 0) setParam(activeTrack.basePointRadius, midi.sliders[2]);
+    if (midi.sliders[3] > 0) setParam(activeTrack.maxLineLength, midi.sliders[3]);
+    if (midi.sliders[4] > 0) setParam(activeTrack.audioEffectSize1, midi.sliders[4]);
+    if (midi.sliders[5] > 0) setParam(activeTrack.audioEffectSize2, midi.sliders[5]);
+    if (midi.sliders[6] > 0) setParam(activeTrack.audioEffectSize3, midi.sliders[6]);
+    if (midi.sliders[7] > 0) setParam(activeTrack.audioEffectSize4, midi.sliders[7]);
 }
 
 void GuiApp::draw() {

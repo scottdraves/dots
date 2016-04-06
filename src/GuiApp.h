@@ -4,6 +4,7 @@
 #include "ofxGui.h"
 #include "ofxXmlSettings.h"
 #include "appConstants.h"
+#include "MidiController.h"
 
 typedef struct dotsTrack {
     ofParameterGroup displayParameters;
@@ -58,6 +59,7 @@ public:
     void keyPressed(int key);
     void handleKey(int key);
     void buttonPressed(const void * sender);
+    void midiToTrackParams();
 
     void saveClicked();
     void loadClicked();
@@ -122,6 +124,8 @@ public:
     dotsTrack *nextTrack;
     dotsTrack defaultTrack;
 
+    dotsTrack midiAdjust;
+
     // Albums and tracks
     int albumIdx, trackIdx;
     bool albumDirty;
@@ -137,6 +141,7 @@ public:
     int numCPs;
     
     queue<int> keyPresses;
+    MidiController midi;
 
 private:
     void setupDefaultParams(dotsTrack &track);
