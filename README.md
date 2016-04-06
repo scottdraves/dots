@@ -1,7 +1,13 @@
 ### Requirements
 
+Add to `OF_DIR/addons`:
+
 - ofxFFT: https://github.com/kylemcdonald/ofxFft (disable FFTW)
-- ofxSyphon: https://github.com/astellato/ofxSyphon (packaged in the repo for 64bit OSX)
+- ofxMidi: https://github.com/danomatika/ofxMidi/
+
+Pre-packaged for 64bit OSX:
+
+- ofxSyphon: https://github.com/astellato/ofxSyphon
 
 ### Running multiple screens
 
