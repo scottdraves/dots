@@ -75,6 +75,7 @@ public:
     void advanceTrack();
     void reloadTrack();
     void deleteTrack();
+    void duplicateTrack();
     void copyTrack();
 
     void destAlbumIdxChanged(int & albumIdx);
@@ -110,7 +111,7 @@ public:
     ofxButton prevAlbumBtn, nextAlbumBtn;
     ofxButton newAlbumBtn, saveAlbumBtn;
     ofxGuiGroup trackControls;
-    ofxButton deleteTrackBtn, reloadTrackBtn;
+    ofxButton deleteTrackBtn, reloadTrackBtn, duplicateTrackBtn;
     ofxGuiGroup albumCopyControls;
     ofParameter<int> destAlbumIdx;
     ofParameter<int> destTrackIdx;

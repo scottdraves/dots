@@ -248,12 +248,13 @@ void GuiApp::setup() {
 
     trackControls.setup();
     trackControls.setName("Tracks");
+    trackControls.add(duplicateTrackBtn.setup("Duplicate track"));
     trackControls.add(reloadTrackBtn.setup("Reload track"));
     trackControls.add(deleteTrackBtn.setup("Remove track"));
     albumGui.add(&trackControls);
 
+    duplicateTrackBtn.addListener(this, &GuiApp::duplicateTrack);
     reloadTrackBtn.addListener(this, &GuiApp::reloadTrack);
-
     deleteTrackBtn.addListener(this, &GuiApp::deleteTrack);
 
     albumCopyControls.setup();
@@ -654,6 +655,18 @@ void GuiApp::deleteTrack() {
     // TODO: less ham-fisted way to do this
     regressTrack();
     advanceTrack();
+}
+
+// TODO: unify with the below
+void GuiApp::duplicateTrack() {
+    cout << "Duplicate track" << endl;
+
+    dotsTrack *cpy = new dotsTrack;
+    setupDefaultParams(*cpy);
+    copyParameters(activeTrack.displayParameters, cpy->displayParameters);
+
+    vector<dotsTrack *> &destTracks = albums[albumIdx].trackList;
+    destTracks.insert(destTracks.begin() + trackIdx + 1, cpy);
 }
 
 void GuiApp::copyTrack() {
