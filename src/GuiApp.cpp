@@ -649,7 +649,7 @@ void GuiApp::deleteTrack() {
     albumDirty = true;
 
     vector<dotsTrack *> &tracks = albums[albumIdx].trackList;
-    tracks.erase(tracks.begin() + albumIdx);
+    tracks.erase(tracks.begin() + trackIdx);
 
     // TODO: less ham-fisted way to do this
     regressTrack();
@@ -750,6 +750,11 @@ void GuiApp::serializeCurrentAlbumToFile() {
 void GuiApp::createAlbum() {
     dotsAlbum album;
     album.albumIdx = albums.size();
+
+    dotsTrack *track = new dotsTrack;
+    setupDefaultParams(*track);
+    track->genomeIdx = currTrack->genomeIdx;
+    album.trackList.push_back(track);
 
     albums.push_back(album);
 }
