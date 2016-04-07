@@ -227,7 +227,7 @@ void GuiApp::setup() {
     // Meta
     metaParams.setName("Meta");
     metaParams.add(wandering.set("wandering", false));
-    metaParams.add(wanderSpeed.set("wanderSpeed", 0, 0, 20));
+    metaParams.add(wanderSpeed.set("wanderSpeed", 1, 0, 20));
     metaParams.add(genomeInterpolationAmt.set("interpolate", 0, 0, 1));
     metaGui.setup(metaParams);
 
