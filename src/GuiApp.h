@@ -28,7 +28,7 @@ typedef struct dotsTrack {
     ofParameter<float> baseSpeed, rmsSpeedMult;
 
     ofParameterGroup dotParams;
-    ofParameter<bool> pointRadiusUsesAudio;
+    ofParameter<float> pointRadiusAudioScaleAmt;
     ofParameter<float> basePointRadius, pointRadiusAudioScale;
 
     ofParameterGroup lineParams;

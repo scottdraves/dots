@@ -100,7 +100,7 @@ public:
     float mmpx, mmpy;
     float baseSpeed, rmsSpeedMult;
     float wanderSpeed;
-    bool pointRadiusUsesAudio;
+    float pointRadiusAudioScaleAmt;
     float frameClearSpeed;
     float particleAlpha, basePointRadius, pointRadiusAudioScale;
     float maxLineLength;

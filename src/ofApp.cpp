@@ -36,7 +36,7 @@ void ofApp::setup(){
     centroidMaxBucket = 0.35;
     rmsMultiple = 5;
     wandering = false;
-    pointRadiusUsesAudio = true;
+    pointRadiusAudioScaleAmt = 1;
     pointRadiusAudioScale = 10.0;
     frameClearSpeed = 50;
     audioEffectSize1 = 1.0;
@@ -208,7 +208,7 @@ void ofApp::guiUpdate() {
     }
 
     wanderSpeed = gui->wanderSpeed;
-    pointRadiusUsesAudio = gui->activeTrack.pointRadiusUsesAudio;
+    pointRadiusAudioScaleAmt = gui->activeTrack.pointRadiusAudioScaleAmt;
     pointRadiusAudioScale = gui->activeTrack.pointRadiusAudioScale;
     fftDecayRate = gui->activeTrack.fftDecayRate;
     rmsMultiple = gui->activeTrack.rmsMultiple;
@@ -335,13 +335,12 @@ void ofApp::flameUpdate() {
     totLinePixels = 0;
     for (int i = 0; i < nsamples-1; i++) {
         // Radius depends on mpy
-        float radius = basePointRadius * mpy;
-        if (pointRadiusUsesAudio) {
-            const int bucket = ofMap(i, 0, nsamples-1, 0, nFftBuckets * centroidMaxBucket);
-            const float scale = pointRadiusAudioScale * fftOutput[bucket];
-            radius *= scale;
-        }
-        // TODO: remove?
+        const float baseRadius = basePointRadius * mpy;
+
+        const int bucket = ofMap(i, 0, nsamples-1, 0, nFftBuckets * centroidMaxBucket);
+        const float audioScale = pointRadiusAudioScale * fftOutput[bucket];
+
+        float radius = ofLerp(baseRadius, baseRadius * audioScale, pointRadiusAudioScaleAmt);
         radius = ofClamp(radius, 0, 100);
 
         int palleteIdx = (int)(currFlameSamples[4*i+2] * CMAP_SIZE);
@@ -789,7 +788,11 @@ void ofApp::handleKey(int key) {
         swapFrame = frame;
         gui->advanceTrack();
     } else if (key == 'd') {
-        gui->activeTrack.pointRadiusUsesAudio.set(!gui->activeTrack.pointRadiusUsesAudio.get());
+        if (gui->activeTrack.pointRadiusAudioScaleAmt > 0)
+            gui->activeTrack.pointRadiusAudioScaleAmt.set(0);
+        else
+            gui->activeTrack.pointRadiusAudioScaleAmt.set(1);
+
     } else if (key == 's') {
         gui->audioMode.set(gui->audioMode.get() + 1);
         if (audioMode >= N_AUDIO_MODES)

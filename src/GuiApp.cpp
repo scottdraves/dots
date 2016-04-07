@@ -344,7 +344,7 @@ void GuiApp::setupDefaultParams(dotsTrack &track) {
 
     // Dot size
     track.dotParams.setName("Dots");
-    track.dotParams.add(track.pointRadiusUsesAudio.set("dotSizeUsesAudio", true));
+    track.dotParams.add(track.pointRadiusAudioScaleAmt.set("pointRadiusAudioScaleAmt", true));
     track.dotParams.add(track.pointRadiusAudioScale.set("dotAudioScale", 10, 0, 50));
     track.dotParams.add(track.basePointRadius.set("baseDotRadius", 10, 0, 50));
     track.displayParameters.add(track.dotParams);
@@ -685,9 +685,9 @@ void GuiApp::copyTrack() {
 
 // TODO: clean up if possible
 void GuiApp::applyParameterInterpolation(float t) {
-    activeTrack.pointRadiusUsesAudio.set(ofLerp(currTrack->pointRadiusUsesAudio.get(),
-                                                 nextTrack->pointRadiusUsesAudio.get(),
-                                                 t));
+    activeTrack.pointRadiusAudioScaleAmt.set(ofLerp(currTrack->pointRadiusAudioScaleAmt.get(),
+                                                    nextTrack->pointRadiusAudioScaleAmt.get(),
+                                                    t));
     activeTrack.pointRadiusAudioScale.set(ofLerp(currTrack->pointRadiusAudioScale.get(),
                                                   nextTrack->pointRadiusAudioScale.get(),
                                                   t));
@@ -718,6 +718,9 @@ void GuiApp::applyParameterInterpolation(float t) {
     activeTrack.particleAlpha.set(ofLerp(currTrack->particleAlpha.get(),
                                           nextTrack->particleAlpha.get(),
                                           t));
+    activeTrack.overallScale.set(ofLerp(currTrack->overallScale.get(),
+                                        nextTrack->overallScale.get(),
+                                        t));
     activeTrack.basePointRadius.set(ofLerp(currTrack->basePointRadius.get(),
                                             nextTrack->basePointRadius.get(),
                                             t));
