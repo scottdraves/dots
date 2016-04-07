@@ -103,6 +103,9 @@ void ofApp::setup(){
     gui->nAudioBuckets = nFftBuckets;
     gui->audioBuckets = fftOutput;
     gui->setupControls(ncps);
+    // TODO: better way to get all initialized
+    gui->advanceTrack();
+    gui->regressTrack();
     albumIdx = gui->albumIdx;
     trackIdx = gui->trackIdx;
 
@@ -263,24 +266,25 @@ void ofApp::flameUpdate() {
 
     if (wandering) {
         counter += wanderSpeed;
-        float normCounter = counter/ispeed;
 
-        if (counter > (nCPsInAlbum * ispeed))
+        if (counter >= (nCPsInAlbum * ispeed))
             counter = 0;
 
+        float normCounter = counter/ispeed;
         int currCP = (int)normCounter;
+
         if (lastCP != currCP) {
             swapFrame = frame;
 
-            lastCP = currCP;
-            genomeIdx = currCP;
-
             gui->advanceTrack();
+
+            lastCP = currCP;
+            genomeIdx = gui->currTrack->genomeIdx;
         } else {
             gui->genomeInterpolationAmt = normCounter - currCP;
 
             // cpAlbumOrder has n+1 - last is a copy of first
-            flam3_interpolate(cpAlbumOrder, nCPsInAlbum+1, normCounter, 0, &cp);
+            flam3_interpolate(cpAlbumOrder, nCPsInAlbum, normCounter, 0, &cp);
         }
     } else {
         float speed = baseSpeed + smoothedAudioRMS * rmsSpeedMult;

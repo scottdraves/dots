@@ -374,8 +374,9 @@ void GuiApp::loadClicked() {
     cout << "Pushed load." << endl;
 }
 
-void GuiApp::genomeModified(int & genome) {
-    albumDirty = true;
+void GuiApp::genomeModified(int & newGenomeIdx) {
+    if (newGenomeIdx != currTrack->genomeIdx)
+        albumDirty = true;
 }
 
 void GuiApp::destAlbumIdxChanged(int & destAlbumIdx) {
@@ -660,6 +661,7 @@ void GuiApp::deleteTrack() {
 // TODO: unify with the below
 void GuiApp::duplicateTrack() {
     cout << "Duplicate track" << endl;
+    albumDirty = true;
 
     dotsTrack *cpy = new dotsTrack;
     setupDefaultParams(*cpy);
@@ -671,6 +673,7 @@ void GuiApp::duplicateTrack() {
 
 void GuiApp::copyTrack() {
     cout << "Copy track" << endl;
+    albumDirty = true;
 
     dotsTrack *cpy = new dotsTrack;
     setupDefaultParams(*cpy);
