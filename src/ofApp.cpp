@@ -800,9 +800,9 @@ void ofApp::handleKey(int key) {
     } else if (key == OF_KEY_DOWN) {
         killCurrent();
     } else if (key == ',') {
-        gui->activeTrack.baseSpeed *= 0.80;
+        gui->regressAlbum();
     } else if (key == '.') {
-        gui->activeTrack.baseSpeed *= 1.2;
+        gui->advanceAlbum();
     } else if (key == '0') {
         mySound.setPosition(mySound.getPosition()-0.02);
         ofSoundStreamSetup(0, 1, this);
