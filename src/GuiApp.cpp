@@ -344,7 +344,7 @@ void GuiApp::setupDefaultParams(dotsTrack &track) {
 
     // Dot size
     track.dotParams.setName("Dots");
-    track.dotParams.add(track.pointRadiusAudioScaleAmt.set("pointRadiusAudioScaleAmt", true));
+    track.dotParams.add(track.pointRadiusAudioScaleAmt.set("pointRadiusAudioScaleAmt", 1, 0, 1));
     track.dotParams.add(track.pointRadiusAudioScale.set("dotAudioScale", 10, 0, 50));
     track.dotParams.add(track.basePointRadius.set("baseDotRadius", 10, 0, 50));
     track.displayParameters.add(track.dotParams);
