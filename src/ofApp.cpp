@@ -263,11 +263,12 @@ void ofApp::flameUpdate() {
 
     if (wandering) {
         counter += wanderSpeed;
+        float normCounter = counter/ispeed;
 
         if (counter > (nCPsInAlbum * ispeed))
             counter = 0;
 
-        int currCP = floor(counter/ispeed);
+        int currCP = (int)normCounter;
         if (lastCP != currCP) {
             swapFrame = frame;
 
@@ -275,11 +276,11 @@ void ofApp::flameUpdate() {
             genomeIdx = currCP;
 
             gui->advanceTrack();
-        } else { 
-            float newIdx = counter/ispeed;
-            gui->genomeInterpolationAmt = newIdx - (int)newIdx;
+        } else {
+            gui->genomeInterpolationAmt = normCounter - currCP;
 
-            flam3_interpolate(cpAlbumOrder, nCPsInAlbum, newIdx, 0, &cp);
+            // cpAlbumOrder has n+1 - last is a copy of first
+            flam3_interpolate(cpAlbumOrder, nCPsInAlbum+1, normCounter, 0, &cp);
         }
     } else {
         float speed = baseSpeed + smoothedAudioRMS * rmsSpeedMult;
@@ -899,8 +900,8 @@ void ofApp::setAlbumCPOrder(const vector<int> &cpOrder) {
 
     delete cpAlbumOrder;
     swapFrame = frame;
-    cpAlbumOrder = (flam3_genome *) malloc(sizeof(flam3_genome) * nCPsInAlbum);
-    memset(cpAlbumOrder, 0, sizeof(flam3_genome) * nCPsInAlbum);
+    cpAlbumOrder = (flam3_genome *) malloc(sizeof(flam3_genome) * (nCPsInAlbum + 1));
+    memset(cpAlbumOrder, 0, sizeof(flam3_genome) * (nCPsInAlbum + 1));
 
     // Copy in genomes in order
     for (int i = 0; i < nCPsInAlbum; ++i) {
@@ -909,6 +910,10 @@ void ofApp::setAlbumCPOrder(const vector<int> &cpOrder) {
         // Reset time
         cpAlbumOrder[i].time = (double) i;
     }
+
+    // Last CP is the first one duplicated
+    flam3_copy(cpAlbumOrder + nCPsInAlbum, &cps[0]);
+    cpAlbumOrder[nCPsInAlbum].time = (double) nCPsInAlbum;
 }
 
 //--------------------------------------------------------------
