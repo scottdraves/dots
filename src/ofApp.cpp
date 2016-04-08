@@ -35,6 +35,7 @@ void ofApp::setup(){
     mpySmoothingFactor = 0.1;
     centroidMaxBucket = 0.35;
     rmsMultiple = 5;
+    saturationPct = 255;
     wandering = false;
     pointRadiusAudioScaleAmt = 1;
     pointRadiusAudioScale = 10.0;
@@ -221,6 +222,7 @@ void ofApp::guiUpdate() {
     particleAlpha = gui->activeScene.particleAlpha;
     basePointRadius = gui->activeScene.basePointRadius;
     maxLineLength = gui->activeScene.maxLineLength;
+    saturationPct = gui->activeScene.saturationPct;
 
     // TODO: use array?
     audioEffectSize1 = gui->activeScene.audioEffectSize1;
@@ -347,6 +349,7 @@ void ofApp::flameUpdate() {
         palleteIdx = ofClamp(palleteIdx, 0, CMAP_SIZE-1);
         double *cv = cp.palette[palleteIdx].color;
         ofColor color(255*cv[0],255*cv[1],255*cv[2], particleAlpha);
+        color.setSaturation(saturationPct * color.getSaturation());
 
         pointPairs[i].pt1.x = currFlameSamples[4*i];
         pointPairs[i].pt1.y = currFlameSamples[4*i+1];

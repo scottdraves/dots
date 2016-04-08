@@ -104,6 +104,7 @@ public:
     float frameClearSpeed;
     float particleAlpha, basePointRadius, pointRadiusAudioScale;
     float maxLineLength;
+    float saturationPct;
 
     // Audio mode
     int audioMode;

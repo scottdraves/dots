@@ -304,63 +304,64 @@ void GuiApp::setup() {
     sceneIdx = -1;
 }
 
-void GuiApp::setupDefaultParams(DotsScene &track) {
-    track.displayParameters.clear();
-    track.sceneParams.clear();
-    track.audioAnalysisParameters.clear();
-    track.drawingParams.clear();
-    track.speedParams.clear();
-    track.dotParams.clear();
-    track.lineParams.clear();
-    track.audioEffectParams.clear();
+void GuiApp::setupDefaultParams(DotsScene &scene) {
+    scene.displayParameters.clear();
+    scene.sceneParams.clear();
+    scene.audioAnalysisParameters.clear();
+    scene.drawingParams.clear();
+    scene.speedParams.clear();
+    scene.dotParams.clear();
+    scene.lineParams.clear();
+    scene.audioEffectParams.clear();
 
     // Track params - not settable here
-    track.sceneParams.add(track.genomeIdx.set("genomeIdx", 0, 0, numCPs));
-    track.displayParameters.add(track.sceneParams);
+    scene.sceneParams.add(scene.genomeIdx.set("genomeIdx", 0, 0, numCPs));
+    scene.displayParameters.add(scene.sceneParams);
 
     // Audio analysis
-    track.audioAnalysisParameters.setName("Audio Analysis");
-    track.audioAnalysisParameters.add(track.fftDecayRate.set("fftDecayRate", 0.9, 0, 1));
-    track.audioAnalysisParameters.add(track.centroidMaxBucket.set("centroidMax (mpx)", 0.35, 0, 1));
-    track.audioAnalysisParameters.add(track.rmsMultiple.set("rmsMult (mpy)", 5, 0, 15));
-    track.audioAnalysisParameters.add(track.mpxSmoothingFactor.set("mpxSmoothingFactor", 0.4, 0, 1));
-    track.audioAnalysisParameters.add(track.mpySmoothingFactor.set("mpySmoothingFactor", 0.1, 0, 1));
-    track.displayParameters.add(track.audioAnalysisParameters);
+    scene.audioAnalysisParameters.setName("Audio Analysis");
+    scene.audioAnalysisParameters.add(scene.fftDecayRate.set("fftDecayRate", 0.9, 0, 1));
+    scene.audioAnalysisParameters.add(scene.centroidMaxBucket.set("centroidMax (mpx)", 0.35, 0, 1));
+    scene.audioAnalysisParameters.add(scene.rmsMultiple.set("rmsMult (mpy)", 5, 0, 15));
+    scene.audioAnalysisParameters.add(scene.mpxSmoothingFactor.set("mpxSmoothingFactor", 0.4, 0, 1));
+    scene.audioAnalysisParameters.add(scene.mpySmoothingFactor.set("mpySmoothingFactor", 0.1, 0, 1));
+    scene.displayParameters.add(scene.audioAnalysisParameters);
 
     // Drawing
-    track.drawingParams.setName("Drawing");
-    track.drawingParams.add(track.clearSpeed.set("clearSpeed", 50, 0, 255));
-    track.drawingParams.add(track.particleAlpha.set("particleAlpha", 50, 0, 255));
-    track.drawingParams.add(track.overallScale.set("overallScale", 1, 0.1, 3.0));
-    track.displayParameters.add(track.drawingParams);
+    scene.drawingParams.setName("Drawing");
+    scene.drawingParams.add(scene.clearSpeed.set("clearSpeed", 50, 0, 255));
+    scene.drawingParams.add(scene.particleAlpha.set("particleAlpha", 50, 0, 255));
+    scene.drawingParams.add(scene.overallScale.set("overallScale", 1, 0.1, 3.0));
+    scene.drawingParams.add(scene.saturationPct.set("saturationPct", 1, 0, 1));
+    scene.displayParameters.add(scene.drawingParams);
 
     // Rotation / Interpolation speed
-    track.speedParams.setName("Speed");
-    track.speedParams.add(track.baseSpeed.set("baseSpeed", 0, 0, 10));
-    track.speedParams.add(track.rmsSpeedMult.set("rmsSpeedMult", 30, 0, 100));
-    track.displayParameters.add(track.speedParams);
+    scene.speedParams.setName("Speed");
+    scene.speedParams.add(scene.baseSpeed.set("baseSpeed", 0, 0, 10));
+    scene.speedParams.add(scene.rmsSpeedMult.set("rmsSpeedMult", 30, 0, 100));
+    scene.displayParameters.add(scene.speedParams);
 
     // Dot size
-    track.dotParams.setName("Dots");
-    track.dotParams.add(track.pointRadiusAudioScaleAmt.set("pointRadiusAudioScaleAmt", 1, 0, 1));
-    track.dotParams.add(track.pointRadiusAudioScale.set("dotAudioScale", 10, 0, 50));
-    track.dotParams.add(track.basePointRadius.set("baseDotRadius", 10, 0, 50));
-    track.displayParameters.add(track.dotParams);
+    scene.dotParams.setName("Dots");
+    scene.dotParams.add(scene.pointRadiusAudioScaleAmt.set("pointRadiusAudioScaleAmt", 1, 0, 1));
+    scene.dotParams.add(scene.pointRadiusAudioScale.set("dotAudioScale", 10, 0, 50));
+    scene.dotParams.add(scene.basePointRadius.set("baseDotRadius", 10, 0, 50));
+    scene.displayParameters.add(scene.dotParams);
 
     // Line size
-    track.lineParams.setName("Lines");
-    track.lineParams.add(track.maxLineLength.set("maxLineLength", 100, 0, 3000));
-    track.displayParameters.add(track.lineParams);
+    scene.lineParams.setName("Lines");
+    scene.lineParams.add(scene.maxLineLength.set("maxLineLength", 100, 0, 3000));
+    scene.displayParameters.add(scene.lineParams);
 
     // Audio effects
-    track.audioEffectParams.setName("Audio Effect Sizes");
-    track.audioEffectParams.add(track.audioEffectSize1.set("audioEffectSize1", 1, 0, 1));
-    track.audioEffectParams.add(track.audioEffectSize2.set("audioEffectSize2", 1, 0, 1));
-    track.audioEffectParams.add(track.audioEffectSize3.set("audioEffectSize3", 1, 0, 1));
-    track.audioEffectParams.add(track.audioEffectSize4.set("audioEffectSize4", 1, 0, 1));
-    track.displayParameters.add(track.audioEffectParams);
+    scene.audioEffectParams.setName("Audio Effect Sizes");
+    scene.audioEffectParams.add(scene.audioEffectSize1.set("audioEffectSize1", 1, 0, 1));
+    scene.audioEffectParams.add(scene.audioEffectSize2.set("audioEffectSize2", 1, 0, 1));
+    scene.audioEffectParams.add(scene.audioEffectSize3.set("audioEffectSize3", 1, 0, 1));
+    scene.audioEffectParams.add(scene.audioEffectSize4.set("audioEffectSize4", 1, 0, 1));
+    scene.displayParameters.add(scene.audioEffectParams);
 
-    track.displayParameters.setName("Display");
+    scene.displayParameters.setName("Scene");
 }
 
 void GuiApp::genomeModified(int & newGenomeIdx) {
@@ -674,60 +675,25 @@ void GuiApp::copyScene() {
 
 // TODO: clean up if possible
 void GuiApp::applyParameterInterpolation(float t) {
-    activeScene.pointRadiusAudioScaleAmt.set(ofLerp(currScene->pointRadiusAudioScaleAmt.get(),
-                                                    nextScene->pointRadiusAudioScaleAmt.get(),
-                                                    t));
-    activeScene.pointRadiusAudioScale.set(ofLerp(currScene->pointRadiusAudioScale.get(),
-                                                  nextScene->pointRadiusAudioScale.get(),
-                                                  t));
-    activeScene.fftDecayRate.set(ofLerp(currScene->fftDecayRate.get(),
-                                         nextScene->fftDecayRate.get(),
-                                         t));
-    activeScene.rmsMultiple.set(ofLerp(currScene->rmsMultiple.get(),
-                                        nextScene->rmsMultiple.get(),
-                                        t));
-    activeScene.centroidMaxBucket.set(ofLerp(currScene->centroidMaxBucket.get(),
-                                              nextScene->centroidMaxBucket.get(),
-                                              t));
-    activeScene.mpxSmoothingFactor.set(ofLerp(currScene->mpxSmoothingFactor.get(),
-                                               nextScene->mpxSmoothingFactor.get(),
-                                               t));
-    activeScene.mpySmoothingFactor.set(ofLerp(currScene->mpySmoothingFactor.get(),
-                                               nextScene->mpySmoothingFactor.get(),
-                                               t));
-    activeScene.baseSpeed.set(ofLerp(currScene->baseSpeed.get(),
-                                      nextScene->baseSpeed.get(),
-                                      t));
-    activeScene.rmsSpeedMult.set(ofLerp(currScene->rmsSpeedMult.get(),
-                                         nextScene->rmsSpeedMult.get(),
-                                         t));
-    activeScene.clearSpeed.set(ofLerp(currScene->clearSpeed.get(),
-                                       nextScene->clearSpeed.get(),
-                                       t));
-    activeScene.particleAlpha.set(ofLerp(currScene->particleAlpha.get(),
-                                          nextScene->particleAlpha.get(),
-                                          t));
-    activeScene.overallScale.set(ofLerp(currScene->overallScale.get(),
-                                        nextScene->overallScale.get(),
-                                        t));
-    activeScene.basePointRadius.set(ofLerp(currScene->basePointRadius.get(),
-                                            nextScene->basePointRadius.get(),
-                                            t));
-    activeScene.maxLineLength.set(ofLerp(currScene->maxLineLength.get(),
-                                          nextScene->maxLineLength.get(),
-                                          t));
-    activeScene.audioEffectSize1.set(ofLerp(currScene->audioEffectSize1.get(),
-                                             nextScene->audioEffectSize1.get(),
-                                             t));
-    activeScene.audioEffectSize2.set(ofLerp(currScene->audioEffectSize2.get(),
-                                             nextScene->audioEffectSize2.get(),
-                                             t));
-    activeScene.audioEffectSize3.set(ofLerp(currScene->audioEffectSize3.get(),
-                                             nextScene->audioEffectSize3.get(),
-                                             t));
-    activeScene.audioEffectSize4.set(ofLerp(currScene->audioEffectSize4.get(),
-                                             nextScene->audioEffectSize4.get(),
-                                             t));
+    activeScene.pointRadiusAudioScaleAmt.set(ofLerp(currScene->pointRadiusAudioScaleAmt.get(), nextScene->pointRadiusAudioScaleAmt.get(), t));
+    activeScene.pointRadiusAudioScale.set(ofLerp(currScene->pointRadiusAudioScale.get(), nextScene->pointRadiusAudioScale.get(), t));
+    activeScene.fftDecayRate.set(ofLerp(currScene->fftDecayRate.get(), nextScene->fftDecayRate.get(), t));
+    activeScene.rmsMultiple.set(ofLerp(currScene->rmsMultiple.get(), nextScene->rmsMultiple.get(), t));
+    activeScene.centroidMaxBucket.set(ofLerp(currScene->centroidMaxBucket.get(), nextScene->centroidMaxBucket.get(), t));
+    activeScene.mpxSmoothingFactor.set(ofLerp(currScene->mpxSmoothingFactor.get(), nextScene->mpxSmoothingFactor.get(), t));
+    activeScene.mpySmoothingFactor.set(ofLerp(currScene->mpySmoothingFactor.get(), nextScene->mpySmoothingFactor.get(), t));
+    activeScene.baseSpeed.set(ofLerp(currScene->baseSpeed.get(), nextScene->baseSpeed.get(), t));
+    activeScene.rmsSpeedMult.set(ofLerp(currScene->rmsSpeedMult.get(), nextScene->rmsSpeedMult.get(), t));
+    activeScene.clearSpeed.set(ofLerp(currScene->clearSpeed.get(), nextScene->clearSpeed.get(), t));
+    activeScene.particleAlpha.set(ofLerp(currScene->particleAlpha.get(), nextScene->particleAlpha.get(), t));
+    activeScene.overallScale.set(ofLerp(currScene->overallScale.get(), nextScene->overallScale.get(), t));
+    activeScene.saturationPct.set(ofLerp(currScene->saturationPct.get(), nextScene->saturationPct.get(), t));
+    activeScene.basePointRadius.set(ofLerp(currScene->basePointRadius.get(), nextScene->basePointRadius.get(), t));
+    activeScene.maxLineLength.set(ofLerp(currScene->maxLineLength.get(), nextScene->maxLineLength.get(), t));
+    activeScene.audioEffectSize1.set(ofLerp(currScene->audioEffectSize1.get(), nextScene->audioEffectSize1.get(), t));
+    activeScene.audioEffectSize2.set(ofLerp(currScene->audioEffectSize2.get(), nextScene->audioEffectSize2.get(), t));
+    activeScene.audioEffectSize3.set(ofLerp(currScene->audioEffectSize3.get(), nextScene->audioEffectSize3.get(), t));
+    activeScene.audioEffectSize4.set(ofLerp(currScene->audioEffectSize4.get(), nextScene->audioEffectSize4.get(), t));
 }
 
 void GuiApp::serializeCurrentTrackToFile() {

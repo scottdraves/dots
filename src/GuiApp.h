@@ -23,6 +23,7 @@ typedef struct DotsScene {
     ofParameter<float> clearSpeed;
     ofParameter<float> particleAlpha;
     ofParameter<float> overallScale;
+    ofParameter<float> saturationPct;
 
     ofParameterGroup speedParams;
     ofParameter<float> baseSpeed, rmsSpeedMult;
