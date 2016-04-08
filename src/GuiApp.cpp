@@ -231,61 +231,59 @@ void GuiApp::setup() {
     metaParams.add(genomeInterpolationAmt.set("interpolate", 0, 0, 1));
     metaGui.setup(metaParams);
 
-    albumGui.setup("Album");
-
-    albumControls.setup();
-    albumControls.setName("< >");
-    albumControls.add(prevAlbumBtn.setup("Prev album"));
-    albumControls.add(nextAlbumBtn.setup("Next album"));
-    albumControls.add(saveAlbumBtn.setup("Save album"));
-    albumControls.add(newAlbumBtn.setup("New album"));
-    albumGui.add(&albumControls);
-
-    prevAlbumBtn.addListener(this, &GuiApp::regressAlbum);
-    nextAlbumBtn.addListener(this, &GuiApp::advanceAlbum);
-    saveAlbumBtn.addListener(this, &GuiApp::saveAlbum);
-    newAlbumBtn.addListener(this, &GuiApp::createAlbum);
+    trackGui.setup("Tracks");
 
     trackControls.setup();
-    trackControls.setName("Tracks");
-    trackControls.add(duplicateTrackBtn.setup("Duplicate track"));
-    trackControls.add(reloadTrackBtn.setup("Reload track"));
-    trackControls.add(deleteTrackBtn.setup("Remove track"));
-    albumGui.add(&trackControls);
+    trackControls.setName("< >");
+    trackControls.add(prevTrackBtn.setup("Prev track"));
+    trackControls.add(nextTrackBtn.setup("Next track"));
+    trackControls.add(saveTrackBtn.setup("Save track"));
+    trackControls.add(newTrackBtn.setup("New track"));
+    trackGui.add(&trackControls);
 
-    duplicateTrackBtn.addListener(this, &GuiApp::duplicateTrack);
-    reloadTrackBtn.addListener(this, &GuiApp::reloadTrack);
-    deleteTrackBtn.addListener(this, &GuiApp::deleteTrack);
+    prevTrackBtn.addListener(this, &GuiApp::regressTrack);
+    nextTrackBtn.addListener(this, &GuiApp::advanceTrack);
+    saveTrackBtn.addListener(this, &GuiApp::saveTrack);
+    newTrackBtn.addListener(this, &GuiApp::createTrack);
 
-    albumCopyControls.setup();
-    albumCopyControls.setName("Copy");
-    albumCopyControls.add(destAlbumIdx.set("destAlbum", -1, 0, 0));
-    albumCopyControls.add(destTrackIdx.set("destTrack", -1, 0, 0));
-    albumCopyControls.add(copyToAlbumBtn.setup("Copy to album at idx"));
-    albumGui.add(&albumCopyControls);
-    destAlbumIdx.addListener(this, &GuiApp::destAlbumIdxChanged);
-    copyToAlbumBtn.addListener(this, &GuiApp::copyTrack);
+    sceneControls.setup();
+    sceneControls.setName("Scenes");
+    sceneControls.add(duplicateSceneBtn.setup("Duplicate scene"));
+    sceneControls.add(reloadSceneBtn.setup("Reload scene"));
+    sceneControls.add(deleteSceneBtn.setup("Remove scene"));
+    trackGui.add(&sceneControls);
 
-    setupDefaultParams(defaultTrack);
-    setupDefaultParams(activeTrack);
-    copyParameters(defaultTrack.displayParameters, activeTrack.displayParameters);
-    displayGui.setup(activeTrack.displayParameters);
-    ofAddListener(displayGui.savePressedE, this, &GuiApp::saveClicked);
-    ofAddListener(displayGui.loadPressedE, this, &GuiApp::loadClicked);
-    activeTrack.genomeIdx.addListener(this, &GuiApp::genomeModified);
+    duplicateSceneBtn.addListener(this, &GuiApp::duplicateScene);
+    reloadSceneBtn.addListener(this, &GuiApp::reloadScene);
+    deleteSceneBtn.addListener(this, &GuiApp::deleteScene);
+
+    sceneCopyControls.setup();
+    sceneCopyControls.setName("Copy");
+    sceneCopyControls.add(destTrackIdx.set("destTrack", -1, 0, 0));
+    sceneCopyControls.add(destSceneIdx.set("destScene", -1, 0, 0));
+    sceneCopyControls.add(copyToTrackBtn.setup("Copy to track at idx"));
+    trackGui.add(&sceneCopyControls);
+    destTrackIdx.addListener(this, &GuiApp::destTrackIdxChanged);
+    copyToTrackBtn.addListener(this, &GuiApp::copyScene);
+
+    setupDefaultParams(defaultScene);
+    setupDefaultParams(activeScene);
+    copyParameters(defaultScene.displayParameters, activeScene.displayParameters);
+    displayGui.setup(activeScene.displayParameters);
+    activeScene.genomeIdx.addListener(this, &GuiApp::genomeModified);
 
     inputGui.setPosition(10, 450);
     debugGui.setPosition(inputGui.getPosition().x + inputGui.getWidth() + 10, inputGui.getPosition().y);
     metaGui.setPosition(debugGui.getPosition().x, debugGui.getPosition().y + debugGui.getHeight() + 10);
-    albumGui.setPosition(510, 65);
-    displayGui.setPosition(albumGui.getPosition().x + albumGui.getWidth() + 10, 15);
+    trackGui.setPosition(510, 65);
+    displayGui.setPosition(trackGui.getPosition().x + trackGui.getWidth() + 10, 15);
 
 
     float height = MAX(MAX(MAX(MAX(inputGui.getPosition().y + inputGui.getHeight(),
                        debugGui.getPosition().y + inputGui.getHeight()),
                        metaGui.getPosition().y + metaGui.getHeight()),
                        displayGui.getPosition().y + displayGui.getHeight()),
-                       albumGui.getPosition().y + albumGui.getHeight());
+                       trackGui.getPosition().y + trackGui.getHeight());
 
     ofSetWindowShape(displayGui.getPosition().x + displayGui.getWidth() + 10,
                      height + 10);
@@ -301,14 +299,14 @@ void GuiApp::setup() {
     ofBackground(0);
     ofSetVerticalSync(false);
 
-    // Signal albums not loaded
-    albumIdx = -1;
+    // Signal tracks not loaded
     trackIdx = -1;
+    sceneIdx = -1;
 }
 
-void GuiApp::setupDefaultParams(dotsTrack &track) {
+void GuiApp::setupDefaultParams(DotsScene &track) {
     track.displayParameters.clear();
-    track.trackParams.clear();
+    track.sceneParams.clear();
     track.audioAnalysisParameters.clear();
     track.drawingParams.clear();
     track.speedParams.clear();
@@ -317,8 +315,8 @@ void GuiApp::setupDefaultParams(dotsTrack &track) {
     track.audioEffectParams.clear();
 
     // Track params - not settable here
-    track.trackParams.add(track.genomeIdx.set("genomeIdx", 0, 0, numCPs));
-    track.displayParameters.add(track.trackParams);
+    track.sceneParams.add(track.genomeIdx.set("genomeIdx", 0, 0, numCPs));
+    track.displayParameters.add(track.sceneParams);
 
     // Audio analysis
     track.audioAnalysisParameters.setName("Audio Analysis");
@@ -365,23 +363,14 @@ void GuiApp::setupDefaultParams(dotsTrack &track) {
     track.displayParameters.setName("Display");
 }
 
-void GuiApp::saveClicked() {
-    cout << "Pushed save." << endl;
-    serializeCurrentAlbumToFile();
-}
-
-void GuiApp::loadClicked() {
-    cout << "Pushed load." << endl;
-}
-
 void GuiApp::genomeModified(int & newGenomeIdx) {
-    if (newGenomeIdx != currTrack->genomeIdx)
-        albumDirty = true;
+    if (newGenomeIdx != currScene->genomeIdx)
+        trackDirty = true;
 }
 
-void GuiApp::destAlbumIdxChanged(int & destAlbumIdx) {
-    destTrackIdx.setMax(albums[destAlbumIdx].trackList.size());
-    destTrackIdx.set(ofClamp(destTrackIdx.get(), destTrackIdx.getMin(), destTrackIdx.getMax()));
+void GuiApp::destTrackIdxChanged(int & destsceneIdx) {
+    destSceneIdx.setMax(tracks[destTrackIdx].scenes.size());
+    destSceneIdx.set(ofClamp(destSceneIdx.get(), destSceneIdx.getMin(), destSceneIdx.getMax()));
 }
 
 void GuiApp::update(){
@@ -398,26 +387,26 @@ void GuiApp::update(){
         }
     }
 
-    if ((wandering || genomeInterpolationAmt > 0.0001) && currTrack && nextTrack) {
+    if ((wandering || genomeInterpolationAmt > 0.0001) && currScene && nextScene) {
         applyParameterInterpolation(genomeInterpolationAmt);
     }
 
     if (!wandering) {
-        midiToTrackParams();
+        midiToSceneParams();
     } else {
         // TODO: apply to midi adjust
     }
 }
 
-void GuiApp::midiToTrackParams() {
-    if (midi.sliders[0] > 0) setParam(activeTrack.clearSpeed, midi.sliders[0]);
-    if (midi.sliders[1] > 0) setParam(activeTrack.overallScale, midi.sliders[1]);
-    if (midi.sliders[2] > 0) setParam(activeTrack.basePointRadius, midi.sliders[2]);
-    if (midi.sliders[3] > 0) setParam(activeTrack.maxLineLength, midi.sliders[3]);
-    if (midi.sliders[4] > 0) setParam(activeTrack.audioEffectSize1, midi.sliders[4]);
-    if (midi.sliders[5] > 0) setParam(activeTrack.audioEffectSize2, midi.sliders[5]);
-    if (midi.sliders[6] > 0) setParam(activeTrack.audioEffectSize3, midi.sliders[6]);
-    if (midi.sliders[7] > 0) setParam(activeTrack.audioEffectSize4, midi.sliders[7]);
+void GuiApp::midiToSceneParams() {
+    if (midi.sliders[0] > 0) setParam(activeScene.clearSpeed, midi.sliders[0]);
+    if (midi.sliders[1] > 0) setParam(activeScene.overallScale, midi.sliders[1]);
+    if (midi.sliders[2] > 0) setParam(activeScene.basePointRadius, midi.sliders[2]);
+    if (midi.sliders[3] > 0) setParam(activeScene.maxLineLength, midi.sliders[3]);
+    if (midi.sliders[4] > 0) setParam(activeScene.audioEffectSize1, midi.sliders[4]);
+    if (midi.sliders[5] > 0) setParam(activeScene.audioEffectSize2, midi.sliders[5]);
+    if (midi.sliders[6] > 0) setParam(activeScene.audioEffectSize3, midi.sliders[6]);
+    if (midi.sliders[7] > 0) setParam(activeScene.audioEffectSize4, midi.sliders[7]);
 }
 
 void GuiApp::draw() {
@@ -436,12 +425,12 @@ void GuiApp::draw() {
         ofDrawBitmapString(s, 150, 15);
     }
 
-    if (albumIdx >= 0) {
-        sprintf(s, "album: %d", albumIdx);
+    if (trackIdx >= 0) {
+        sprintf(s, "track: %d / %lu", trackIdx, tracks.size()-1);
         ofDrawBitmapString(s, 510, 25);
-        sprintf(s, "track: %d", trackIdx);
+        sprintf(s, "scene: %d / %lu", sceneIdx, tracks[trackIdx].scenes.size()-1);
         ofDrawBitmapString(s, 510, 40);
-        sprintf(s, "genome: %d", activeTrack.genomeIdx.get());
+        sprintf(s, "genome: %d / %d", activeScene.genomeIdx.get(), numCPs-1);
         ofDrawBitmapString(s, 510, 55);
     }
 
@@ -509,7 +498,7 @@ void GuiApp::draw() {
         ofSetColor(200, 0, 0);
         ofDrawLine(mappedCentroid, 0, mappedCentroid, -fftHeight);
         ofDrawBitmapString("centroid", mappedCentroid + 4, -30);
-        float mappedCentroidMax = fftWidth * activeTrack.centroidMaxBucket;
+        float mappedCentroidMax = fftWidth * activeScene.centroidMaxBucket;
         ofSetColor(125, 0, 0);
         ofDrawLine(mappedCentroidMax, 0, mappedCentroidMax, -fftHeight);
         ofDrawBitmapString("centroidMax", mappedCentroidMax + 4, -30);
@@ -534,7 +523,7 @@ void GuiApp::draw() {
     debugGui.draw();
     displayGui.draw();
     metaGui.draw();
-    albumGui.draw();
+    trackGui.draw();
 }
 
 void GuiApp::handleKey(int key) {
@@ -545,49 +534,55 @@ void GuiApp::keyPressed(int key) {
     keyPresses.push(key);
 }
 
-vector<int> GuiApp::getAlbumGenomeIndices() {
+vector<int> GuiApp::getTrackGenomeIndices() {
     vector<int> indices;
-    for (auto track : albums[albumIdx].trackList) {
+    for (auto track : tracks[trackIdx].scenes) {
         indices.push_back(track->genomeIdx.get());
     }
     return indices;
 }
 
-void GuiApp::regressAlbum() {
-    cout << "Regress album" << endl;
-    if (albumIdx < 0) return;
-
-    albumIdx--;
-    if (albumIdx < 0) {
-        albumIdx = albums.size() - 1;
-    }
-
-    trackIdx = -1;
-    advanceTrack();
-}
-
-void GuiApp::advanceAlbum() {
-    cout << "Advance album" << endl;
-    if (albumIdx < 0) return;
-
-    albumIdx++;
-    if (albumIdx >= albums.size()) {
-        albumIdx = 0;
-    }
-
-    trackIdx = -1;
-    advanceTrack();
-}
-
 void GuiApp::regressTrack() {
-    if (albumIdx < 0) return;
+    cout << "Regress track" << endl;
+    if (trackIdx < 0) return;
 
     trackIdx--;
-    int nextIdx = trackIdx + 1;
-
-    int nTracks = albums[albumIdx].trackList.size();
     if (trackIdx < 0) {
-        trackIdx = nTracks-1;
+        trackIdx = tracks.size() - 1;
+    }
+
+    sceneIdx = -1;
+    advanceScene();
+}
+
+void GuiApp::advanceTrack() {
+    cout << "Advance track" << endl;
+    if (trackIdx < 0) return;
+
+    trackIdx++;
+    if (trackIdx >= tracks.size()) {
+        trackIdx = 0;
+    }
+
+    sceneIdx = -1;
+    advanceScene();
+}
+
+void GuiApp::saveTrack() {
+    cout << "Save track" << endl;
+    copyParameters(activeScene.displayParameters, currScene->displayParameters);
+    serializeCurrentTrackToFile();
+}
+
+void GuiApp::regressScene() {
+    if (trackIdx < 0) return;
+
+    sceneIdx--;
+    int nextIdx = sceneIdx + 1;
+
+    int nTracks = tracks[trackIdx].scenes.size();
+    if (sceneIdx < 0) {
+        sceneIdx = nTracks-1;
         nextIdx = 0;
     }
 
@@ -596,26 +591,26 @@ void GuiApp::regressTrack() {
     }
 
     // Save what we're coming from
-    if (currTrack && !wandering) {
-        copyParameters(activeTrack.displayParameters, currTrack->displayParameters);
+    if (currScene && !wandering) {
+        copyParameters(activeScene.displayParameters, currScene->displayParameters);
     }
 
-    currTrack = albums[albumIdx].trackList[trackIdx];
-    nextTrack = albums[albumIdx].trackList[nextIdx];
+    currScene = tracks[trackIdx].scenes[sceneIdx];
+    nextScene = tracks[trackIdx].scenes[nextIdx];
 
     // Load what we're going to
-    copyParameters(currTrack->displayParameters, activeTrack.displayParameters);
+    copyParameters(currScene->displayParameters, activeScene.displayParameters);
 }
 
-void GuiApp::advanceTrack() {
-    if (albumIdx < 0) return;
+void GuiApp::advanceScene() {
+    if (trackIdx < 0) return;
 
-    trackIdx++;
-    int nextIdx = trackIdx + 1;
+    sceneIdx++;
+    int nextIdx = sceneIdx + 1;
 
-    int nTracks = albums[albumIdx].trackList.size();
-    if (trackIdx >= nTracks) {
-        trackIdx = 0;
+    int nTracks = tracks[trackIdx].scenes.size();
+    if (sceneIdx >= nTracks) {
+        sceneIdx = 0;
         nextIdx = 1;
     }
 
@@ -624,140 +619,134 @@ void GuiApp::advanceTrack() {
     }
 
     // Save what we're coming from
-    if (currTrack && !wandering) {
-        copyParameters(activeTrack.displayParameters, currTrack->displayParameters);
+    if (currScene && !wandering) {
+        copyParameters(activeScene.displayParameters, currScene->displayParameters);
     }
 
-    currTrack = albums[albumIdx].trackList[trackIdx];
-    nextTrack = albums[albumIdx].trackList[nextIdx];
+    currScene = tracks[trackIdx].scenes[sceneIdx];
+    nextScene = tracks[trackIdx].scenes[nextIdx];
 
     // Load what we're going to
-    copyParameters(currTrack->displayParameters, activeTrack.displayParameters);
+    copyParameters(currScene->displayParameters, activeScene.displayParameters);
 }
 
-void GuiApp::reloadTrack() {
-    cout << "Reload track" << endl;
-    copyParameters(currTrack->displayParameters, activeTrack.displayParameters);
+void GuiApp::reloadScene() {
+    cout << "Reload scene" << endl;
+    copyParameters(currScene->displayParameters, activeScene.displayParameters);
 }
 
-void GuiApp::saveAlbum() {
-    cout << "Save album" << endl;
-    copyParameters(activeTrack.displayParameters, currTrack->displayParameters);
-    serializeCurrentAlbumToFile();
-}
+void GuiApp::deleteScene() {
+    cout << "Delete scene" << endl;
+    trackDirty = true;
 
-void GuiApp::deleteTrack() {
-    cout << "Delete track" << endl;
-    albumDirty = true;
-
-    vector<dotsTrack *> &tracks = albums[albumIdx].trackList;
-    tracks.erase(tracks.begin() + trackIdx);
+    vector<DotsScene *> &scenes = tracks[trackIdx].scenes;
+    tracks.erase(tracks.begin() + sceneIdx);
 
     // TODO: less ham-fisted way to do this
-    regressTrack();
-    advanceTrack();
+    regressScene();
+    advanceScene();
 }
 
 // TODO: unify with the below
-void GuiApp::duplicateTrack() {
-    cout << "Duplicate track" << endl;
-    albumDirty = true;
+void GuiApp::duplicateScene() {
+    cout << "Duplicate scene" << endl;
+    trackDirty = true;
 
-    dotsTrack *cpy = new dotsTrack;
+    DotsScene *cpy = new DotsScene;
     setupDefaultParams(*cpy);
-    copyParameters(activeTrack.displayParameters, cpy->displayParameters);
+    copyParameters(activeScene.displayParameters, cpy->displayParameters);
 
-    vector<dotsTrack *> &destTracks = albums[albumIdx].trackList;
-    destTracks.insert(destTracks.begin() + trackIdx + 1, cpy);
+    vector<DotsScene *> &destTracks = tracks[trackIdx].scenes;
+    destTracks.insert(destTracks.begin() + sceneIdx + 1, cpy);
 }
 
-void GuiApp::copyTrack() {
-    cout << "Copy track" << endl;
-    albumDirty = true;
+void GuiApp::copyScene() {
+    cout << "Copy scene" << endl;
+    trackDirty = true;
 
-    dotsTrack *cpy = new dotsTrack;
+    DotsScene *cpy = new DotsScene;
     setupDefaultParams(*cpy);
-    copyParameters(activeTrack.displayParameters, cpy->displayParameters);
+    copyParameters(activeScene.displayParameters, cpy->displayParameters);
 
-    vector<dotsTrack *> &destTracks = albums[destAlbumIdx].trackList;
-    destTracks.insert(destTracks.begin() + destTrackIdx, cpy);
+    vector<DotsScene *> &destTracks = tracks[destTrackIdx].scenes;
+    destTracks.insert(destTracks.begin() + destSceneIdx, cpy);
 }
 
 // TODO: clean up if possible
 void GuiApp::applyParameterInterpolation(float t) {
-    activeTrack.pointRadiusAudioScaleAmt.set(ofLerp(currTrack->pointRadiusAudioScaleAmt.get(),
-                                                    nextTrack->pointRadiusAudioScaleAmt.get(),
+    activeScene.pointRadiusAudioScaleAmt.set(ofLerp(currScene->pointRadiusAudioScaleAmt.get(),
+                                                    nextScene->pointRadiusAudioScaleAmt.get(),
                                                     t));
-    activeTrack.pointRadiusAudioScale.set(ofLerp(currTrack->pointRadiusAudioScale.get(),
-                                                  nextTrack->pointRadiusAudioScale.get(),
+    activeScene.pointRadiusAudioScale.set(ofLerp(currScene->pointRadiusAudioScale.get(),
+                                                  nextScene->pointRadiusAudioScale.get(),
                                                   t));
-    activeTrack.fftDecayRate.set(ofLerp(currTrack->fftDecayRate.get(),
-                                         nextTrack->fftDecayRate.get(),
+    activeScene.fftDecayRate.set(ofLerp(currScene->fftDecayRate.get(),
+                                         nextScene->fftDecayRate.get(),
                                          t));
-    activeTrack.rmsMultiple.set(ofLerp(currTrack->rmsMultiple.get(),
-                                        nextTrack->rmsMultiple.get(),
+    activeScene.rmsMultiple.set(ofLerp(currScene->rmsMultiple.get(),
+                                        nextScene->rmsMultiple.get(),
                                         t));
-    activeTrack.centroidMaxBucket.set(ofLerp(currTrack->centroidMaxBucket.get(),
-                                              nextTrack->centroidMaxBucket.get(),
+    activeScene.centroidMaxBucket.set(ofLerp(currScene->centroidMaxBucket.get(),
+                                              nextScene->centroidMaxBucket.get(),
                                               t));
-    activeTrack.mpxSmoothingFactor.set(ofLerp(currTrack->mpxSmoothingFactor.get(),
-                                               nextTrack->mpxSmoothingFactor.get(),
+    activeScene.mpxSmoothingFactor.set(ofLerp(currScene->mpxSmoothingFactor.get(),
+                                               nextScene->mpxSmoothingFactor.get(),
                                                t));
-    activeTrack.mpySmoothingFactor.set(ofLerp(currTrack->mpySmoothingFactor.get(),
-                                               nextTrack->mpySmoothingFactor.get(),
+    activeScene.mpySmoothingFactor.set(ofLerp(currScene->mpySmoothingFactor.get(),
+                                               nextScene->mpySmoothingFactor.get(),
                                                t));
-    activeTrack.baseSpeed.set(ofLerp(currTrack->baseSpeed.get(),
-                                      nextTrack->baseSpeed.get(),
+    activeScene.baseSpeed.set(ofLerp(currScene->baseSpeed.get(),
+                                      nextScene->baseSpeed.get(),
                                       t));
-    activeTrack.rmsSpeedMult.set(ofLerp(currTrack->rmsSpeedMult.get(),
-                                         nextTrack->rmsSpeedMult.get(),
+    activeScene.rmsSpeedMult.set(ofLerp(currScene->rmsSpeedMult.get(),
+                                         nextScene->rmsSpeedMult.get(),
                                          t));
-    activeTrack.clearSpeed.set(ofLerp(currTrack->clearSpeed.get(),
-                                       nextTrack->clearSpeed.get(),
+    activeScene.clearSpeed.set(ofLerp(currScene->clearSpeed.get(),
+                                       nextScene->clearSpeed.get(),
                                        t));
-    activeTrack.particleAlpha.set(ofLerp(currTrack->particleAlpha.get(),
-                                          nextTrack->particleAlpha.get(),
+    activeScene.particleAlpha.set(ofLerp(currScene->particleAlpha.get(),
+                                          nextScene->particleAlpha.get(),
                                           t));
-    activeTrack.overallScale.set(ofLerp(currTrack->overallScale.get(),
-                                        nextTrack->overallScale.get(),
+    activeScene.overallScale.set(ofLerp(currScene->overallScale.get(),
+                                        nextScene->overallScale.get(),
                                         t));
-    activeTrack.basePointRadius.set(ofLerp(currTrack->basePointRadius.get(),
-                                            nextTrack->basePointRadius.get(),
+    activeScene.basePointRadius.set(ofLerp(currScene->basePointRadius.get(),
+                                            nextScene->basePointRadius.get(),
                                             t));
-    activeTrack.maxLineLength.set(ofLerp(currTrack->maxLineLength.get(),
-                                          nextTrack->maxLineLength.get(),
+    activeScene.maxLineLength.set(ofLerp(currScene->maxLineLength.get(),
+                                          nextScene->maxLineLength.get(),
                                           t));
-    activeTrack.audioEffectSize1.set(ofLerp(currTrack->audioEffectSize1.get(),
-                                             nextTrack->audioEffectSize1.get(),
+    activeScene.audioEffectSize1.set(ofLerp(currScene->audioEffectSize1.get(),
+                                             nextScene->audioEffectSize1.get(),
                                              t));
-    activeTrack.audioEffectSize2.set(ofLerp(currTrack->audioEffectSize2.get(),
-                                             nextTrack->audioEffectSize2.get(),
+    activeScene.audioEffectSize2.set(ofLerp(currScene->audioEffectSize2.get(),
+                                             nextScene->audioEffectSize2.get(),
                                              t));
-    activeTrack.audioEffectSize3.set(ofLerp(currTrack->audioEffectSize3.get(),
-                                             nextTrack->audioEffectSize3.get(),
+    activeScene.audioEffectSize3.set(ofLerp(currScene->audioEffectSize3.get(),
+                                             nextScene->audioEffectSize3.get(),
                                              t));
-    activeTrack.audioEffectSize4.set(ofLerp(currTrack->audioEffectSize4.get(),
-                                             nextTrack->audioEffectSize4.get(),
+    activeScene.audioEffectSize4.set(ofLerp(currScene->audioEffectSize4.get(),
+                                             nextScene->audioEffectSize4.get(),
                                              t));
 }
 
-void GuiApp::serializeCurrentAlbumToFile() {
-    cout << "Saving album " << albumIdx << " to file." << endl;
+void GuiApp::serializeCurrentTrackToFile() {
+    cout << "Saving track " << trackIdx << " to file." << endl;
     char filename[255];
-    sprintf(filename, "genomeSettings/album-%03d.xml", albumIdx);
+    sprintf(filename, "genomeSettings/track-%03d.xml", trackIdx);
 
     settings.clear();
-    settings.addTag("album");
-    settings.pushTag("album");
+    settings.addTag("track");
+    settings.pushTag("track");
 
-        settings.addTag("tracks");
-        settings.pushTag("tracks");
-        int nTracks = albums[albumIdx].trackList.size();
-        for (int i = 0; i < nTracks; ++i) {
-            dotsTrack *track = albums[albumIdx].trackList[i];
-            settings.addTag("track");
-            settings.pushTag("track", i);
-            settings.serialize(track->displayParameters);
+        settings.addTag("scenes");
+        settings.pushTag("scenes");
+        int nScenes = tracks[trackIdx].scenes.size();
+        for (int i = 0; i < nScenes; ++i) {
+            DotsScene *scene = tracks[trackIdx].scenes[i];
+            settings.addTag("scene");
+            settings.pushTag("scene", i);
+            settings.serialize(scene->displayParameters);
             settings.popTag();
         }
         settings.popTag();
@@ -766,94 +755,97 @@ void GuiApp::serializeCurrentAlbumToFile() {
     settings.save(filename);
 }
 
-void GuiApp::createAlbum() {
-    dotsAlbum album;
-    album.albumIdx = albums.size();
+void GuiApp::createTrack() {
+    DotsTrack track;
+    track.trackIdx = tracks.size();
 
-    dotsTrack *track = new dotsTrack;
-    setupDefaultParams(*track);
-    track->genomeIdx = currTrack->genomeIdx;
-    album.trackList.push_back(track);
+    DotsScene *scene = new DotsScene;
+    setupDefaultParams(*scene);
+    scene->genomeIdx = currScene->genomeIdx;
+    track.scenes.push_back(scene);
 
-    albums.push_back(album);
+    tracks.push_back(track);
 }
 
 void GuiApp::setupControls(int numCPs) {
     this->numCPs = numCPs;
 
-    dotsAlbum defaultAlbum;
-    defaultAlbum.albumIdx = 0;
+    DotsTrack defaultTrack;
+    defaultTrack.trackIdx = 0;
 
     for (int cpIdx = 0; cpIdx < numCPs; ++cpIdx) {
-        dotsTrack *track = new dotsTrack;
+        DotsScene *track = new DotsScene;
         setupDefaultParams(*track);
 
         track->genomeIdx = cpIdx;
 
-        defaultAlbum.trackList.push_back(track);
+        defaultTrack.scenes.push_back(track);
     }
 
-    albumIdx = 0;
     trackIdx = 0;
+    sceneIdx = 0;
 
-    albums.push_back(defaultAlbum);
+    tracks.push_back(defaultTrack);
 
-    // Now load albums from file
+    // Now load tracks from file
     loadAllParamsFromFile();
-    destAlbumIdx.set(0);
-    destAlbumIdx.setMax(albums.size() - 1);
+    destSceneIdx.set(0);
+    destSceneIdx.setMax(tracks.size() - 1);
     destTrackIdx.set(0);
 }
 
 void GuiApp::loadAllParamsFromFile() {
     ofDirectory dir("genomeSettings");
 
-    map<int, dotsAlbum> albumMap;
+    map<int, DotsTrack> trackMap;
 
     for (auto &file : dir.getFiles()) {
         settings.clear();
         settings.load(file.path());
 
         string filename = file.getFileName();
-        int albumIdx = stoi(filename.substr(6, 9));
+
+        if (filename.find("track") != 0) continue;
+
+        int trackIdx = stoi(filename.substr(6, 9));
 
         // Skip 0th, even if it's saved.
-        if (albumIdx == 0) continue;
+        if (trackIdx == 0) continue;
 
-        dotsAlbum album;
-        album.albumIdx = albumIdx;
+        DotsTrack track;
+        track.trackIdx = trackIdx;
 
         settings.clear();
         settings.loadFile(file.getAbsolutePath());
-        settings.pushTag("album");
-            settings.pushTag("tracks");
-            int nTracks = settings.getNumTags("track");
-            for (int i = 0; i < nTracks; ++i) {
-                dotsTrack *track = new dotsTrack;
-                setupDefaultParams(*track);
+        settings.pushTag("track");
+            settings.pushTag("scenes");
+            int nScenes = settings.getNumTags("scenes");
+            for (int i = 0; i < nScenes; ++i) {
+                DotsScene *scene = new DotsScene;
+                setupDefaultParams(*scene);
 
-                settings.pushTag("track", i);
-                settings.deserialize(track->displayParameters);
+                settings.pushTag("scene", i);
+                settings.deserialize(scene->displayParameters);
                 settings.popTag();
 
-                album.trackList.push_back(track);
+                track.scenes.push_back(scene);
             }
             settings.popTag();
         settings.popTag();
 
-        cout << "Loading a" << albumIdx << " from file." << endl;
-        albumMap[albumIdx] = album;
+        cout << "Loading a" << trackIdx << " from file." << endl;
+        trackMap[trackIdx] = track;
     }
 
-    for (auto &pair : albumMap) {
-        albums.push_back(pair.second);
+    for (auto &pair : trackMap) {
+        tracks.push_back(pair.second);
     }
 
-    // Sort albums by idx
-    std::sort(albums.begin(), albums.end(),
-              [](const dotsAlbum & a, const dotsAlbum & b) -> bool
+    // Sort tracks by idx
+    std::sort(tracks.begin(), tracks.end(),
+              [](const DotsTrack & a, const DotsTrack & b) -> bool
               {
-                  return a.albumIdx < b.albumIdx;
+                  return a.trackIdx < b.trackIdx;
               });
 }
 

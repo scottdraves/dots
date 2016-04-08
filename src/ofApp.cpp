@@ -104,10 +104,10 @@ void ofApp::setup(){
     gui->audioBuckets = fftOutput;
     gui->setupControls(ncps);
     // TODO: better way to get all initialized
-    gui->advanceTrack();
-    gui->regressTrack();
-    albumIdx = gui->albumIdx;
+    gui->advanceScene();
+    gui->regressScene();
     trackIdx = gui->trackIdx;
+    sceneIdx = gui->sceneIdx;
 
     billboardShader.setGeometryInputType(GL_LINES);
     billboardShader.setGeometryOutputType(GL_TRIANGLE_STRIP);
@@ -166,7 +166,7 @@ void ofApp::setup(){
         flameSequences[i].xform_distribution = NULL;
     }
 
-    albumIdx = -1;
+    trackIdx = -1;
 }
 
 void ofApp::guiUpdate() {
@@ -178,20 +178,20 @@ void ofApp::guiUpdate() {
     gui->audioCentroid = audioCentroid;
     gui->audioRMS = audioRMS;
 
-    bool setAlbum = false;
-    if (gui->albumIdx != albumIdx || gui->albumDirty) {
-        albumIdx = gui->albumIdx;
-        setAlbumCPOrder(gui->getAlbumGenomeIndices());
+    bool setTrack = false;
+    if (gui->trackIdx != trackIdx || gui->trackDirty) {
+        trackIdx = gui->trackIdx;
+        setTrackCPOrder(gui->getTrackGenomeIndices());
 
-        setAlbum = true;
-        gui->albumDirty = false;
+        setTrack = true;
+        gui->trackDirty = false;
     }
 
-    if (!wandering && (gui->trackIdx != trackIdx || setAlbum)) {
+    if (!wandering && (gui->sceneIdx != sceneIdx || setTrack)) {
         gui->genomeInterpolationAmt = 0;
 
-        trackIdx = gui->trackIdx;
-        genomeIdx = gui->activeTrack.genomeIdx;
+        sceneIdx = gui->sceneIdx;
+        genomeIdx = gui->activeScene.genomeIdx;
 
         swapFrame = frame;
         flam3_copy(&cp, &cps[genomeIdx]);
@@ -208,25 +208,25 @@ void ofApp::guiUpdate() {
     }
 
     wanderSpeed = gui->wanderSpeed;
-    pointRadiusAudioScaleAmt = gui->activeTrack.pointRadiusAudioScaleAmt;
-    pointRadiusAudioScale = gui->activeTrack.pointRadiusAudioScale;
-    fftDecayRate = gui->activeTrack.fftDecayRate;
-    rmsMultiple = gui->activeTrack.rmsMultiple;
-    centroidMaxBucket = gui->activeTrack.centroidMaxBucket;
-    mpxSmoothingFactor = gui->activeTrack.mpxSmoothingFactor;
-    mpySmoothingFactor = gui->activeTrack.mpySmoothingFactor;
-    baseSpeed = gui->activeTrack.baseSpeed;
-    rmsSpeedMult = gui->activeTrack.rmsSpeedMult;
-    frameClearSpeed = gui->activeTrack.clearSpeed;
-    particleAlpha = gui->activeTrack.particleAlpha;
-    basePointRadius = gui->activeTrack.basePointRadius;
-    maxLineLength = gui->activeTrack.maxLineLength;
+    pointRadiusAudioScaleAmt = gui->activeScene.pointRadiusAudioScaleAmt;
+    pointRadiusAudioScale = gui->activeScene.pointRadiusAudioScale;
+    fftDecayRate = gui->activeScene.fftDecayRate;
+    rmsMultiple = gui->activeScene.rmsMultiple;
+    centroidMaxBucket = gui->activeScene.centroidMaxBucket;
+    mpxSmoothingFactor = gui->activeScene.mpxSmoothingFactor;
+    mpySmoothingFactor = gui->activeScene.mpySmoothingFactor;
+    baseSpeed = gui->activeScene.baseSpeed;
+    rmsSpeedMult = gui->activeScene.rmsSpeedMult;
+    frameClearSpeed = gui->activeScene.clearSpeed;
+    particleAlpha = gui->activeScene.particleAlpha;
+    basePointRadius = gui->activeScene.basePointRadius;
+    maxLineLength = gui->activeScene.maxLineLength;
 
     // TODO: use array?
-    audioEffectSize1 = gui->activeTrack.audioEffectSize1;
-    audioEffectSize2 = gui->activeTrack.audioEffectSize2;
-    audioEffectSize3 = gui->activeTrack.audioEffectSize3;
-    audioEffectSize4 = gui->activeTrack.audioEffectSize4;
+    audioEffectSize1 = gui->activeScene.audioEffectSize1;
+    audioEffectSize2 = gui->activeScene.audioEffectSize2;
+    audioEffectSize3 = gui->activeScene.audioEffectSize3;
+    audioEffectSize4 = gui->activeScene.audioEffectSize4;
 
     if (audioMode != gui->audioMode) {
         audioMode = gui->audioMode;
@@ -267,7 +267,7 @@ void ofApp::flameUpdate() {
     if (wandering) {
         counter += wanderSpeed;
 
-        if (counter >= (nCPsInAlbum * ispeed))
+        if (counter >= (nCPsInTrack * ispeed))
             counter = 0;
 
         float normCounter = counter/ispeed;
@@ -276,15 +276,15 @@ void ofApp::flameUpdate() {
         if (lastCP != currCP) {
             swapFrame = frame;
 
-            gui->advanceTrack();
+            gui->advanceScene();
 
             lastCP = currCP;
-            genomeIdx = gui->currTrack->genomeIdx;
+            genomeIdx = gui->currScene->genomeIdx;
         } else {
             gui->genomeInterpolationAmt = normCounter - currCP;
 
-            // cpAlbumOrder has n+1 - last is a copy of first
-            flam3_interpolate(cpAlbumOrder, nCPsInAlbum, normCounter, 0, &cp);
+            // cpTrackOrder has n+1 - last is a copy of first
+            flam3_interpolate(cpTrackOrder, nCPsInTrack, normCounter, 0, &cp);
         }
     } else {
         float speed = baseSpeed + smoothedAudioRMS * rmsSpeedMult;
@@ -729,7 +729,7 @@ void ofApp::draw(){
     if (gui->drawMode == 0) {
         int loc;
         billboardShader.begin();
-            const float screenScale = ofGetWidth() / 1024.0 * gui->activeTrack.overallScale;
+            const float screenScale = ofGetWidth() / 1024.0 * gui->activeScene.overallScale;
 
             billboardShader.setUniform2f("screen", ofGetWidth(), ofGetHeight());
             billboardShader.setUniform2f("cpCenter", cp.center[0], cp.center[1]);
@@ -783,15 +783,15 @@ void ofApp::handleKey(int key) {
         gui->wandering.set(!gui->wandering.get());
     } else if (key == OF_KEY_LEFT) {
         swapFrame = frame;
-        gui->regressTrack();
+        gui->regressScene();
     } else if (key == OF_KEY_RIGHT) {
         swapFrame = frame;
-        gui->advanceTrack();
+        gui->advanceScene();
     } else if (key == 'd') {
-        if (gui->activeTrack.pointRadiusAudioScaleAmt > 0)
-            gui->activeTrack.pointRadiusAudioScaleAmt.set(0);
+        if (gui->activeScene.pointRadiusAudioScaleAmt > 0)
+            gui->activeScene.pointRadiusAudioScaleAmt.set(0);
         else
-            gui->activeTrack.pointRadiusAudioScaleAmt.set(1);
+            gui->activeScene.pointRadiusAudioScaleAmt.set(1);
 
     } else if (key == 's') {
         gui->audioMode.set(gui->audioMode.get() + 1);
@@ -808,9 +808,9 @@ void ofApp::handleKey(int key) {
     } else if (key == OF_KEY_DOWN) {
         killCurrent();
     } else if (key == ',') {
-        gui->regressAlbum();
+        gui->regressTrack();
     } else if (key == '.') {
-        gui->advanceAlbum();
+        gui->advanceTrack();
     } else if (key == '0') {
         mySound.setPosition(mySound.getPosition()-0.02);
         ofSoundStreamSetup(0, 1, this);
@@ -902,25 +902,25 @@ void ofApp::initrc(long sed) {
     irandinit(&rc,1);
 }
 
-void ofApp::setAlbumCPOrder(const vector<int> &cpOrder) {
-    nCPsInAlbum = cpOrder.size();
+void ofApp::setTrackCPOrder(const vector<int> &cpOrder) {
+    nCPsInTrack = cpOrder.size();
 
-    delete cpAlbumOrder;
+    delete cpTrackOrder;
     swapFrame = frame;
-    cpAlbumOrder = (flam3_genome *) malloc(sizeof(flam3_genome) * (nCPsInAlbum + 1));
-    memset(cpAlbumOrder, 0, sizeof(flam3_genome) * (nCPsInAlbum + 1));
+    cpTrackOrder = (flam3_genome *) malloc(sizeof(flam3_genome) * (nCPsInTrack + 1));
+    memset(cpTrackOrder, 0, sizeof(flam3_genome) * (nCPsInTrack + 1));
 
     // Copy in genomes in order
-    for (int i = 0; i < nCPsInAlbum; ++i) {
-        flam3_copy(cpAlbumOrder + i, &cps[cpOrder[i]]);
+    for (int i = 0; i < nCPsInTrack; ++i) {
+        flam3_copy(cpTrackOrder + i, &cps[cpOrder[i]]);
 
         // Reset time
-        cpAlbumOrder[i].time = (double) i;
+        cpTrackOrder[i].time = (double) i;
     }
 
     // Last CP is the first one duplicated
-    flam3_copy(cpAlbumOrder + nCPsInAlbum, &cps[0]);
-    cpAlbumOrder[nCPsInAlbum].time = (double) nCPsInAlbum;
+    flam3_copy(cpTrackOrder + nCPsInTrack, &cps[0]);
+    cpTrackOrder[nCPsInTrack].time = (double) nCPsInTrack;
 }
 
 //--------------------------------------------------------------

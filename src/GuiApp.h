@@ -6,10 +6,10 @@
 #include "appConstants.h"
 #include "MidiController.h"
 
-typedef struct dotsTrack {
+typedef struct DotsScene {
     ofParameterGroup displayParameters;
 
-    ofParameterGroup trackParams;
+    ofParameterGroup sceneParams;
     ofParameter<int> genomeIdx;
     // TODO: duration?
 
@@ -36,12 +36,12 @@ typedef struct dotsTrack {
 
     ofParameterGroup audioEffectParams;
     ofParameter<float> audioEffectSize1, audioEffectSize2, audioEffectSize3, audioEffectSize4;
-} dotsTrack;
+} DotsScene;
 
-typedef struct dotsAlbum {
-    int albumIdx;
-    vector<dotsTrack *> trackList;
-} dotsAlbum;
+typedef struct DotsTrack {
+    int trackIdx;
+    vector<DotsScene *> scenes;
+} DotsTrack;
 
 class ReplaceablePanel : public ofxPanel {
 public:
@@ -59,31 +59,28 @@ public:
     void keyPressed(int key);
     void handleKey(int key);
     void buttonPressed(const void * sender);
-    void midiToTrackParams();
+    void midiToSceneParams();
 
-    void saveClicked();
-    void loadClicked();
+    vector<int> getTrackGenomeIndices();
 
-    vector<int> getAlbumGenomeIndices();
-
-    void advanceAlbum();
-    void regressAlbum();
-    void saveAlbum();
-    void createAlbum();
-
-    void regressTrack();
     void advanceTrack();
-    void reloadTrack();
-    void deleteTrack();
-    void duplicateTrack();
-    void copyTrack();
+    void regressTrack();
+    void saveTrack();
+    void createTrack();
 
-    void destAlbumIdxChanged(int & albumIdx);
+    void regressScene();
+    void advanceScene();
+    void reloadScene();
+    void deleteScene();
+    void duplicateScene();
+    void copyScene();
+
+    void destTrackIdxChanged(int & trackIdx);
     void genomeModified(int & genome);
 
     void loadAllParamsFromFile();
     void setupControls(int numCPs);
-    void serializeCurrentAlbumToFile();
+    void serializeCurrentTrackToFile();
 
     void applyParameterInterpolation(float t);
 
@@ -106,31 +103,31 @@ public:
     ofParameter<float> wanderSpeed;
     ofParameter<float> genomeInterpolationAmt;
 
-    ofxPanel albumGui;
-    ofxGuiGroup albumControls;
-    ofxButton prevAlbumBtn, nextAlbumBtn;
-    ofxButton newAlbumBtn, saveAlbumBtn;
+    ofxPanel trackGui;
     ofxGuiGroup trackControls;
-    ofxButton deleteTrackBtn, reloadTrackBtn, duplicateTrackBtn;
-    ofxGuiGroup albumCopyControls;
-    ofParameter<int> destAlbumIdx;
+    ofxButton prevTrackBtn, nextTrackBtn;
+    ofxButton newTrackBtn, saveTrackBtn;
+    ofxGuiGroup sceneControls;
+    ofxButton deleteSceneBtn, reloadSceneBtn, duplicateSceneBtn;
+    ofxGuiGroup sceneCopyControls;
     ofParameter<int> destTrackIdx;
-    ofxButton copyToAlbumBtn;
+    ofParameter<int> destSceneIdx;
+    ofxButton copyToTrackBtn;
 
     ofxPanel analysisGui, inputGui, debugGui, metaGui, displayGui;
 
     // Parameters
-    dotsTrack activeTrack;
-    dotsTrack *currTrack;
-    dotsTrack *nextTrack;
-    dotsTrack defaultTrack;
+    DotsScene activeScene;
+    DotsScene *currScene;
+    DotsScene *nextScene;
+    DotsScene defaultScene;
 
-    dotsTrack midiAdjust;
+    DotsScene midiAdjust;
 
-    // Albums and tracks
-    int albumIdx, trackIdx;
-    bool albumDirty;
-    vector<dotsAlbum> albums;
+    // tracks and scenes
+    int trackIdx, sceneIdx;
+    bool trackDirty;
+    vector<DotsTrack> tracks;
 
     // To mirror from ofApp
     float frameRate, pctParticles;
@@ -145,5 +142,5 @@ public:
     MidiController midi;
 
 private:
-    void setupDefaultParams(dotsTrack &track);
+    void setupDefaultParams(DotsScene &track);
 };
