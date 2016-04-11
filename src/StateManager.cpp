@@ -495,8 +495,15 @@ void StateManager::applyParameterInterpolation(float t) {
 
 void StateManager::serializeCurrentTrackToFile() {
     cout << "Saving track " << trackIdx << " to file." << endl;
-    char filename[255];
-    sprintf(filename, "genomeSettings/track-%03d.xml", trackIdx);
+
+    char paramFilename[255];
+    sprintf(paramFilename, "params/track-%03d.xml", trackIdx);
+
+    char flameFilename[255];
+    sprintf(flameFilename, "genomes/track-%03d.xml", trackIdx);
+
+    ofFile flameFile(ofToDataPath(flameFilename), ofFile::WriteOnly);
+    flameFile << "<genomes>" << endl;
 
     settings.clear();
     settings.addTag("track");
@@ -511,11 +518,16 @@ void StateManager::serializeCurrentTrackToFile() {
         settings.pushTag("scene", i);
         settings.serialize(scene->displayParameters);
         settings.popTag();
+
+        flameFile << flam3_print_to_string(scene->genome) << endl;
     }
     settings.popTag();
 
     settings.popTag();
-    settings.save(filename);
+    settings.save(paramFilename);
+
+    flameFile << "</genomes>" << endl;
+    flameFile.close();
 }
 
 void StateManager::createTrack() {
