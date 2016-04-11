@@ -24,6 +24,7 @@
 		71189AC11CB4AD1600D1015F /* CoreMIDI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 71189AB51CB4AD1600D1015F /* CoreMIDI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		711EDDAE1C2C65F500D4FA8A /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 711EDDAD1C2C65F500D4FA8A /* CoreAudio.framework */; };
 		711EDDB01C2C67B200D4FA8A /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 711EDDAF1C2C67B200D4FA8A /* libxml2.tbd */; };
+		713042CD1CB9A104008F3E33 /* StateManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 713042CB1CB9A104008F3E33 /* StateManager.cpp */; };
 		7135FDB31C529C9500FC877B /* GuiApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7135FDB11C529C9500FC877B /* GuiApp.cpp */; };
 		7135FDC71C529EC500FC877B /* ofxBaseGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7135FDB61C529EC500FC877B /* ofxBaseGui.cpp */; };
 		7135FDC81C529EC500FC877B /* ofxButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7135FDB81C529EC500FC877B /* ofxButton.cpp */; };
@@ -123,6 +124,8 @@
 		71189AB51CB4AD1600D1015F /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = ../../../../../../../System/Library/Frameworks/CoreMIDI.framework; sourceTree = "<group>"; };
 		711EDDAD1C2C65F500D4FA8A /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		711EDDAF1C2C67B200D4FA8A /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
+		713042CB1CB9A104008F3E33 /* StateManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StateManager.cpp; sourceTree = "<group>"; };
+		713042CC1CB9A104008F3E33 /* StateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StateManager.h; sourceTree = "<group>"; };
 		7135FDB11C529C9500FC877B /* GuiApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuiApp.cpp; sourceTree = "<group>"; };
 		7135FDB21C529C9500FC877B /* GuiApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuiApp.h; sourceTree = "<group>"; };
 		7135FDB61C529EC500FC877B /* ofxBaseGui.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBaseGui.cpp; sourceTree = "<group>"; };
@@ -614,6 +617,8 @@
 				7135FDB21C529C9500FC877B /* GuiApp.h */,
 				71189A851CB4ACDD00D1015F /* MidiController.cpp */,
 				71189A861CB4ACDD00D1015F /* MidiController.h */,
+				713042CB1CB9A104008F3E33 /* StateManager.cpp */,
+				713042CC1CB9A104008F3E33 /* StateManager.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -723,6 +728,7 @@
 				71F8DF091CAA319700777EBC /* SyphonNameboundClient.m in Sources */,
 				7135FDC71C529EC500FC877B /* ofxBaseGui.cpp in Sources */,
 				71D2D08A1C4D6D1100F9113F /* ofxFftBasic.cpp in Sources */,
+				713042CD1CB9A104008F3E33 /* StateManager.cpp in Sources */,
 				714EF6F51C2C635000C9D231 /* interpolation.c in Sources */,
 				71189ABB1CB4AD1600D1015F /* ofxMidi.cpp in Sources */,
 				71189ABA1CB4AD1600D1015F /* ofxBaseMidi.cpp in Sources */,

@@ -7,20 +7,15 @@ static const double ispeed = 800.0;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    ofSetWindowTitle("D0TS");
     ofBackground(0);
     ofSetVerticalSync(false);
     ofSetLogLevel(OF_LOG_VERBOSE);
+    ofHideCursor();
 
     syphonServer.setName("dots");
 
-    counter = 0;
-    nsamples = 25000;	seed = 0;
-    genomeIdx = 0;
-    ofSetWindowTitle("D0TS");
-
-    currFlameSamples = (double *)malloc(sizeof(double)*nsamples*4);
-    prevFlameSamples = (double *)malloc(sizeof(double)*nsamples*4);
-
+    nsamples = 25000;
     fullscreen = 1;
 
     // GUI-displayed
@@ -36,7 +31,6 @@ void ofApp::setup(){
     centroidMaxBucket = 0.35;
     rmsMultiple = 5;
     saturationPct = 255;
-    wandering = false;
     pointRadiusAudioScaleAmt = 1;
     pointRadiusAudioScale = 10.0;
     frameClearSpeed = 50;
@@ -44,42 +38,17 @@ void ofApp::setup(){
     audioEffectSize2 = 1.0;
     audioEffectSize3 = 1.0;
     audioEffectSize4 = 1.0;
-    
-    ofHideCursor();
+    overallScale = 1;
     
     visualsFbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA, 4);
 
-    {
-        FILE *in;
-        char *inf = "../../../data/live.flam3";
-        in = fopen(inf, "rb");
-        if (!in) {
-            cout << "couldn't open flame3, exiting" << endl;
-            std::exit(1);
-        }
-        cps = flam3_parse_from_file(in, inf, flam3_defaults_on, &ncps);
-        for (int i = 0; i < ncps; i++) {
-            cps[i].time = (double) i;
-        }
-        if (!cps) {
-            cout << "couldn't read flame3, exiting" << endl;
-            std::exit(1);
-        }
-    }
-    {
-        FILE *in;
-        char *inf = "../../../data/genebank2.flam3";
-        in = fopen(inf, "rb");
-        if (!in) {
-            cout << "couldn't open genebank, exiting" << endl;
-            std::exit(1);
-        }
-        genebank = flam3_parse_from_file(in, inf, flam3_defaults_on, &ngenebank);
-    }
     memset(&cp, 0, sizeof(flam3_genome));
     memset(&renderCp, 0, sizeof(flam3_genome));
-    flam3_copy(&cp, &cps[genomeIdx]);
-	   
+    stateManager->loadGenome(&cp);
+
+    currFlameSamples = (double *)malloc(sizeof(double)*nsamples*4);
+    prevFlameSamples = (double *)malloc(sizeof(double)*nsamples*4);
+
     audioMode = AUDIO_MODE_MIC;
     ofSoundStreamListDevices();
     
@@ -103,12 +72,6 @@ void ofApp::setup(){
     
     gui->nAudioBuckets = nFftBuckets;
     gui->audioBuckets = fftOutput;
-    gui->setupControls(ncps);
-    // TODO: better way to get all initialized
-    gui->advanceScene();
-    gui->regressScene();
-    trackIdx = gui->trackIdx;
-    sceneIdx = gui->sceneIdx;
 
     billboardShader.setGeometryInputType(GL_LINES);
     billboardShader.setGeometryOutputType(GL_TRIANGLE_STRIP);
@@ -167,7 +130,8 @@ void ofApp::setup(){
         flameSequences[i].xform_distribution = NULL;
     }
 
-    trackIdx = -1;
+    stateManager->onSceneChange.add(this, &ofApp::handleSceneChanged, 0);
+    stateManager->onTrackChange.add(this, &ofApp::handleTrackChanged, 0);
 }
 
 void ofApp::guiUpdate() {
@@ -179,56 +143,57 @@ void ofApp::guiUpdate() {
     gui->audioCentroid = audioCentroid;
     gui->audioRMS = audioRMS;
 
-    bool setTrack = false;
-    if (gui->trackIdx != trackIdx || gui->trackDirty) {
-        trackIdx = gui->trackIdx;
-        setTrackCPOrder(gui->getTrackGenomeIndices());
+//    bool setTrack = false;
+//    if (gui->trackIdx != trackIdx || gui->trackDirty) {
+//        trackIdx = gui->trackIdx;
+//        setTrackCPOrder(gui->getTrackGenomeIndices());
+//
+//        setTrack = true;
+//        gui->trackDirty = false;
+//    }
+//
+//    if (!wandering && (gui->sceneIdx != sceneIdx || setTrack)) {
+//        gui->genomeInterpolationAmt = 0;
+//
+//        sceneIdx = gui->sceneIdx;
+//        genomeIdx = gui->activeScene.genomeIdx;
+//
+//        swapFrame = frame;
+//        flam3_copy(&cp, &cps[genomeIdx]);
+//    }
 
-        setTrack = true;
-        gui->trackDirty = false;
-    }
-
-    if (!wandering && (gui->sceneIdx != sceneIdx || setTrack)) {
-        gui->genomeInterpolationAmt = 0;
-
-        sceneIdx = gui->sceneIdx;
-        genomeIdx = gui->activeScene.genomeIdx;
-
-        swapFrame = frame;
-        flam3_copy(&cp, &cps[genomeIdx]);
-    }
-
-    // Copy data from gui
-    if (wandering != gui->wandering.get()) {
-        wandering = gui->wandering.get();
-
-        if (wandering) {
-            counter = ispeed * genomeIdx;
-            lastCP = genomeIdx;
-        }
-    }
+//    // Copy data from gui
+//    if (wandering != gui->wandering.get()) {
+//        wandering = gui->wandering.get();
+//
+//        if (wandering) {
+//            counter = ispeed * genomeIdx;
+//            lastCP = genomeIdx;
+//        }
+//    }
 
     wanderSpeed = gui->wanderSpeed;
-    pointRadiusAudioScaleAmt = gui->activeScene.pointRadiusAudioScaleAmt;
-    pointRadiusAudioScale = gui->activeScene.pointRadiusAudioScale;
-    fftDecayRate = gui->activeScene.fftDecayRate;
-    rmsMultiple = gui->activeScene.rmsMultiple;
-    centroidMaxBucket = gui->activeScene.centroidMaxBucket;
-    mpxSmoothingFactor = gui->activeScene.mpxSmoothingFactor;
-    mpySmoothingFactor = gui->activeScene.mpySmoothingFactor;
-    baseSpeed = gui->activeScene.baseSpeed;
-    rmsSpeedMult = gui->activeScene.rmsSpeedMult;
-    frameClearSpeed = gui->activeScene.clearSpeed;
-    particleAlpha = gui->activeScene.particleAlpha;
-    basePointRadius = gui->activeScene.basePointRadius;
-    maxLineLength = gui->activeScene.maxLineLength;
-    saturationPct = gui->activeScene.saturationPct;
+    pointRadiusAudioScaleAmt = stateManager->activeScene.pointRadiusAudioScaleAmt;
+    pointRadiusAudioScale = stateManager->activeScene.pointRadiusAudioScale;
+    fftDecayRate = stateManager->activeScene.fftDecayRate;
+    rmsMultiple = stateManager->activeScene.rmsMultiple;
+    centroidMaxBucket = stateManager->activeScene.centroidMaxBucket;
+    mpxSmoothingFactor = stateManager->activeScene.mpxSmoothingFactor;
+    mpySmoothingFactor = stateManager->activeScene.mpySmoothingFactor;
+    baseSpeed = stateManager->activeScene.baseSpeed;
+    rmsSpeedMult = stateManager->activeScene.rmsSpeedMult;
+    frameClearSpeed = stateManager->activeScene.clearSpeed;
+    particleAlpha = stateManager->activeScene.particleAlpha;
+    basePointRadius = stateManager->activeScene.basePointRadius;
+    maxLineLength = stateManager->activeScene.maxLineLength;
+    saturationPct = stateManager->activeScene.saturationPct;
+    overallScale = stateManager->activeScene.overallScale;
 
     // TODO: use array?
-    audioEffectSize1 = gui->activeScene.audioEffectSize1;
-    audioEffectSize2 = gui->activeScene.audioEffectSize2;
-    audioEffectSize3 = gui->activeScene.audioEffectSize3;
-    audioEffectSize4 = gui->activeScene.audioEffectSize4;
+    audioEffectSize1 = stateManager->activeScene.audioEffectSize1;
+    audioEffectSize2 = stateManager->activeScene.audioEffectSize2;
+    audioEffectSize3 = stateManager->activeScene.audioEffectSize3;
+    audioEffectSize4 = stateManager->activeScene.audioEffectSize4;
 
     if (audioMode != gui->audioMode) {
         audioMode = gui->audioMode;
@@ -263,200 +228,18 @@ void ofApp::guiUpdate() {
     }
 }
 
-void ofApp::flameUpdate() {
-    initrc(seed);
-
-    if (wandering) {
-        counter += wanderSpeed;
-
-        if (counter >= (nCPsInTrack * ispeed))
-            counter = 0;
-
-        float normCounter = counter/ispeed;
-        int currCP = (int)normCounter;
-
-        if (lastCP != currCP) {
-            swapFrame = frame;
-
-            gui->advanceScene();
-
-            lastCP = currCP;
-            genomeIdx = gui->currScene->genomeIdx;
-        } else {
-            gui->genomeInterpolationAmt = normCounter - currCP;
-
-            // cpTrackOrder has n+1 - last is a copy of first
-            flam3_interpolate(cpTrackOrder, nCPsInTrack, normCounter, 0, &cp);
-        }
-    } else {
-        float speed = baseSpeed + smoothedAudioRMS * rmsSpeedMult;
-        flam3_rotate(&cp, speed, flam3_inttype_log);
-    }
-
-    // Copy the true cp to a renderable version we'll animate
-    flam3_copy(&renderCp, &cp);
-
-    // Update flam3 parameters to animate
-    setFlameParameters();
-
-    if (prepare_precalc_flags2(&renderCp)) {
-        fprintf(stderr,"prepare xform pointers returned error: aborting.\n");
-        return;
-    }
-
-    // Update xform_distribution using renderable xform
-    const int flameSeqIdxToUpdate = (frame-swapFrame) % flameSequences.size();
-    flameSeq &seqToUpdate = flameSequences[flameSeqIdxToUpdate];
-    if (seqToUpdate.xform_distribution) {
-        free(seqToUpdate.xform_distribution);
-    }
-    seqToUpdate.frameUpdated = frame;
-    seqToUpdate.xform_distribution = flam3_create_xform_distrib(&renderCp);
-
-    // Render points
-    std::swap(prevFlameSamples, currFlameSamples);
-    const int nFlameSeqs = MIN(flameSequences.size(), (frame-swapFrame)+1);
-    const int nSamplesPerSeq = nsamples / nFlameSeqs;
-    for (int i = nFlameSeqs-1; i >= 0 ; --i) {
-        double *flameSamples = currFlameSamples + nSamplesPerSeq * 4 * i;
-
-        flameSamples[0] = flam3_random_isaac_11(&rc);
-        flameSamples[1] = flam3_random_isaac_11(&rc);
-        flameSamples[2] = flam3_random_isaac_01(&rc);
-        flameSamples[3] = flam3_random_isaac_01(&rc);
-
-        flam3_iterate(&renderCp,
-                      nSamplesPerSeq,
-                      20,
-                      flameSamples,
-                      flameSequences[i].xform_distribution,
-                      &rc);
-    }
-
-    totDotPixels = 0;
-    totLinePixels = 0;
-    for (int i = 0; i < nsamples-1; i++) {
-        // Radius depends on mpy
-        const float baseRadius = basePointRadius * mpy;
-
-        const int bucket = ofMap(i, 0, nsamples-1, 0, nFftBuckets * centroidMaxBucket);
-        const float audioScale = pointRadiusAudioScale * fftOutput[bucket];
-
-        float radius = ofLerp(baseRadius, baseRadius * audioScale, pointRadiusAudioScaleAmt);
-        radius = ofClamp(radius, 0, 100);
-
-        int palleteIdx = (int)(currFlameSamples[4*i+2] * CMAP_SIZE);
-        palleteIdx = ofClamp(palleteIdx, 0, CMAP_SIZE-1);
-        double *cv = cp.palette[palleteIdx].color;
-        ofColor color(255*cv[0],255*cv[1],255*cv[2], particleAlpha);
-        color.setSaturation(saturationPct * color.getSaturation());
-
-        pointPairs[i].pt1.x = currFlameSamples[4*i];
-        pointPairs[i].pt1.y = currFlameSamples[4*i+1];
-        pointPairs[i].pt2.x = prevFlameSamples[4*i];
-        pointPairs[i].pt2.y = prevFlameSamples[4*i+1];
-
-        pointPairs[i].color = color;
-        pointPairs[i].ptSize = radius;
-        pointPairs[i].lineWidth = ofClamp(radius/4, 0, 6);
-
-        totDotPixels += (radius * 2) * (radius * 2);
-        totLinePixels +=  pointPairs[i].lineWidth;
-    }
-
-    ++frame;
+void ofApp::handleTrackChanged(int & trackIdx) {
+    swapFrame = frame;
+    stateManager->loadGenome(&cp);
 }
 
-//--------------------------------------------------------------
-void ofApp::update(){
-    // Handle our keypresses
-    while (!keyPresses.empty()) {
-        handleKey(keyPresses.front());
-        keyPresses.pop();
-    }
-    
-    // Handle GUI keypresses
-    while (!gui->keyPresses.empty()) {
-        handleKey(gui->keyPresses.front());
-        gui->keyPresses.pop();
-    }
-
-    // Copy audio if needed
-    if (audioMode == AUDIO_MODE_MP3) {
-        float *ss = ofSoundGetSpectrum(nFftBuckets);
-        memcpy(fftOutput, ss, sizeof(float) * nFftBuckets);
-    } else if (audioMode == AUDIO_MODE_MIC || audioMode == AUDIO_MODE_NOISE) {
-        // No action needed
-    } else {
-        memset(fftOutput, 0, sizeof(float) * nFftBuckets);
-    }
-
-    // Compute audio centroid
-    float centroidN = 0, centroidD = 0;
-    for (int i = 0; i < nFftBuckets; ++i) {
-        centroidN += fftOutput[i] * i;
-        centroidD += fftOutput[i];
-    }
-    float centroidBucket = centroidN / centroidD;
-    audioCentroid = fmin(centroidBucket / nFftBuckets, 1);
-
-    // Compute audio centroid mapping to useful space
-    float centroidMapped = sqrt(ofMap(audioCentroid, 0, centroidMaxBucket, 0, 1, true)); // TODO: should we use sqrt here?
-
-    // Compute audio RMS mapping to useful space
-    float audioRMSMapped = ofClamp(audioRMS * rmsMultiple, 0.0, 1.0);
-
-    // Note: this is very dependent on the tempo of the music.
-    mpx += (centroidMapped - mpx) * mpxSmoothingFactor;
-    mpy += (audioRMSMapped - mpy) * mpySmoothingFactor;
-
-    guiUpdate();
-    flameUpdate();
-}
-
-//--------------------------------------------------------------
-void ofApp::audioIn(float * input, int bufferSize, int nChannels){
-    if (audioMode == AUDIO_MODE_MIC) {
-        memcpy(audioInput, input, sizeof(float) * bufferSize);
-    } else if (audioMode == AUDIO_MODE_NOISE) {
-        for (int i = 0; i < bufferSize; i++)
-            audioInput[i] = ofRandom(-1, 1);
-    } else if (audioMode == AUDIO_MODE_NONE) {
-        // TODO: don't overwrite constantly
-        for (int i = 0; i < bufferSize; i++)
-            audioInput[i] = 0;
-    }
-
-    // Only process data if we're listening
-    if (audioMode == AUDIO_MODE_MIC || audioMode == AUDIO_MODE_NOISE) {
-        fft->setSignal(audioInput);
-        float *fftAmplitude = fft->getAmplitude();
-
-        for (int i = 0; i < fft->getBinSize(); ++i) {
-            // TODO: in theory this should be 20, but 16 seems to work better.
-            float val = ofClamp(16.0 * log10(fftAmplitude[i] + 1), 0.0, 1.0);
-            if (val > fftOutput[i] || fftDecayRate <= 0.01) {
-                fftOutput[i] = val;
-            } else {
-                fftOutput[i] *= fftDecayRate;
-            }
-        }
-        
-        float newAudioRMS = 0.0;
-        for (int i = 0; i < bufferSize; i++){
-            float sample = input[i] * 0.5;
-            newAudioRMS += sample * sample;
-        }
-        newAudioRMS /= bufferSize;
-        newAudioRMS = sqrt(newAudioRMS);
-
-        audioRMS = newAudioRMS;
-        smoothedAudioRMS += (audioRMS - smoothedAudioRMS) * 0.3;
-    }
+void ofApp::handleSceneChanged(int & sceneIdx){
+    swapFrame = frame;
+    stateManager->loadGenome(&cp);
 }
 
 void ofApp::setFlameParameters() {
-    switch (genomeIdx) {
+    switch (stateManager->activeScene.genomeIdx) {
         case 0:
             renderCp.xform[4].var[5] = mpx;
             renderCp.xform[3].var[8] = mpy;
@@ -593,60 +376,60 @@ void ofApp::setFlameParameters() {
             break;
         case 25:
             for (int i = 0; i < renderCp.num_xforms; i++) {
-	      renderCp.xform[i].c[0][0] = cp.xform[i].c[0][0] + audioEffectSize1 * mpy;
-	      renderCp.xform[i].c[1][1] = cp.xform[i].c[1][1] + audioEffectSize2 * mpx;
-	      renderCp.xform[i].c[0][1] = cp.xform[i].c[0][1] + audioEffectSize3 * mpy;
-	      renderCp.xform[i].c[1][0] = cp.xform[i].c[1][0] + audioEffectSize4 * mpx;
-	    }
+                renderCp.xform[i].c[0][0] = cp.xform[i].c[0][0] + audioEffectSize1 * mpy;
+                renderCp.xform[i].c[1][1] = cp.xform[i].c[1][1] + audioEffectSize2 * mpx;
+                renderCp.xform[i].c[0][1] = cp.xform[i].c[0][1] + audioEffectSize3 * mpy;
+                renderCp.xform[i].c[1][0] = cp.xform[i].c[1][0] + audioEffectSize4 * mpx;
+            }
             break;
         case 26:
-	    renderCp.xform[2].julian_power = cp.xform[2].julian_power + audioEffectSize3 * mpy * 10;
-	    renderCp.xform[2].julian_dist = cp.xform[2].julian_dist + audioEffectSize4 * mpx * 3;
+            renderCp.xform[2].julian_power = cp.xform[2].julian_power + audioEffectSize3 * mpy * 10;
+            renderCp.xform[2].julian_dist = cp.xform[2].julian_dist + audioEffectSize4 * mpx * 3;
             for (int i = 0; i < renderCp.num_xforms; i++) {
-	      renderCp.xform[i].c[0][0] = cp.xform[i].c[0][0] + audioEffectSize1 * mpy;
-	      renderCp.xform[i].c[1][1] = cp.xform[i].c[1][1] + audioEffectSize2 * mpx;
-	    }
+                renderCp.xform[i].c[0][0] = cp.xform[i].c[0][0] + audioEffectSize1 * mpy;
+                renderCp.xform[i].c[1][1] = cp.xform[i].c[1][1] + audioEffectSize2 * mpx;
+            }
             break;
         case 27:
             for (int i = 2; i < renderCp.num_xforms; i++) {
-	      renderCp.xform[i].c[0][0] = cp.xform[i].c[0][0] + audioEffectSize1 * mpy;
-	      renderCp.xform[i].var[VAR_SWIRL] = cp.xform[i].var[VAR_SWIRL] + audioEffectSize2 * mpy / 10;
-	      renderCp.xform[i].var[VAR_POLAR] = cp.xform[i].var[VAR_POLAR] + audioEffectSize3 * mpy / 10;
-	      renderCp.xform[i].var[VAR_SPHERICAL] = cp.xform[i].var[VAR_SPHERICAL] + audioEffectSize4 * mpy / 10;
-	    }
+                renderCp.xform[i].c[0][0] = cp.xform[i].c[0][0] + audioEffectSize1 * mpy;
+                renderCp.xform[i].var[VAR_SWIRL] = cp.xform[i].var[VAR_SWIRL] + audioEffectSize2 * mpy / 10;
+                renderCp.xform[i].var[VAR_POLAR] = cp.xform[i].var[VAR_POLAR] + audioEffectSize3 * mpy / 10;
+                renderCp.xform[i].var[VAR_SPHERICAL] = cp.xform[i].var[VAR_SPHERICAL] + audioEffectSize4 * mpy / 10;
+            }
             break;
         case 28:
             for (int i = 0; i < renderCp.num_xforms; i++) {
-	      renderCp.xform[i].var[VAR_JULIA] = cp.xform[i].var[VAR_JULIA] + audioEffectSize1 * mpy;
-	      renderCp.xform[i].c[0][0] = cp.xform[i].c[0][0] + audioEffectSize1 * mpy;
-	      renderCp.xform[i].c[1][1] = cp.xform[i].c[1][1] + audioEffectSize2 * mpx;
-	      renderCp.xform[i].c[2][0] = cp.xform[i].c[2][0] + audioEffectSize3 * mpy;
-	      renderCp.xform[i].c[2][1] = cp.xform[i].c[2][1] + audioEffectSize4 * mpx;
-	    }
+                renderCp.xform[i].var[VAR_JULIA] = cp.xform[i].var[VAR_JULIA] + audioEffectSize1 * mpy;
+                renderCp.xform[i].c[0][0] = cp.xform[i].c[0][0] + audioEffectSize1 * mpy;
+                renderCp.xform[i].c[1][1] = cp.xform[i].c[1][1] + audioEffectSize2 * mpx;
+                renderCp.xform[i].c[2][0] = cp.xform[i].c[2][0] + audioEffectSize3 * mpy;
+                renderCp.xform[i].c[2][1] = cp.xform[i].c[2][1] + audioEffectSize4 * mpx;
+            }
             break;
         case 29:
-	    renderCp.xform[1].ngon_power = cp.xform[1].ngon_power + audioEffectSize1 * mpy;
+            renderCp.xform[1].ngon_power = cp.xform[1].ngon_power + audioEffectSize1 * mpy;
             for (int i = 0; i < renderCp.num_xforms; i++) {
-	      renderCp.xform[i].c[0][0] = cp.xform[i].c[0][0] + audioEffectSize1 * mpy;
-	      renderCp.xform[i].c[1][1] = cp.xform[i].c[1][1] + audioEffectSize2 * mpx;
-	      renderCp.xform[i].c[2][0] = cp.xform[i].c[2][0] + audioEffectSize3 * mpy;
-	      renderCp.xform[i].c[2][1] = cp.xform[i].c[2][1] + audioEffectSize4 * mpx;
-	    }
+                renderCp.xform[i].c[0][0] = cp.xform[i].c[0][0] + audioEffectSize1 * mpy;
+                renderCp.xform[i].c[1][1] = cp.xform[i].c[1][1] + audioEffectSize2 * mpx;
+                renderCp.xform[i].c[2][0] = cp.xform[i].c[2][0] + audioEffectSize3 * mpy;
+                renderCp.xform[i].c[2][1] = cp.xform[i].c[2][1] + audioEffectSize4 * mpx;
+            }
             break;
         case 30:
-	    renderCp.xform[0].var[VAR_DISC] = cp.xform[0].var[VAR_DISC] + audioEffectSize3 * mpy;
-	    renderCp.xform[0].rectangles_x = cp.xform[0].rectangles_x + audioEffectSize1 * mpy;
-	    renderCp.xform[0].rectangles_y = cp.xform[0].rectangles_y + audioEffectSize2 * mpx;
-	    renderCp.xform[4].c[0][0] = cp.xform[4].c[0][0] + audioEffectSize4 * mpy;
-	    renderCp.xform[4].c[1][1] = cp.xform[0].c[1][1] + audioEffectSize3 * mpx;
+            renderCp.xform[0].var[VAR_DISC] = cp.xform[0].var[VAR_DISC] + audioEffectSize3 * mpy;
+            renderCp.xform[0].rectangles_x = cp.xform[0].rectangles_x + audioEffectSize1 * mpy;
+            renderCp.xform[0].rectangles_y = cp.xform[0].rectangles_y + audioEffectSize2 * mpx;
+            renderCp.xform[4].c[0][0] = cp.xform[4].c[0][0] + audioEffectSize4 * mpy;
+            renderCp.xform[4].c[1][1] = cp.xform[0].c[1][1] + audioEffectSize3 * mpx;
             break;
         case 31:
             for (int i = 0; i < renderCp.num_xforms; i++) {
-	      renderCp.xform[i].c[0][0] = cp.xform[i].c[0][0] + audioEffectSize1 * mpy;
-	      renderCp.xform[i].c[1][1] = cp.xform[i].c[1][1] + audioEffectSize2 * mpx;
-	      renderCp.xform[i].c[2][0] = cp.xform[i].c[2][0] + audioEffectSize3 * mpy;
-	      renderCp.xform[i].c[2][1] = cp.xform[i].c[2][1] + audioEffectSize4 * mpx;
-	    }
+                renderCp.xform[i].c[0][0] = cp.xform[i].c[0][0] + audioEffectSize1 * mpy;
+                renderCp.xform[i].c[1][1] = cp.xform[i].c[1][1] + audioEffectSize2 * mpx;
+                renderCp.xform[i].c[2][0] = cp.xform[i].c[2][0] + audioEffectSize3 * mpy;
+                renderCp.xform[i].c[2][1] = cp.xform[i].c[2][1] + audioEffectSize4 * mpx;
+            }
             break;
         case 32:
             renderCp.xform[0].c[0][0] = cp.xform[0].c[0][0] + audioEffectSize1 * mpy;
@@ -682,7 +465,176 @@ void ofApp::setFlameParameters() {
             renderCp.xform[6].c[2][1] = cp.xform[4].c[2][1] + audioEffectSize4 * mpy;
             break;
     }
+    
+}
 
+void ofApp::flameUpdate() {
+    // Update current genome
+    stateManager->flameUpdate(&cp, smoothedAudioRMS);
+
+    // Copy the true cp to a renderable version we'll animate
+    flam3_copy(&renderCp, &cp);
+
+    // Update flam3 parameters to animate
+    setFlameParameters();
+
+    if (prepare_precalc_flags2(&renderCp)) {
+        fprintf(stderr,"prepare xform pointers returned error: aborting.\n");
+        return;
+    }
+
+    // Update xform_distribution using renderable xform
+    const int flameSeqIdxToUpdate = (frame-swapFrame) % flameSequences.size();
+    flameSeq &seqToUpdate = flameSequences[flameSeqIdxToUpdate];
+    if (seqToUpdate.xform_distribution) {
+        free(seqToUpdate.xform_distribution);
+    }
+    seqToUpdate.frameUpdated = frame;
+    seqToUpdate.xform_distribution = flam3_create_xform_distrib(&renderCp);
+
+    // cache
+    randctx *rc = &stateManager->rc;
+
+    // Render points
+    std::swap(prevFlameSamples, currFlameSamples);
+    const int nFlameSeqs = MIN(flameSequences.size(), (frame-swapFrame)+1);
+    const int nSamplesPerSeq = nsamples / nFlameSeqs;
+    for (int i = nFlameSeqs-1; i >= 0 ; --i) {
+        double *flameSamples = currFlameSamples + nSamplesPerSeq * 4 * i;
+
+        flameSamples[0] = flam3_random_isaac_11(rc);
+        flameSamples[1] = flam3_random_isaac_11(rc);
+        flameSamples[2] = flam3_random_isaac_01(rc);
+        flameSamples[3] = flam3_random_isaac_01(rc);
+
+        flam3_iterate(&renderCp,
+                      nSamplesPerSeq,
+                      20,
+                      flameSamples,
+                      flameSequences[i].xform_distribution,
+                      rc);
+    }
+
+    totDotPixels = 0;
+    totLinePixels = 0;
+    for (int i = 0; i < nsamples-1; i++) {
+        // Radius depends on mpy
+        const float baseRadius = basePointRadius * mpy;
+
+        const int bucket = ofMap(i, 0, nsamples-1, 0, nFftBuckets * centroidMaxBucket);
+        const float audioScale = pointRadiusAudioScale * fftOutput[bucket];
+
+        float radius = ofLerp(baseRadius, baseRadius * audioScale, pointRadiusAudioScaleAmt);
+        radius = ofClamp(radius, 0, 100);
+
+        int palleteIdx = (int)(currFlameSamples[4*i+2] * CMAP_SIZE);
+        palleteIdx = ofClamp(palleteIdx, 0, CMAP_SIZE-1);
+        double *cv = cp.palette[palleteIdx].color;
+        ofColor color(255*cv[0],255*cv[1],255*cv[2], particleAlpha);
+        color.setSaturation(saturationPct * color.getSaturation());
+
+        pointPairs[i].pt1.x = currFlameSamples[4*i];
+        pointPairs[i].pt1.y = currFlameSamples[4*i+1];
+        pointPairs[i].pt2.x = prevFlameSamples[4*i];
+        pointPairs[i].pt2.y = prevFlameSamples[4*i+1];
+
+        pointPairs[i].color = color;
+        pointPairs[i].ptSize = radius;
+        pointPairs[i].lineWidth = ofClamp(radius/4, 0, 6);
+
+        totDotPixels += (radius * 2) * (radius * 2);
+        totLinePixels +=  pointPairs[i].lineWidth;
+    }
+
+    ++frame;
+}
+
+//--------------------------------------------------------------
+void ofApp::update(){
+    // Handle our keypresses
+    while (!keyPresses.empty()) {
+        handleKey(keyPresses.front());
+        keyPresses.pop();
+    }
+    
+    // Handle GUI keypresses
+    while (!gui->keyPresses.empty()) {
+        handleKey(gui->keyPresses.front());
+        gui->keyPresses.pop();
+    }
+
+    // Copy audio if needed
+    if (audioMode == AUDIO_MODE_MP3) {
+        float *ss = ofSoundGetSpectrum(nFftBuckets);
+        memcpy(fftOutput, ss, sizeof(float) * nFftBuckets);
+    } else if (audioMode == AUDIO_MODE_MIC || audioMode == AUDIO_MODE_NOISE) {
+        // No action needed
+    } else {
+        memset(fftOutput, 0, sizeof(float) * nFftBuckets);
+    }
+
+    // Compute audio centroid
+    float centroidN = 0, centroidD = 0;
+    for (int i = 0; i < nFftBuckets; ++i) {
+        centroidN += fftOutput[i] * i;
+        centroidD += fftOutput[i];
+    }
+    float centroidBucket = centroidN / centroidD;
+    audioCentroid = fmin(centroidBucket / nFftBuckets, 1);
+
+    // Compute audio centroid mapping to useful space
+    float centroidMapped = sqrt(ofMap(audioCentroid, 0, centroidMaxBucket, 0, 1, true)); // TODO: should we use sqrt here?
+
+    // Compute audio RMS mapping to useful space
+    float audioRMSMapped = ofClamp(audioRMS * rmsMultiple, 0.0, 1.0);
+
+    // Note: this is very dependent on the tempo of the music.
+    mpx += (centroidMapped - mpx) * mpxSmoothingFactor;
+    mpy += (audioRMSMapped - mpy) * mpySmoothingFactor;
+
+    guiUpdate();
+    flameUpdate();
+}
+
+//--------------------------------------------------------------
+void ofApp::audioIn(float * input, int bufferSize, int nChannels){
+    if (audioMode == AUDIO_MODE_MIC) {
+        memcpy(audioInput, input, sizeof(float) * bufferSize);
+    } else if (audioMode == AUDIO_MODE_NOISE) {
+        for (int i = 0; i < bufferSize; i++)
+            audioInput[i] = ofRandom(-1, 1);
+    } else if (audioMode == AUDIO_MODE_NONE) {
+        // TODO: don't overwrite constantly
+        for (int i = 0; i < bufferSize; i++)
+            audioInput[i] = 0;
+    }
+
+    // Only process data if we're listening
+    if (audioMode == AUDIO_MODE_MIC || audioMode == AUDIO_MODE_NOISE) {
+        fft->setSignal(audioInput);
+        float *fftAmplitude = fft->getAmplitude();
+
+        for (int i = 0; i < fft->getBinSize(); ++i) {
+            // TODO: in theory this should be 20, but 16 seems to work better.
+            float val = ofClamp(16.0 * log10(fftAmplitude[i] + 1), 0.0, 1.0);
+            if (val > fftOutput[i] || fftDecayRate <= 0.01) {
+                fftOutput[i] = val;
+            } else {
+                fftOutput[i] *= fftDecayRate;
+            }
+        }
+        
+        float newAudioRMS = 0.0;
+        for (int i = 0; i < bufferSize; i++){
+            float sample = input[i] * 0.5;
+            newAudioRMS += sample * sample;
+        }
+        newAudioRMS /= bufferSize;
+        newAudioRMS = sqrt(newAudioRMS);
+
+        audioRMS = newAudioRMS;
+        smoothedAudioRMS += (audioRMS - smoothedAudioRMS) * 0.3;
+    }
 }
 
 bool pairCompareDesc(const pointPair& firstElem, pointPair& secondElem) {
@@ -732,7 +684,7 @@ void ofApp::draw(){
     if (gui->drawMode == 0) {
         int loc;
         billboardShader.begin();
-            const float screenScale = ofGetWidth() / 1024.0 * gui->activeScene.overallScale;
+            const float screenScale = ofGetWidth() / 1024.0 * overallScale;
 
             billboardShader.setUniform2f("screen", ofGetWidth(), ofGetHeight());
             billboardShader.setUniform2f("cpCenter", cp.center[0], cp.center[1]);
@@ -786,16 +738,15 @@ void ofApp::handleKey(int key) {
         gui->wandering.set(!gui->wandering.get());
     } else if (key == OF_KEY_LEFT) {
         swapFrame = frame;
-        gui->regressScene();
+        stateManager->regressScene();
     } else if (key == OF_KEY_RIGHT) {
         swapFrame = frame;
-        gui->advanceScene();
+        stateManager->advanceScene();
     } else if (key == 'd') {
-        if (gui->activeScene.pointRadiusAudioScaleAmt > 0)
-            gui->activeScene.pointRadiusAudioScaleAmt.set(0);
+        if (stateManager->activeScene.pointRadiusAudioScaleAmt > 0)
+            stateManager->activeScene.pointRadiusAudioScaleAmt.set(0);
         else
-            gui->activeScene.pointRadiusAudioScaleAmt.set(1);
-
+            stateManager->activeScene.pointRadiusAudioScaleAmt.set(1);
     } else if (key == 's') {
         gui->audioMode.set(gui->audioMode.get() + 1);
         if (audioMode >= N_AUDIO_MODES)
@@ -807,13 +758,13 @@ void ofApp::handleKey(int key) {
         ofHideCursor();
         fullscreen = !fullscreen;
     } else if (key == OF_KEY_UP) {
-        mutateCurrent();
+        stateManager->mutateCurrent(&cp);
     } else if (key == OF_KEY_DOWN) {
-        killCurrent();
+        stateManager->killCurrent(&cp);
     } else if (key == ',') {
-        gui->regressTrack();
+        stateManager->regressTrack();
     } else if (key == '.') {
-        gui->advanceTrack();
+        stateManager->advanceTrack();
     } else if (key == '0') {
         mySound.setPosition(mySound.getPosition()-0.02);
         ofSoundStreamSetup(0, 1, this);
@@ -847,83 +798,6 @@ void ofApp::handleKey(int key) {
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     keyPresses.push(key);
-}
-
-int ofApp::randomi(int n) {
-    int i = flam3_random_isaac_01(&rc) * ncps;
-    return i % n;
-}
-
-void ofApp::killCurrent() {
-    flam3_genome result;
-    memset(&result, 0, sizeof(flam3_genome));
-    initrc(time(NULL));
-    if (randomi(2)) {
-        cout << "Crossing random with random" << endl;
-        int parent0 = randomi(ncps);
-        int parent1 = randomi(ncps);
-        flam3_cross(&cps[parent0], &cps[parent1], &result, CROSS_NOT_SPECIFIED, &rc, NULL);
-    } else {
-        cout << "Crossing random with genebank" << endl;
-        int parent0 = randomi(ncps);
-        int parent1 = randomi(ngenebank);
-        flam3_cross(&cps[parent0], &genebank[parent1], &result, CROSS_NOT_SPECIFIED, &rc, NULL);
-    }
-    flam3_copy(&cp, &result);
-    flam3_copy(&cps[genomeIdx], &result);
-    swapFrame = frame;
-}
-
-void ofApp::mateCurrent() {
-    flam3_genome result;
-    memset(&result, 0, sizeof(flam3_genome));
-    initrc(time(NULL));
-    int parent1 = random()%ncps;
-    flam3_cross(&cps[genomeIdx], &cps[parent1], &result, CROSS_NOT_SPECIFIED, &rc, NULL);
-    flam3_copy(&cp, &result);
-    flam3_copy(&cps[genomeIdx], &result);
-    swapFrame = frame;
-}
-
-void ofApp::mutateCurrent() {
-    flam3_genome result;
-    memset(&result, 0, sizeof(flam3_genome));
-    initrc(time(NULL));
-    int ivars[flam3_nvariations];
-    for (int i = 0; i < flam3_nvariations; i++)
-        ivars[i] = i;
-    
-    flam3_mutate(&cps[genomeIdx], MUTATE_NOT_SPECIFIED, ivars, flam3_nvariations, 0, 0.2, &rc, NULL);
-    flam3_copy(&cp, &cps[genomeIdx]);
-    swapFrame = frame;
-}
-
-void ofApp::initrc(long sed) {
-    /* Set up the isaac rng */
-    for (int lp = 0; lp < RANDSIZ; lp++)
-        rc.randrsl[lp] = sed;
-    irandinit(&rc,1);
-}
-
-void ofApp::setTrackCPOrder(const vector<int> &cpOrder) {
-    nCPsInTrack = cpOrder.size();
-
-    delete cpTrackOrder;
-    swapFrame = frame;
-    cpTrackOrder = (flam3_genome *) malloc(sizeof(flam3_genome) * (nCPsInTrack + 1));
-    memset(cpTrackOrder, 0, sizeof(flam3_genome) * (nCPsInTrack + 1));
-
-    // Copy in genomes in order
-    for (int i = 0; i < nCPsInTrack; ++i) {
-        flam3_copy(cpTrackOrder + i, &cps[cpOrder[i]]);
-
-        // Reset time
-        cpTrackOrder[i].time = (double) i;
-    }
-
-    // Last CP is the first one duplicated
-    flam3_copy(cpTrackOrder + nCPsInTrack, &cps[0]);
-    cpTrackOrder[nCPsInTrack].time = (double) nCPsInTrack;
 }
 
 //--------------------------------------------------------------

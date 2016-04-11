@@ -6,6 +6,7 @@
 #include "GuiApp.h"
 #include "appConstants.h"
 #include "ofxSyphon.h"
+#include "StateManager.h"
 
 extern "C" {
 #include "flam3.h"
@@ -40,40 +41,13 @@ public:
     void windowResized(int w, int h);
     void audioIn(float * input, int bufferSize, int nChannels);
 
-    void setTrackCPOrder(const vector<int> &cpOrder);
-    
-    void killCurrent();
-    void mateCurrent();
-    void mutateCurrent();
-    void initrc(long sed);
-    int randomi(int n);
-
     void guiUpdate();
     void setFlameParameters();
     void flameUpdate();
     void handleKey(int key);
 
-    // Interpolation
-    int genomeIdx;
-    float counter;
-    bool wandering;
-
-    // Fixed randomness for flam3
-    int seed;
-    randctx rc;
-
-    // Geneback for mutation
-    int ngenebank;
-    flam3_genome *genebank;
-
-    // Base control points
-    int ncps;
-    flam3_genome *cps;
-
-    // Copied into cpOrder
-    int trackIdx, sceneIdx;
-    int nCPsInTrack;
-    flam3_genome *cpTrackOrder;
+    void handleTrackChanged(int & trackIdx);
+    void handleSceneChanged(int & sceneIdx);
 
     // After interpolation and to render
     flam3_genome cp, renderCp;
@@ -81,7 +55,7 @@ public:
     double *prevFlameSamples, *currFlameSamples;
 
     // Interpolate between flam3 cps smoothly
-    int frame, swapFrame, lastCP;
+    int frame, swapFrame;
     vector<flameSeq> flameSequences;
 
     // Dot shader
@@ -105,6 +79,7 @@ public:
     float particleAlpha, basePointRadius, pointRadiusAudioScale;
     float maxLineLength;
     float saturationPct;
+    float overallScale;
 
     // Audio mode
     int audioMode;
@@ -126,6 +101,9 @@ public:
     ofFbo visualsFbo;
     shared_ptr<ofTexture> visuals;
     ofxSyphonServer syphonServer;
+
+    // State manager
+    shared_ptr<StateManager> stateManager;
 
     queue<int> keyPresses;
 };

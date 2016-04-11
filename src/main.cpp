@@ -2,6 +2,7 @@
 #include "GuiApp.h"
 #include "ofAppGLFWWindow.h"
 #include "ofApp.h"
+#include "StateManager.h"
 
 //========================================================================
 int main( ){
@@ -20,10 +21,16 @@ int main( ){
     settings.resizable = true;
     settings.shareContextWith = mainWindow;
     shared_ptr<ofAppBaseWindow> guiWindow = ofCreateWindow(settings);
-    
-    shared_ptr<ofApp> mainApp(new ofApp());
+
+    shared_ptr<StateManager> stateManager(new StateManager());
+    stateManager->setup();
+
     shared_ptr<GuiApp> guiApp(new GuiApp());
+    guiApp->stateManager = stateManager;
+
+    shared_ptr<ofApp> mainApp(new ofApp());
     mainApp->gui = guiApp;
+    mainApp->stateManager = stateManager;
     
     ofRunApp(guiWindow, guiApp);
     ofRunApp(mainWindow, mainApp);
