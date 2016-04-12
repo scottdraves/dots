@@ -32,7 +32,7 @@ void GuiApp::setup() {
     // Meta
     metaParams.setName("Meta");
     metaParams.add(wandering.set("wandering", false));
-    metaParams.add(wanderSpeed.set("wanderSpeed", 1, 0, 20));
+    metaParams.add(wanderSpeed.set("wanderSpeed", 0.007, 0, 0.12));
     metaParams.add(genomeInterpolationAmt.set("interpolate", 0, 0, 1));
     metaGui.setup(metaParams);
 
@@ -106,6 +106,15 @@ void GuiApp::update(){
             soundStreamDevice.setMax(nSoundDevices);
         }
     }
+
+    stateManager->wandering = wandering.get();
+    stateManager->wanderSpeed = wanderSpeed.get();
+
+    if (wandering) {
+        genomeInterpolationAmt = stateManager->interpAmt;
+    } else {
+        stateManager->interpAmt = genomeInterpolationAmt;
+    }
 }
 
 void GuiApp::draw() {
@@ -129,7 +138,7 @@ void GuiApp::draw() {
         ofDrawBitmapString(s, 510, 25);
         sprintf(s, "scene: %d / %lu", stateManager->sceneIdx, stateManager->getTrack().scenes.size()-1);
         ofDrawBitmapString(s, 510, 40);
-        sprintf(s, "genome: %d", stateManager->activeScene.genomeId);
+        sprintf(s, "genome: %d", stateManager->getScene().genomeId);
         ofDrawBitmapString(s, 510, 55);
     }
 

@@ -120,7 +120,6 @@ void setParam(ofParameter<ParameterType>& param, float t) {
 
 void StateManager::setup() {
     loadGenebanks();
-    loadAllParamsFromFile();
 
     seed = 0;
     initrc(seed);
@@ -149,6 +148,7 @@ void StateManager::setup() {
     // Now load tracks from file
     loadAllParamsFromFile();
 
+    wandering = false;
     trackIdx = 0;
     sceneIdx = -1;
     advanceScene();
@@ -190,7 +190,7 @@ void StateManager::genomeModified(int & newGenomeIdx) {
 }
 
 void StateManager::update() {
-    if ((wandering || interpAmt > 0.0001) && currScene && nextScene) {
+    if (wandering && currScene && nextScene) {
         applyParameterInterpolation(interpAmt);
     }
 
@@ -218,7 +218,7 @@ void StateManager::flameUpdate(flam3_genome *dest, float audioRMS) {
             interpAmt = wanderElapsed - currCP;
 
             // cpTrackOrder has n+1 - last is a copy of first
-            flam3_interpolate(getTrack().genomes, getTrack().nGenomes, wanderElapsed, 0, dest);
+            flam3_interpolate(getTrack().genomes, getTrack().nGenomes + 1, wanderElapsed, 0, dest);
         }
     } else {
         float speed = activeScene.baseSpeed + audioRMS * activeScene.rmsSpeedMult;
@@ -423,7 +423,7 @@ void StateManager::deleteScene() {
     cout << "Delete scene" << endl;
 
     vector<DotsScene *> &scenes = tracks[trackIdx].scenes;
-    tracks.erase(tracks.begin() + sceneIdx);
+    scenes.erase(scenes.begin() + sceneIdx);
     getTrack().setGenomesFromScenes();
 
     // TODO: less ham-fisted way to do this
@@ -458,7 +458,8 @@ void StateManager::createTrack() {
 
     DotsScene *scene = new DotsScene;
     scene->setupParams();
-    scene->setupGenome(nextGenomeId(), currScene->genome);
+    activeScene.copyParamsTo(*scene);
+    getScene().copyGenomeTo(*scene);
 
     track.scenes.push_back(scene);
     track.setGenomesFromScenes();
@@ -545,13 +546,13 @@ void StateManager::loadAllParamsFromFile() {
         if (trackId == 0) continue;
 
         DotsTrack track;
-        track.trackId = trackIdx;
+        track.trackId = trackId;
 
         settings.clear();
         settings.loadFile(file.getAbsolutePath());
         settings.pushTag("track");
         settings.pushTag("scenes");
-        int nScenes = settings.getNumTags("scenes");
+        int nScenes = settings.getNumTags("scene");
         for (int i = 0; i < nScenes; ++i) {
             DotsScene *scene = new DotsScene;
             scene->setupParams();
@@ -607,10 +608,11 @@ void StateManager::loadAllParamsFromFile() {
             flam3_copy(scene->genome, track.genomes + i);
             i++;
         }
+        track.setGenomesFromScenes();
     }
 
     for (auto &pair : trackMap) {
-        tracks.push_back(pair.second);
+        tracks.push_back(std::move(pair.second));
         if (pair.second.trackId > maxTrackId)
             maxTrackId = pair.second.trackId;
     }

@@ -105,7 +105,7 @@ static void copyParameters(const ofParameterGroup &from, const ofParameterGroup 
 
 typedef struct DotsScene {
     int genomeId;
-    flam3_genome *genome;
+    flam3_genome *genome = NULL;
 
     ofParameterGroup displayParameters;
 
@@ -136,6 +136,8 @@ typedef struct DotsScene {
 
     void setupGenome(const int genomeId, flam3_genome *src) {
         this->genomeId = genomeId;
+
+        if (genome) free(genome);
 
         genome = (flam3_genome *)malloc(sizeof(flam3_genome));
         memset(genome, 0, sizeof(flam3_genome));
@@ -206,7 +208,7 @@ typedef struct DotsScene {
     }
 
     ~DotsScene() {
-        delete genome;
+        free(genome);
     }
 } DotsScene;
 
@@ -220,15 +222,19 @@ typedef struct DotsTrack {
     void setGenomesFromScenes() {
         nGenomes = scenes.size();
 
-        flam3_genome *newGenomes = (flam3_genome*)malloc(sizeof(flam3_genome) * nGenomes);
-        memset(newGenomes, 0, sizeof(flam3_genome) * nGenomes);
+        flam3_genome *newGenomes = (flam3_genome*)malloc(sizeof(flam3_genome) * (nGenomes + 1));
+        memset(newGenomes, 0, sizeof(flam3_genome) * (nGenomes + 1));
 
         for (int i = 0; i < nGenomes; ++i) {
-            flam3_copy(newGenomes + i, scenes[i]->genome);
-            scenes[i]->genome = newGenomes + i;
+            flam3_copy(&newGenomes[i], scenes[i]->genome);
+            newGenomes[i].time = i;
         }
 
-        if (genomes) delete genomes;
+        // Last element is so we loop properly
+        flam3_copy(&newGenomes[nGenomes], scenes[0]->genome);
+        newGenomes[nGenomes].time = nGenomes;
+
+        if (genomes) free(genomes);
         genomes = newGenomes;
     }
 } DotsTrack;
@@ -277,7 +283,7 @@ public:
     DotsScene *nextScene;
 
     // Are we wandering or standing still
-    bool wandering;
+    ofParameter<bool> wandering;
     float wanderSpeed;
     int lastCP;
     float wanderElapsed;

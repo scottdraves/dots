@@ -48,6 +48,7 @@ public:
 
     void handleTrackChanged(int & trackIdx);
     void handleSceneChanged(int & sceneIdx);
+    void handleWanderingChanged(bool & wandering);
 
     // After interpolation and to render
     flam3_genome cp, renderCp;

@@ -134,6 +134,7 @@ void ofApp::setup(){
     stateManager->onTrackChange.add(this, &ofApp::handleTrackChanged, 0);
     stateManager->onSceneUpdate.add(this, &ofApp::handleSceneChanged, 0);
     stateManager->onTrackUpdate.add(this, &ofApp::handleTrackChanged, 0);
+    stateManager->wandering.addListener(this, &ofApp::handleWanderingChanged);
 
 }
 
@@ -209,7 +210,12 @@ void ofApp::handleTrackChanged(int & trackIdx) {
 
 void ofApp::handleSceneChanged(int & sceneIdx){
     swapFrame = frame;
-    stateManager->loadGenome(&cp);
+    if (!stateManager->wandering)
+        stateManager->loadGenome(&cp);
+}
+
+void ofApp::handleWanderingChanged(bool & wandering) {
+    swapFrame = frame;
 }
 
 void ofApp::setFlameParameters() {
@@ -566,6 +572,7 @@ void ofApp::update(){
     mpx += (centroidMapped - mpx) * mpxSmoothingFactor;
     mpy += (audioRMSMapped - mpy) * mpySmoothingFactor;
 
+    stateManager->update();
     guiUpdate();
     flameUpdate();
 }
