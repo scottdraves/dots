@@ -143,8 +143,8 @@ void GuiApp::draw() {
         ofDrawBitmapString(s, 510, 25);
         sprintf(s, "scene: %d / %lu", stateManager->sceneIdx, stateManager->getTrack().scenes.size()-1);
         ofDrawBitmapString(s, 510, 40);
-//        sprintf(s, "genome: %d / %d", activeScene.genomeIdx.get(), numCPs-1);
-//        ofDrawBitmapString(s, 510, 55);
+        sprintf(s, "genome: %d", stateManager->activeScene.genomeIdx);
+        ofDrawBitmapString(s, 510, 55);
     }
 
     ofTranslate(0, 17);

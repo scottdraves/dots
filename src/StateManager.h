@@ -210,6 +210,24 @@ typedef struct DotsScene {
 typedef struct DotsTrack {
     int trackIdx;
     vector<DotsScene *> scenes;
+
+    int nGenomes;
+    flam3_genome *genomes = NULL;
+
+    void setGenomesFromScenes() {
+        nGenomes = scenes.size();
+
+        flam3_genome *newGenomes = (flam3_genome*)malloc(sizeof(flam3_genome) * nGenomes);
+        memset(newGenomes, 0, sizeof(flam3_genome) * nGenomes);
+
+        for (int i = 0; i < nGenomes; ++i) {
+            flam3_copy(newGenomes + i, scenes[i]->genome);
+            scenes[i]->genome = newGenomes + i;
+        }
+
+        if (genomes) delete genomes;
+        genomes = newGenomes;
+    }
 } DotsTrack;
 
 class StateManager {
@@ -229,9 +247,6 @@ public:
     void mutateCurrent(flam3_genome *dest);
 
     void midiToSceneParams(MidiController &midi);
-
-    vector<int> getTrackGenomeIndices();
-    void setTrackCPOrder(const vector<int> &cpOrder);
 
     void genomeModified(int & genome);
 

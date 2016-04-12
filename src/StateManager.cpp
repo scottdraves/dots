@@ -139,10 +139,9 @@ void StateManager::setup() {
 
         defaultTrack.scenes.push_back(scene);
     }
+    defaultTrack.setGenomesFromScenes();
 
-    tracks.push_back(defaultTrack);
-
-
+    tracks.push_back(std::move(defaultTrack));
 
     // Now load tracks from file
     loadAllParamsFromFile();
@@ -216,7 +215,7 @@ void StateManager::flameUpdate(flam3_genome *dest, float audioRMS) {
             interpAmt = wanderElapsed - currCP;
 
             // cpTrackOrder has n+1 - last is a copy of first
-            flam3_interpolate(cpTrackOrder, nGenomesInTrack, wanderElapsed, 0, dest);
+            flam3_interpolate(getTrack().genomes, getTrack().nGenomes, wanderElapsed, 0, dest);
         }
     } else {
         float speed = activeScene.baseSpeed + audioRMS * activeScene.rmsSpeedMult;
@@ -280,26 +279,6 @@ void StateManager::initrc(long sed) {
     irandinit(&rc,1);
 }
 
-void StateManager::setTrackCPOrder(const vector<int> &cpOrder) {
-//    nGenomesInTrack = cpOrder.size();
-//
-//    delete cpTrackOrder;
-//    cpTrackOrder = (flam3_genome *) malloc(sizeof(flam3_genome) * (nGenomesInTrack + 1));
-//    memset(cpTrackOrder, 0, sizeof(flam3_genome) * (nGenomesInTrack + 1));
-//
-//    // Copy in genomes in order
-//    for (int i = 0; i < nGenomesInTrack; ++i) {
-//        flam3_copy(cpTrackOrder + i, &cps[cpOrder[i]]);
-//
-//        // Reset time
-//        cpTrackOrder[i].time = (double) i;
-//    }
-//
-//    // Last CP is the first one duplicated
-//    flam3_copy(cpTrackOrder + nGenomesInTrack, &cps[0]);
-//    cpTrackOrder[nGenomesInTrack].time = (double) nGenomesInTrack;
-}
-
 void StateManager::midiToSceneParams(MidiController &midi) {
     if (midi.sliders[0] > 0) setParam(activeScene.clearSpeed, midi.sliders[0]);
     if (midi.sliders[1] > 0) setParam(activeScene.overallScale, midi.sliders[1]);
@@ -309,14 +288,6 @@ void StateManager::midiToSceneParams(MidiController &midi) {
     if (midi.sliders[5] > 0) setParam(activeScene.audioEffectSize2, midi.sliders[5]);
     if (midi.sliders[6] > 0) setParam(activeScene.audioEffectSize3, midi.sliders[6]);
     if (midi.sliders[7] > 0) setParam(activeScene.audioEffectSize4, midi.sliders[7]);
-}
-
-vector<int> StateManager::getTrackGenomeIndices() {
-    vector<int> indices;
-    for (auto track : tracks[trackIdx].scenes) {
-        indices.push_back(track->genomeIdx);
-    }
-    return indices;
 }
 
 DotsTrack& StateManager::getTrack() {
@@ -356,6 +327,7 @@ void StateManager::advanceTrack() {
 void StateManager::saveTrack() {
     cout << "Save track" << endl;
     activeScene.copyTo(*currScene);
+    getTrack().setGenomesFromScenes();
     serializeCurrentTrackToFile();
 }
 
@@ -422,6 +394,7 @@ void StateManager::advanceScene() {
 void StateManager::reloadScene() {
     cout << "Reload scene" << endl;
     currScene->copyTo(activeScene);
+    getTrack().setGenomesFromScenes();
 
     ofNotifyEvent(onSceneChange, sceneIdx);
 }
@@ -431,6 +404,7 @@ void StateManager::deleteScene() {
 
     vector<DotsScene *> &scenes = tracks[trackIdx].scenes;
     tracks.erase(tracks.begin() + sceneIdx);
+    getTrack().setGenomesFromScenes();
 
     // TODO: less ham-fisted way to do this
     regressScene();
@@ -449,8 +423,9 @@ void StateManager::duplicateScene() {
     cpy->setupParams();
     activeScene.copyTo(*cpy);
 
-    vector<DotsScene *> &destTracks = tracks[trackIdx].scenes;
-    destTracks.insert(destTracks.begin() + sceneIdx + 1, cpy);
+    vector<DotsScene *> &destScenes = tracks[trackIdx].scenes;
+    destScenes.insert(destScenes.begin() + sceneIdx + 1, cpy);
+    getTrack().setGenomesFromScenes();
 
     ofNotifyEvent(onTrackUpdate, trackIdx);
     ofNotifyEvent(onSceneChange, sceneIdx);
@@ -468,6 +443,19 @@ void StateManager::copyScene() {
 //
 //    ofNotifyEvent(onTrackUpdate, trackIdx);
 //    ofNotifyEvent(onSceneChange, sceneIdx);
+}
+
+void StateManager::createTrack() {
+    DotsTrack track;
+    track.trackIdx = tracks.size();
+
+    DotsScene *scene = new DotsScene;
+    scene->setupParams();
+    scene->setupGenome(currScene->genomeIdx, currScene->genome);
+    track.scenes.push_back(scene);
+    track.setGenomesFromScenes();
+
+    tracks.push_back(std::move(track));
 }
 
 // TODO: clean up if possible
@@ -511,9 +499,9 @@ void StateManager::serializeCurrentTrackToFile() {
 
     settings.addTag("scenes");
     settings.pushTag("scenes");
-    int nScenes = tracks[trackIdx].scenes.size();
+    int nScenes = getTrack().scenes.size();
     for (int i = 0; i < nScenes; ++i) {
-        DotsScene *scene = tracks[trackIdx].scenes[i];
+        DotsScene *scene = getTrack().scenes[i];
         settings.addTag("scene");
         settings.pushTag("scene", i);
         settings.serialize(scene->displayParameters);
@@ -530,31 +518,18 @@ void StateManager::serializeCurrentTrackToFile() {
     flameFile.close();
 }
 
-void StateManager::createTrack() {
-    DotsTrack track;
-    track.trackIdx = tracks.size();
-
-    DotsScene *scene = new DotsScene;
-    scene->setupParams();
-    scene->setupGenome(currScene->genomeIdx, currScene->genome);
-    track.scenes.push_back(scene);
-
-    tracks.push_back(track);
-}
-
 void StateManager::loadAllParamsFromFile() {
-    ofDirectory dir("genomeSettings");
-
     map<int, DotsTrack> trackMap;
 
+    ofDirectory dir("params");
     for (auto &file : dir.getFiles()) {
         settings.clear();
         settings.load(file.path());
 
         string filename = file.getFileName();
-
         if (filename.find("track") != 0) continue;
 
+        // Load track idx from filename
         int trackIdx = stoi(filename.substr(6, 9));
 
         // Skip 0th, even if it's saved.
@@ -571,7 +546,6 @@ void StateManager::loadAllParamsFromFile() {
         for (int i = 0; i < nScenes; ++i) {
             DotsScene *scene = new DotsScene;
             scene->setupParams();
-            // TODO: add genome here
 
             settings.pushTag("scene", i);
             settings.deserialize(scene->displayParameters);
@@ -584,6 +558,36 @@ void StateManager::loadAllParamsFromFile() {
 
         cout << "Loading a" << trackIdx << " from file." << endl;
         trackMap[trackIdx] = track;
+    }
+
+    dir.open("genomes");
+    for (auto &file : dir.getFiles()) {
+        string filename = file.getFileName();
+
+        if (filename.find("track") != 0) continue;
+
+        // Load track idx from filename
+        int trackIdx = stoi(filename.substr(6, 9));
+
+        // Skip 0th, even if it's saved.
+        if (trackIdx == 0) continue;
+
+        // Somehow we're missing genomes!
+        if (trackMap.count(trackIdx) == 0) continue;
+
+        DotsTrack &track = trackMap.at(trackIdx);
+
+        char *fn = strdup(file.getAbsolutePath().c_str());
+        FILE *f = fopen(fn, "rb");
+        track.genomes = flam3_parse_from_file(f, fn, flam3_defaults_on, &track.nGenomes);
+
+        int i = 0;
+        for (auto &scene : track.scenes) {
+            scene->genome = (flam3_genome *)malloc(sizeof(flam3_genome));
+            memset(scene->genome, 0, sizeof(flam3_genome));
+            flam3_copy(scene->genome, track.genomes + i);
+            i++;
+        }
     }
 
     for (auto &pair : trackMap) {
