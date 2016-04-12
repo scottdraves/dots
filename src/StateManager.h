@@ -104,7 +104,7 @@ static void copyParameters(const ofParameterGroup &from, const ofParameterGroup 
 }
 
 typedef struct DotsScene {
-    int genomeIdx;
+    int genomeId;
     flam3_genome *genome;
 
     ofParameterGroup displayParameters;
@@ -134,8 +134,8 @@ typedef struct DotsScene {
     ofParameterGroup audioEffectParams;
     ofParameter<float> audioEffectSize1, audioEffectSize2, audioEffectSize3, audioEffectSize4;
 
-    void setupGenome(const int genomeIdx, flam3_genome *src) {
-        this->genomeIdx = genomeIdx;
+    void setupGenome(const int genomeId, flam3_genome *src) {
+        this->genomeId = genomeId;
 
         genome = (flam3_genome *)malloc(sizeof(flam3_genome));
         memset(genome, 0, sizeof(flam3_genome));
@@ -197,9 +197,12 @@ typedef struct DotsScene {
         displayParameters.setName("Scene");
     };
 
-    void copyTo(DotsScene &dest) {
-        dest.setupGenome(genomeIdx, genome);
+    void copyParamsTo(DotsScene &dest) {
         copyParameters(this->displayParameters, dest.displayParameters);
+    }
+
+    void copyGenomeTo(DotsScene &dest) {
+        dest.setupGenome(genomeId, genome);
     }
 
     ~DotsScene() {
@@ -208,7 +211,7 @@ typedef struct DotsScene {
 } DotsScene;
 
 typedef struct DotsTrack {
-    int trackIdx;
+    int trackId;
     vector<DotsScene *> scenes;
 
     int nGenomes;
@@ -242,9 +245,9 @@ public:
     int randomi(int n);
 
     void loadGenome(flam3_genome *dest);
-    void killCurrent(flam3_genome *dest);
-    void mateCurrent(flam3_genome *dest);
-    void mutateCurrent(flam3_genome *dest);
+    void killCurrent();
+    void mateCurrent();
+    void mutateCurrent();
 
     void midiToSceneParams(MidiController &midi);
 
@@ -266,7 +269,7 @@ public:
     void reloadScene();
     void deleteScene();
     void duplicateScene();
-    void copyScene();
+    DotsScene& getScene();
 
     DotsScene defaultScene;
     DotsScene activeScene;
@@ -284,10 +287,6 @@ public:
     int trackIdx, sceneIdx;
     vector<DotsTrack> tracks;
 
-    // For rendering
-    int nGenomesInTrack;
-    flam3_genome *cpTrackOrder;
-
     // Geneback for mutation
     int ngenebank;
     flam3_genome *genebank;
@@ -302,6 +301,8 @@ public:
 
     // For serialization
     ofxXmlSettings settings;
+    int maxGenomeId;
+    int maxTrackId;
 
     // Events
     ofEvent<int> onTrackChange;
@@ -309,4 +310,8 @@ public:
 
     ofEvent<int> onTrackUpdate;
     ofEvent<int> onSceneUpdate;
+
+protected:
+    int nextGenomeId() { return ++maxGenomeId; };
+    int nextTrackId() { return ++maxTrackId; };
 };

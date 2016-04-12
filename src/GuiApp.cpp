@@ -62,15 +62,6 @@ void GuiApp::setup() {
     reloadSceneBtn.addListener(stateManager.get(), &StateManager::reloadScene);
     deleteSceneBtn.addListener(stateManager.get(), &StateManager::deleteScene);
 
-    sceneCopyControls.setup();
-    sceneCopyControls.setName("Copy");
-    sceneCopyControls.add(destTrackIdx.set("destTrack", -1, 0, 0));
-    sceneCopyControls.add(destSceneIdx.set("destScene", -1, 0, 0));
-    sceneCopyControls.add(copyToTrackBtn.setup("Copy to track at idx"));
-    trackGui.add(&sceneCopyControls);
-    destTrackIdx.addListener(this, &GuiApp::destTrackIdxChanged);
-    copyToTrackBtn.addListener(stateManager.get(), &StateManager::copyScene);
-
     // State manager must be set up first
     displayGui.setup(stateManager->activeScene.displayParameters);
 
@@ -100,11 +91,6 @@ void GuiApp::setup() {
 
     ofBackground(0);
     ofSetVerticalSync(false);
-}
-
-void GuiApp::destTrackIdxChanged(int & destTrackIdx) {
-    destSceneIdx.setMax(stateManager->getTrack().scenes.size());
-    destSceneIdx.set(ofClamp(destSceneIdx.get(), destSceneIdx.getMin(), destSceneIdx.getMax()));
 }
 
 void GuiApp::update(){
@@ -143,7 +129,7 @@ void GuiApp::draw() {
         ofDrawBitmapString(s, 510, 25);
         sprintf(s, "scene: %d / %lu", stateManager->sceneIdx, stateManager->getTrack().scenes.size()-1);
         ofDrawBitmapString(s, 510, 40);
-        sprintf(s, "genome: %d", stateManager->activeScene.genomeIdx);
+        sprintf(s, "genome: %d", stateManager->activeScene.genomeId);
         ofDrawBitmapString(s, 510, 55);
     }
 

@@ -132,6 +132,9 @@ void ofApp::setup(){
 
     stateManager->onSceneChange.add(this, &ofApp::handleSceneChanged, 0);
     stateManager->onTrackChange.add(this, &ofApp::handleTrackChanged, 0);
+    stateManager->onSceneUpdate.add(this, &ofApp::handleSceneChanged, 0);
+    stateManager->onTrackUpdate.add(this, &ofApp::handleTrackChanged, 0);
+
 }
 
 void ofApp::guiUpdate() {
@@ -142,35 +145,6 @@ void ofApp::guiUpdate() {
     gui->mpy = mpy;
     gui->audioCentroid = audioCentroid;
     gui->audioRMS = audioRMS;
-
-//    bool setTrack = false;
-//    if (gui->trackIdx != trackIdx || gui->trackDirty) {
-//        trackIdx = gui->trackIdx;
-//        setTrackCPOrder(gui->getTrackGenomeIndices());
-//
-//        setTrack = true;
-//        gui->trackDirty = false;
-//    }
-//
-//    if (!wandering && (gui->sceneIdx != sceneIdx || setTrack)) {
-//        gui->genomeInterpolationAmt = 0;
-//
-//        sceneIdx = gui->sceneIdx;
-//        genomeIdx = gui->activeScene.genomeIdx;
-//
-//        swapFrame = frame;
-//        flam3_copy(&cp, &cps[genomeIdx]);
-//    }
-
-//    // Copy data from gui
-//    if (wandering != gui->wandering.get()) {
-//        wandering = gui->wandering.get();
-//
-//        if (wandering) {
-//            counter = ispeed * genomeIdx;
-//            lastCP = genomeIdx;
-//        }
-//    }
 
     wanderSpeed = gui->wanderSpeed;
     pointRadiusAudioScaleAmt = stateManager->activeScene.pointRadiusAudioScaleAmt;
@@ -239,7 +213,7 @@ void ofApp::handleSceneChanged(int & sceneIdx){
 }
 
 void ofApp::setFlameParameters() {
-    switch (stateManager->activeScene.genomeIdx) {
+    switch (stateManager->activeScene.genomeId) {
         case 0:
             renderCp.xform[4].var[5] = mpx;
             renderCp.xform[3].var[8] = mpy;
@@ -758,9 +732,9 @@ void ofApp::handleKey(int key) {
         ofHideCursor();
         fullscreen = !fullscreen;
     } else if (key == OF_KEY_UP) {
-        stateManager->mutateCurrent(&cp);
+        stateManager->mutateCurrent();
     } else if (key == OF_KEY_DOWN) {
-        stateManager->killCurrent(&cp);
+        stateManager->killCurrent();
     } else if (key == ',') {
         stateManager->regressTrack();
     } else if (key == '.') {

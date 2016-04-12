@@ -130,7 +130,7 @@ void StateManager::setup() {
 
     // Build default scene
     DotsTrack defaultTrack;
-    defaultTrack.trackIdx = 0;
+    defaultTrack.trackId = 0;
 
     for (int cpIdx = 0; cpIdx < ncps; ++cpIdx) {
         DotsScene *scene = new DotsScene;
@@ -142,6 +142,9 @@ void StateManager::setup() {
     defaultTrack.setGenomesFromScenes();
 
     tracks.push_back(std::move(defaultTrack));
+
+    maxGenomeId = ncps-1;
+    maxTrackId = 0;
 
     // Now load tracks from file
     loadAllParamsFromFile();
@@ -202,7 +205,7 @@ void StateManager::flameUpdate(flam3_genome *dest, float audioRMS) {
     if (wandering) {
         wanderElapsed += wanderSpeed;
 
-        if (wanderElapsed >= nGenomesInTrack)
+        if (wanderElapsed >= getTrack().nGenomes)
             wanderElapsed = 0;
 
         int currCP = (int)wanderElapsed;
@@ -234,7 +237,7 @@ void StateManager::loadGenome(flam3_genome *dest) {
     flam3_copy(dest, currScene->genome);
 }
 
-void StateManager::killCurrent(flam3_genome *dest) {
+void StateManager::killCurrent() {
     flam3_genome result;
     memset(&result, 0, sizeof(flam3_genome));
     initrc(time(NULL));
@@ -249,19 +252,28 @@ void StateManager::killCurrent(flam3_genome *dest) {
         int parent1 = randomi(ngenebank);
         flam3_cross(&cps[parent0], &genebank[parent1], &result, CROSS_NOT_SPECIFIED, &rc, NULL);
     }
-    flam3_copy(dest, &result);
+
+    flam3_copy(getScene().genome, &result);
+    getScene().genomeId = nextGenomeId();
+
+    getTrack().setGenomesFromScenes();
+    ofNotifyEvent(onTrackUpdate, trackIdx);
 }
 
-void StateManager::mateCurrent(flam3_genome *dest) {
+void StateManager::mateCurrent() {
     flam3_genome result;
     memset(&result, 0, sizeof(flam3_genome));
     initrc(time(NULL));
     int parent1 = random()%ncps;
-    flam3_cross(dest, &cps[parent1], &result, CROSS_NOT_SPECIFIED, &rc, NULL);
-    flam3_copy(dest, &result);
+    flam3_cross(getScene().genome, &cps[parent1], &result, CROSS_NOT_SPECIFIED, &rc, NULL);
+    flam3_copy(getScene().genome, &result);
+    getScene().genomeId = nextGenomeId();
+
+    getTrack().setGenomesFromScenes();
+    ofNotifyEvent(onTrackUpdate, trackIdx);
 }
 
-void StateManager::mutateCurrent(flam3_genome *dest) {
+void StateManager::mutateCurrent() {
     flam3_genome result;
     memset(&result, 0, sizeof(flam3_genome));
     initrc(time(NULL));
@@ -269,7 +281,11 @@ void StateManager::mutateCurrent(flam3_genome *dest) {
     for (int i = 0; i < flam3_nvariations; i++)
         ivars[i] = i;
 
-    flam3_mutate(dest, MUTATE_NOT_SPECIFIED, ivars, flam3_nvariations, 0, 0.2, &rc, NULL);
+    flam3_mutate(getScene().genome, MUTATE_NOT_SPECIFIED, ivars, flam3_nvariations, 0, 0.2, &rc, NULL);
+    getScene().genomeId = nextGenomeId();
+
+    getTrack().setGenomesFromScenes();
+    ofNotifyEvent(onTrackUpdate, trackIdx);
 }
 
 void StateManager::initrc(long sed) {
@@ -292,6 +308,10 @@ void StateManager::midiToSceneParams(MidiController &midi) {
 
 DotsTrack& StateManager::getTrack() {
     return tracks[trackIdx];
+}
+
+DotsScene& StateManager::getScene() {
+    return *currScene;
 }
 
 void StateManager::regressTrack() {
@@ -326,7 +346,7 @@ void StateManager::advanceTrack() {
 
 void StateManager::saveTrack() {
     cout << "Save track" << endl;
-    activeScene.copyTo(*currScene);
+    activeScene.copyParamsTo(*currScene);
     getTrack().setGenomesFromScenes();
     serializeCurrentTrackToFile();
 }
@@ -337,7 +357,7 @@ void StateManager::regressScene() {
     sceneIdx--;
     int nextIdx = sceneIdx + 1;
 
-    int nTracks = tracks[trackIdx].scenes.size();
+    int nTracks = getTrack().scenes.size();
     if (sceneIdx < 0) {
         sceneIdx = nTracks-1;
         nextIdx = 0;
@@ -349,14 +369,14 @@ void StateManager::regressScene() {
 
     // Save what we're coming from
     if (currScene && !wandering) {
-        activeScene.copyTo(*currScene);
+        activeScene.copyParamsTo(*currScene);
     }
 
     currScene = tracks[trackIdx].scenes[sceneIdx];
     nextScene = tracks[trackIdx].scenes[nextIdx];
 
     // Load what we're going to
-    currScene->copyTo(activeScene);
+    currScene->copyParamsTo(activeScene);
 
     ofNotifyEvent(onSceneChange, sceneIdx);
 }
@@ -367,7 +387,7 @@ void StateManager::advanceScene() {
     sceneIdx++;
     int nextIdx = sceneIdx + 1;
 
-    int nTracks = tracks[trackIdx].scenes.size();
+    int nTracks = getTrack().scenes.size();
     if (sceneIdx >= nTracks) {
         sceneIdx = 0;
         nextIdx = 1;
@@ -379,21 +399,21 @@ void StateManager::advanceScene() {
 
     // Save what we're coming from
     if (currScene && !wandering) {
-        activeScene.copyTo(*currScene);
+        activeScene.copyParamsTo(*currScene);
     }
 
     currScene = tracks[trackIdx].scenes[sceneIdx];
     nextScene = tracks[trackIdx].scenes[nextIdx];
 
     // Load what we're going to
-    currScene->copyTo(activeScene);
+    currScene->copyParamsTo(activeScene);
 
     ofNotifyEvent(onSceneChange, sceneIdx);
 }
 
 void StateManager::reloadScene() {
     cout << "Reload scene" << endl;
-    currScene->copyTo(activeScene);
+    currScene->copyParamsTo(activeScene);
     getTrack().setGenomesFromScenes();
 
     ofNotifyEvent(onSceneChange, sceneIdx);
@@ -421,7 +441,8 @@ void StateManager::duplicateScene() {
 
     DotsScene *cpy = new DotsScene;
     cpy->setupParams();
-    activeScene.copyTo(*cpy);
+    activeScene.copyParamsTo(*cpy);
+    currScene->copyGenomeTo(*cpy);
 
     vector<DotsScene *> &destScenes = tracks[trackIdx].scenes;
     destScenes.insert(destScenes.begin() + sceneIdx + 1, cpy);
@@ -431,27 +452,14 @@ void StateManager::duplicateScene() {
     ofNotifyEvent(onSceneChange, sceneIdx);
 }
 
-void StateManager::copyScene() {
-//    cout << "Copy scene" << endl;
-//
-//    DotsScene *cpy = new DotsScene;
-//    cpy->setup();
-//    copyParameters(activeScene.displayParameters, cpy->displayParameters);
-//
-//    vector<DotsScene *> &destTracks = tracks[destTrackIdx].scenes;
-//    destTracks.insert(destTracks.begin() + destSceneIdx, cpy);
-//
-//    ofNotifyEvent(onTrackUpdate, trackIdx);
-//    ofNotifyEvent(onSceneChange, sceneIdx);
-}
-
 void StateManager::createTrack() {
     DotsTrack track;
-    track.trackIdx = tracks.size();
+    track.trackId = nextTrackId();
 
     DotsScene *scene = new DotsScene;
     scene->setupParams();
-    scene->setupGenome(currScene->genomeIdx, currScene->genome);
+    scene->setupGenome(nextGenomeId(), currScene->genome);
+
     track.scenes.push_back(scene);
     track.setGenomesFromScenes();
 
@@ -482,13 +490,13 @@ void StateManager::applyParameterInterpolation(float t) {
 }
 
 void StateManager::serializeCurrentTrackToFile() {
-    cout << "Saving track " << trackIdx << " to file." << endl;
+    cout << "Saving track idx " << trackIdx << " / id " << getTrack().trackId << " to file." << endl;
 
     char paramFilename[255];
-    sprintf(paramFilename, "params/track-%03d.xml", trackIdx);
+    sprintf(paramFilename, "params/track-%03d.xml", getTrack().trackId);
 
     char flameFilename[255];
-    sprintf(flameFilename, "genomes/track-%03d.xml", trackIdx);
+    sprintf(flameFilename, "genomes/track-%03d.xml", getTrack().trackId);
 
     ofFile flameFile(ofToDataPath(flameFilename), ofFile::WriteOnly);
     flameFile << "<genomes>" << endl;
@@ -504,6 +512,7 @@ void StateManager::serializeCurrentTrackToFile() {
         DotsScene *scene = getTrack().scenes[i];
         settings.addTag("scene");
         settings.pushTag("scene", i);
+        settings.addValue("genomeId", scene->genomeId);
         settings.serialize(scene->displayParameters);
         settings.popTag();
 
@@ -529,14 +538,14 @@ void StateManager::loadAllParamsFromFile() {
         string filename = file.getFileName();
         if (filename.find("track") != 0) continue;
 
-        // Load track idx from filename
-        int trackIdx = stoi(filename.substr(6, 9));
+        // Load track id from filename
+        int trackId = stoi(filename.substr(6, 9));
 
         // Skip 0th, even if it's saved.
-        if (trackIdx == 0) continue;
+        if (trackId == 0) continue;
 
         DotsTrack track;
-        track.trackIdx = trackIdx;
+        track.trackId = trackIdx;
 
         settings.clear();
         settings.loadFile(file.getAbsolutePath());
@@ -548,16 +557,26 @@ void StateManager::loadAllParamsFromFile() {
             scene->setupParams();
 
             settings.pushTag("scene", i);
+            scene->genomeId = settings.getValue("genomeId", -1);
+
+            if (scene->genomeId < 0) continue;
+
             settings.deserialize(scene->displayParameters);
             settings.popTag();
 
+            if (scene->genomeId > maxGenomeId)
+                maxGenomeId = scene->genomeId;
+
             track.scenes.push_back(scene);
         }
+
         settings.popTag();
         settings.popTag();
 
-        cout << "Loading a" << trackIdx << " from file." << endl;
-        trackMap[trackIdx] = track;
+        if (track.scenes.size() == 0) continue;
+
+        cout << "Loading track id " << trackId << " from file." << endl;
+        trackMap[trackId] = track;
     }
 
     dir.open("genomes");
@@ -567,15 +586,15 @@ void StateManager::loadAllParamsFromFile() {
         if (filename.find("track") != 0) continue;
 
         // Load track idx from filename
-        int trackIdx = stoi(filename.substr(6, 9));
+        int trackId = stoi(filename.substr(6, 9));
 
         // Skip 0th, even if it's saved.
-        if (trackIdx == 0) continue;
+        if (trackId == 0) continue;
 
         // Somehow we're missing genomes!
-        if (trackMap.count(trackIdx) == 0) continue;
+        if (trackMap.count(trackId) == 0) continue;
 
-        DotsTrack &track = trackMap.at(trackIdx);
+        DotsTrack &track = trackMap.at(trackId);
 
         char *fn = strdup(file.getAbsolutePath().c_str());
         FILE *f = fopen(fn, "rb");
@@ -592,12 +611,14 @@ void StateManager::loadAllParamsFromFile() {
 
     for (auto &pair : trackMap) {
         tracks.push_back(pair.second);
+        if (pair.second.trackId > maxTrackId)
+            maxTrackId = pair.second.trackId;
     }
 
     // Sort tracks by idx
     std::sort(tracks.begin(), tracks.end(),
               [](const DotsTrack & a, const DotsTrack & b) -> bool
               {
-                  return a.trackIdx < b.trackIdx;
+                  return a.trackId < b.trackId;
               });
 }

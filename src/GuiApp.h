@@ -24,8 +24,6 @@ public:
     void handleKey(int key);
     void buttonPressed(const void * sender);
 
-    void destTrackIdxChanged(int & destTrackIdx);
-
     // Patameters that don't need to be serialized/unserialized
     ofParameterGroup audioInputParameters;
     ofParameter<int> audioMode;
@@ -49,10 +47,6 @@ public:
     ofxButton newTrackBtn, saveTrackBtn;
     ofxGuiGroup sceneControls;
     ofxButton deleteSceneBtn, reloadSceneBtn, duplicateSceneBtn;
-    ofxGuiGroup sceneCopyControls;
-    ofParameter<int> destTrackIdx;
-    ofParameter<int> destSceneIdx;
-    ofxButton copyToTrackBtn;
 
     ofxPanel analysisGui, inputGui, debugGui, metaGui, displayGui;
 
