@@ -449,6 +449,9 @@ void ofApp::setFlameParameters() {
 }
 
 void ofApp::flameUpdate() {
+    stateManager->initrc(0);
+    randctx *rc = &stateManager->rc;
+
     // Update current genome
     stateManager->flameUpdate(&cp, smoothedAudioRMS);
 
@@ -471,9 +474,6 @@ void ofApp::flameUpdate() {
     }
     seqToUpdate.frameUpdated = frame;
     seqToUpdate.xform_distribution = flam3_create_xform_distrib(&renderCp);
-
-    // cache
-    randctx *rc = &stateManager->rc;
 
     // Render points
     std::swap(prevFlameSamples, currFlameSamples);
