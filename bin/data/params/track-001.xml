@@ -1,7 +1,7 @@
 <track>
     <scenes>
         <scene>
-            <genomeId>88</genomeId>
+            <genomeId>98</genomeId>
             <Scene>
                 <Audio_Analysis>
                     <fftDecayRate>0.9</fftDecayRate>
@@ -11,8 +11,80 @@
                     <mpySmoothingFactor>0.1</mpySmoothingFactor>
                 </Audio_Analysis>
                 <Drawing>
-                    <clearSpeed>11.7092</clearSpeed>
-                    <particleAlpha>50</particleAlpha>
+                    <clearSpeed>10.4082</clearSpeed>
+                    <particleAlpha>248.495</particleAlpha>
+                    <overallScale>0.49949</overallScale>
+                    <saturationPct>0.693878</saturationPct>
+                </Drawing>
+                <Speed>
+                    <baseSpeed>0</baseSpeed>
+                    <rmsSpeedMult>35.7143</rmsSpeedMult>
+                </Speed>
+                <Dots>
+                    <pointRadiusAudioScaleAmt>0.454082</pointRadiusAudioScaleAmt>
+                    <dotAudioScale>7.65306</dotAudioScale>
+                    <baseDotRadius>3.31633</baseDotRadius>
+                </Dots>
+                <Lines>
+                    <maxLineLength>107.143</maxLineLength>
+                </Lines>
+                <Audio_Effect_Sizes>
+                    <audioEffectSize1>1</audioEffectSize1>
+                    <audioEffectSize2>1</audioEffectSize2>
+                    <audioEffectSize3>1</audioEffectSize3>
+                    <audioEffectSize4>1</audioEffectSize4>
+                </Audio_Effect_Sizes>
+            </Scene>
+        </scene>
+        <scene>
+            <genomeId>97</genomeId>
+            <Scene>
+                <Audio_Analysis>
+                    <fftDecayRate>0.9</fftDecayRate>
+                    <centroidMax__mpx_>0.35</centroidMax__mpx_>
+                    <rmsMult__mpy_>5</rmsMult__mpy_>
+                    <mpxSmoothingFactor>0.4</mpxSmoothingFactor>
+                    <mpySmoothingFactor>0.1</mpySmoothingFactor>
+                </Audio_Analysis>
+                <Drawing>
+                    <clearSpeed>5.20408</clearSpeed>
+                    <particleAlpha>84.5663</particleAlpha>
+                    <overallScale>1</overallScale>
+                    <saturationPct>0.693878</saturationPct>
+                </Drawing>
+                <Speed>
+                    <baseSpeed>0</baseSpeed>
+                    <rmsSpeedMult>35.7143</rmsSpeedMult>
+                </Speed>
+                <Dots>
+                    <pointRadiusAudioScaleAmt>0.454082</pointRadiusAudioScaleAmt>
+                    <dotAudioScale>7.65306</dotAudioScale>
+                    <baseDotRadius>3.31633</baseDotRadius>
+                </Dots>
+                <Lines>
+                    <maxLineLength>168.367</maxLineLength>
+                </Lines>
+                <Audio_Effect_Sizes>
+                    <audioEffectSize1>1</audioEffectSize1>
+                    <audioEffectSize2>1</audioEffectSize2>
+                    <audioEffectSize3>1</audioEffectSize3>
+                    <audioEffectSize4>1</audioEffectSize4>
+                </Audio_Effect_Sizes>
+            </Scene>
+        </scene>
+        <scene>
+            <genomeId>93</genomeId>
+            <Scene>
+                <Audio_Analysis>
+                    <fftDecayRate>0.9</fftDecayRate>
+                    <centroidMax__mpx_>0.35</centroidMax__mpx_>
+                    <rmsMult__mpy_>5</rmsMult__mpy_>
+                    <mpxSmoothingFactor>0.4</mpxSmoothingFactor>
+                    <mpySmoothingFactor>0.1</mpySmoothingFactor>
+                </Audio_Analysis>
+                <Drawing>
+                    <clearSpeed>7.80612</clearSpeed>
+                    <particleAlpha>46.8367</particleAlpha>
                     <overallScale>1</overallScale>
                     <saturationPct>1</saturationPct>
                 </Drawing>
@@ -21,9 +93,9 @@
                     <rmsSpeedMult>30</rmsSpeedMult>
                 </Speed>
                 <Dots>
-                    <pointRadiusAudioScaleAmt>1</pointRadiusAudioScaleAmt>
+                    <pointRadiusAudioScaleAmt>0</pointRadiusAudioScaleAmt>
                     <dotAudioScale>10</dotAudioScale>
-                    <baseDotRadius>10</baseDotRadius>
+                    <baseDotRadius>4.59184</baseDotRadius>
                 </Dots>
                 <Lines>
                     <maxLineLength>100</maxLineLength>
@@ -37,7 +109,7 @@
             </Scene>
         </scene>
         <scene>
-            <genomeId>78</genomeId>
+            <genomeId>103</genomeId>
             <Scene>
                 <Audio_Analysis>
                     <fftDecayRate>0.9</fftDecayRate>
@@ -47,8 +119,8 @@
                     <mpySmoothingFactor>0.1</mpySmoothingFactor>
                 </Audio_Analysis>
                 <Drawing>
-                    <clearSpeed>50</clearSpeed>
-                    <particleAlpha>50</particleAlpha>
+                    <clearSpeed>7.80612</clearSpeed>
+                    <particleAlpha>109.286</particleAlpha>
                     <overallScale>1</overallScale>
                     <saturationPct>1</saturationPct>
                 </Drawing>
@@ -58,11 +130,83 @@
                 </Speed>
                 <Dots>
                     <pointRadiusAudioScaleAmt>1</pointRadiusAudioScaleAmt>
-                    <dotAudioScale>10</dotAudioScale>
-                    <baseDotRadius>10</baseDotRadius>
+                    <dotAudioScale>5.10204</dotAudioScale>
+                    <baseDotRadius>2.80612</baseDotRadius>
                 </Dots>
                 <Lines>
-                    <maxLineLength>100</maxLineLength>
+                    <maxLineLength>153.061</maxLineLength>
+                </Lines>
+                <Audio_Effect_Sizes>
+                    <audioEffectSize1>1</audioEffectSize1>
+                    <audioEffectSize2>1</audioEffectSize2>
+                    <audioEffectSize3>1</audioEffectSize3>
+                    <audioEffectSize4>1</audioEffectSize4>
+                </Audio_Effect_Sizes>
+            </Scene>
+        </scene>
+        <scene>
+            <genomeId>103</genomeId>
+            <Scene>
+                <Audio_Analysis>
+                    <fftDecayRate>0.9</fftDecayRate>
+                    <centroidMax__mpx_>0.35</centroidMax__mpx_>
+                    <rmsMult__mpy_>5</rmsMult__mpy_>
+                    <mpxSmoothingFactor>0.4</mpxSmoothingFactor>
+                    <mpySmoothingFactor>0.1</mpySmoothingFactor>
+                </Audio_Analysis>
+                <Drawing>
+                    <clearSpeed>7.80612</clearSpeed>
+                    <particleAlpha>109.286</particleAlpha>
+                    <overallScale>1</overallScale>
+                    <saturationPct>1</saturationPct>
+                </Drawing>
+                <Speed>
+                    <baseSpeed>0</baseSpeed>
+                    <rmsSpeedMult>5.10204</rmsSpeedMult>
+                </Speed>
+                <Dots>
+                    <pointRadiusAudioScaleAmt>1</pointRadiusAudioScaleAmt>
+                    <dotAudioScale>5.10204</dotAudioScale>
+                    <baseDotRadius>2.80612</baseDotRadius>
+                </Dots>
+                <Lines>
+                    <maxLineLength>153.061</maxLineLength>
+                </Lines>
+                <Audio_Effect_Sizes>
+                    <audioEffectSize1>1</audioEffectSize1>
+                    <audioEffectSize2>1</audioEffectSize2>
+                    <audioEffectSize3>1</audioEffectSize3>
+                    <audioEffectSize4>1</audioEffectSize4>
+                </Audio_Effect_Sizes>
+            </Scene>
+        </scene>
+        <scene>
+            <genomeId>99</genomeId>
+            <Scene>
+                <Audio_Analysis>
+                    <fftDecayRate>0.9</fftDecayRate>
+                    <centroidMax__mpx_>0.35</centroidMax__mpx_>
+                    <rmsMult__mpy_>5</rmsMult__mpy_>
+                    <mpxSmoothingFactor>0.4</mpxSmoothingFactor>
+                    <mpySmoothingFactor>0.1</mpySmoothingFactor>
+                </Audio_Analysis>
+                <Drawing>
+                    <clearSpeed>7.80612</clearSpeed>
+                    <particleAlpha>109.286</particleAlpha>
+                    <overallScale>1</overallScale>
+                    <saturationPct>1</saturationPct>
+                </Drawing>
+                <Speed>
+                    <baseSpeed>0</baseSpeed>
+                    <rmsSpeedMult>30</rmsSpeedMult>
+                </Speed>
+                <Dots>
+                    <pointRadiusAudioScaleAmt>1</pointRadiusAudioScaleAmt>
+                    <dotAudioScale>5.10204</dotAudioScale>
+                    <baseDotRadius>2.80612</baseDotRadius>
+                </Dots>
+                <Lines>
+                    <maxLineLength>153.061</maxLineLength>
                 </Lines>
                 <Audio_Effect_Sizes>
                     <audioEffectSize1>1</audioEffectSize1>
