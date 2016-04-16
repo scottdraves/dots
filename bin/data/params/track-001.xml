@@ -49,7 +49,7 @@
                 <Drawing>
                     <clearSpeed>5.20408</clearSpeed>
                     <particleAlpha>109.286</particleAlpha>
-                    <overallScale>1</overallScale>
+                    <overallScale>0.825</overallScale>
                     <saturationPct>0.72449</saturationPct>
                 </Drawing>
                 <Speed>
@@ -162,7 +162,7 @@
                 </Drawing>
                 <Speed>
                     <baseSpeed>0</baseSpeed>
-                    <rmsSpeedMult>30</rmsSpeedMult>
+                    <rmsSpeedMult>5.61224</rmsSpeedMult>
                 </Speed>
                 <Dots>
                     <pointRadiusAudioScaleAmt>1</pointRadiusAudioScaleAmt>
