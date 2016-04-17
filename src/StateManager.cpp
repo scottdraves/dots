@@ -521,6 +521,8 @@ void StateManager::serializeCurrentTrackToFile() {
     settings.addTag("track");
     settings.pushTag("track");
 
+    settings.serialize(getTrack().displayParameters);
+
     settings.addTag("scenes");
     settings.pushTag("scenes");
     int nScenes = getTrack().scenes.size();
@@ -567,6 +569,9 @@ void StateManager::loadAllParamsFromFile() {
         settings.clear();
         settings.loadFile(file.getAbsolutePath());
         settings.pushTag("track");
+
+        settings.deserialize(track.displayParameters);
+
         settings.pushTag("scenes");
         int nScenes = settings.getNumTags("scene");
         for (int i = 0; i < nScenes; ++i) {
