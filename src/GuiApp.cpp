@@ -1,6 +1,8 @@
 #include "GuiApp.h"
 
 void GuiApp::setup() {
+    ofSetEscapeQuitsApp(false);
+    
     midi.setup();
 
     ofSoundStream ss;

@@ -12,6 +12,7 @@ void ofApp::setup(){
     ofSetVerticalSync(false);
     ofSetLogLevel(OF_LOG_VERBOSE);
     ofHideCursor();
+    ofSetEscapeQuitsApp(false);
 
     syphonServer.setName("dots");
 
