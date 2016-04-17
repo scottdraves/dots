@@ -18,4 +18,6 @@
 // Try not to conflict with other keys
 #define DOTS_KEY_COMMAND_UP 55555
 
+#define NUM_MOTION_IDS 36
+
 #endif /* appConstants_h */

@@ -1,7 +1,11 @@
 <track>
+    <Track>
+        <Wander>
+            <speed>0.1</speed>
+        </Wander>
+    </Track>
     <scenes>
         <scene>
-            <genomeId>122</genomeId>
             <Scene>
                 <Audio_Analysis>
                     <fftDecayRate>0.9</fftDecayRate>
@@ -28,16 +32,16 @@
                 <Lines>
                     <maxLineLength>61.2245</maxLineLength>
                 </Lines>
-                <Audio_Effect_Sizes>
-                    <audioEffectSize1>1</audioEffectSize1>
-                    <audioEffectSize2>1</audioEffectSize2>
-                    <audioEffectSize3>1</audioEffectSize3>
-                    <audioEffectSize4>1</audioEffectSize4>
-                </Audio_Effect_Sizes>
+                <Audio_Effects>
+                    <motionId>0</motionId>
+                    <effectSize1>1</effectSize1>
+                    <effectSize2>1</effectSize2>
+                    <effectSize3>1</effectSize3>
+                    <effectSize4>1</effectSize4>
+                </Audio_Effects>
             </Scene>
         </scene>
         <scene>
-            <genomeId>146</genomeId>
             <Scene>
                 <Audio_Analysis>
                     <fftDecayRate>0.9</fftDecayRate>
@@ -64,16 +68,16 @@
                 <Lines>
                     <maxLineLength>61.2245</maxLineLength>
                 </Lines>
-                <Audio_Effect_Sizes>
-                    <audioEffectSize1>1</audioEffectSize1>
-                    <audioEffectSize2>1</audioEffectSize2>
-                    <audioEffectSize3>1</audioEffectSize3>
-                    <audioEffectSize4>1</audioEffectSize4>
-                </Audio_Effect_Sizes>
+                <Audio_Effects>
+                    <motionId>0</motionId>
+                    <effectSize1>1</effectSize1>
+                    <effectSize2>1</effectSize2>
+                    <effectSize3>1</effectSize3>
+                    <effectSize4>1</effectSize4>
+                </Audio_Effects>
             </Scene>
         </scene>
         <scene>
-            <genomeId>150</genomeId>
             <Scene>
                 <Audio_Analysis>
                     <fftDecayRate>0.9</fftDecayRate>
@@ -100,16 +104,16 @@
                 <Lines>
                     <maxLineLength>61.2245</maxLineLength>
                 </Lines>
-                <Audio_Effect_Sizes>
-                    <audioEffectSize1>1</audioEffectSize1>
-                    <audioEffectSize2>1</audioEffectSize2>
-                    <audioEffectSize3>1</audioEffectSize3>
-                    <audioEffectSize4>1</audioEffectSize4>
-                </Audio_Effect_Sizes>
+                <Audio_Effects>
+                    <motionId>0</motionId>
+                    <effectSize1>1</effectSize1>
+                    <effectSize2>1</effectSize2>
+                    <effectSize3>1</effectSize3>
+                    <effectSize4>1</effectSize4>
+                </Audio_Effects>
             </Scene>
         </scene>
         <scene>
-            <genomeId>155</genomeId>
             <Scene>
                 <Audio_Analysis>
                     <fftDecayRate>0.9</fftDecayRate>
@@ -136,16 +140,16 @@
                 <Lines>
                     <maxLineLength>61.2245</maxLineLength>
                 </Lines>
-                <Audio_Effect_Sizes>
-                    <audioEffectSize1>1</audioEffectSize1>
-                    <audioEffectSize2>1</audioEffectSize2>
-                    <audioEffectSize3>1</audioEffectSize3>
-                    <audioEffectSize4>1</audioEffectSize4>
-                </Audio_Effect_Sizes>
+                <Audio_Effects>
+                    <motionId>0</motionId>
+                    <effectSize1>1</effectSize1>
+                    <effectSize2>1</effectSize2>
+                    <effectSize3>1</effectSize3>
+                    <effectSize4>1</effectSize4>
+                </Audio_Effects>
             </Scene>
         </scene>
         <scene>
-            <genomeId>154</genomeId>
             <Scene>
                 <Audio_Analysis>
                     <fftDecayRate>0.9</fftDecayRate>
@@ -172,16 +176,16 @@
                 <Lines>
                     <maxLineLength>61.2245</maxLineLength>
                 </Lines>
-                <Audio_Effect_Sizes>
-                    <audioEffectSize1>1</audioEffectSize1>
-                    <audioEffectSize2>1</audioEffectSize2>
-                    <audioEffectSize3>1</audioEffectSize3>
-                    <audioEffectSize4>1</audioEffectSize4>
-                </Audio_Effect_Sizes>
+                <Audio_Effects>
+                    <motionId>0</motionId>
+                    <effectSize1>1</effectSize1>
+                    <effectSize2>1</effectSize2>
+                    <effectSize3>1</effectSize3>
+                    <effectSize4>1</effectSize4>
+                </Audio_Effects>
             </Scene>
         </scene>
         <scene>
-            <genomeId>153</genomeId>
             <Scene>
                 <Audio_Analysis>
                     <fftDecayRate>0.9</fftDecayRate>
@@ -208,16 +212,16 @@
                 <Lines>
                     <maxLineLength>61.2245</maxLineLength>
                 </Lines>
-                <Audio_Effect_Sizes>
-                    <audioEffectSize1>1</audioEffectSize1>
-                    <audioEffectSize2>1</audioEffectSize2>
-                    <audioEffectSize3>1</audioEffectSize3>
-                    <audioEffectSize4>1</audioEffectSize4>
-                </Audio_Effect_Sizes>
+                <Audio_Effects>
+                    <motionId>0</motionId>
+                    <effectSize1>1</effectSize1>
+                    <effectSize2>1</effectSize2>
+                    <effectSize3>1</effectSize3>
+                    <effectSize4>1</effectSize4>
+                </Audio_Effects>
             </Scene>
         </scene>
         <scene>
-            <genomeId>145</genomeId>
             <Scene>
                 <Audio_Analysis>
                     <fftDecayRate>0.9</fftDecayRate>
@@ -244,16 +248,16 @@
                 <Lines>
                     <maxLineLength>61.2245</maxLineLength>
                 </Lines>
-                <Audio_Effect_Sizes>
-                    <audioEffectSize1>1</audioEffectSize1>
-                    <audioEffectSize2>1</audioEffectSize2>
-                    <audioEffectSize3>1</audioEffectSize3>
-                    <audioEffectSize4>1</audioEffectSize4>
-                </Audio_Effect_Sizes>
+                <Audio_Effects>
+                    <motionId>0</motionId>
+                    <effectSize1>1</effectSize1>
+                    <effectSize2>1</effectSize2>
+                    <effectSize3>1</effectSize3>
+                    <effectSize4>1</effectSize4>
+                </Audio_Effects>
             </Scene>
         </scene>
         <scene>
-            <genomeId>144</genomeId>
             <Scene>
                 <Audio_Analysis>
                     <fftDecayRate>0.9</fftDecayRate>
@@ -280,16 +284,16 @@
                 <Lines>
                     <maxLineLength>61.2245</maxLineLength>
                 </Lines>
-                <Audio_Effect_Sizes>
-                    <audioEffectSize1>1</audioEffectSize1>
-                    <audioEffectSize2>1</audioEffectSize2>
-                    <audioEffectSize3>1</audioEffectSize3>
-                    <audioEffectSize4>1</audioEffectSize4>
-                </Audio_Effect_Sizes>
+                <Audio_Effects>
+                    <motionId>0</motionId>
+                    <effectSize1>1</effectSize1>
+                    <effectSize2>1</effectSize2>
+                    <effectSize3>1</effectSize3>
+                    <effectSize4>1</effectSize4>
+                </Audio_Effects>
             </Scene>
         </scene>
         <scene>
-            <genomeId>121</genomeId>
             <Scene>
                 <Audio_Analysis>
                     <fftDecayRate>0.9</fftDecayRate>
@@ -316,12 +320,13 @@
                 <Lines>
                     <maxLineLength>61.2245</maxLineLength>
                 </Lines>
-                <Audio_Effect_Sizes>
-                    <audioEffectSize1>1</audioEffectSize1>
-                    <audioEffectSize2>1</audioEffectSize2>
-                    <audioEffectSize3>1</audioEffectSize3>
-                    <audioEffectSize4>1</audioEffectSize4>
-                </Audio_Effect_Sizes>
+                <Audio_Effects>
+                    <motionId>0</motionId>
+                    <effectSize1>1</effectSize1>
+                    <effectSize2>1</effectSize2>
+                    <effectSize3>1</effectSize3>
+                    <effectSize4>1</effectSize4>
+                </Audio_Effects>
             </Scene>
         </scene>
     </scenes>

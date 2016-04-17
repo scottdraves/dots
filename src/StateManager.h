@@ -104,7 +104,6 @@ static void copyParameters(const ofParameterGroup &from, const ofParameterGroup 
 }
 
 typedef struct DotsScene {
-    int genomeId;
     flam3_genome *genome = NULL;
 
     ofParameterGroup displayParameters;
@@ -132,11 +131,10 @@ typedef struct DotsScene {
     ofParameter<float> maxLineLength;
 
     ofParameterGroup audioEffectParams;
+    ofParameter<int> motionId;
     ofParameter<float> audioEffectSize1, audioEffectSize2, audioEffectSize3, audioEffectSize4;
 
-    void setupGenome(const int genomeId, flam3_genome *src) {
-        this->genomeId = genomeId;
-
+    void setupGenome(flam3_genome *src) {
         if (genome) free(genome);
 
         genome = (flam3_genome *)malloc(sizeof(flam3_genome));
@@ -189,11 +187,12 @@ typedef struct DotsScene {
         displayParameters.add(lineParams);
 
         // Audio effects
-        audioEffectParams.setName("Audio Effect Sizes");
-        audioEffectParams.add(audioEffectSize1.set("audioEffectSize1", 1, 0, 1));
-        audioEffectParams.add(audioEffectSize2.set("audioEffectSize2", 1, 0, 1));
-        audioEffectParams.add(audioEffectSize3.set("audioEffectSize3", 1, 0, 1));
-        audioEffectParams.add(audioEffectSize4.set("audioEffectSize4", 1, 0, 1));
+        audioEffectParams.setName("Audio Effects");
+        audioEffectParams.add(motionId.set("motionId", 0, 0, NUM_MOTION_IDS));
+        audioEffectParams.add(audioEffectSize1.set("effectSize1", 1, 0, 1));
+        audioEffectParams.add(audioEffectSize2.set("effectSize2", 1, 0, 1));
+        audioEffectParams.add(audioEffectSize3.set("effectSize3", 1, 0, 1));
+        audioEffectParams.add(audioEffectSize4.set("effectSize4", 1, 0, 1));
         displayParameters.add(audioEffectParams);
         
         displayParameters.setName("Scene");
@@ -204,7 +203,7 @@ typedef struct DotsScene {
     }
 
     void copyGenomeTo(DotsScene &dest) {
-        dest.setupGenome(genomeId, genome);
+        dest.setupGenome(genome);
     }
 
     ~DotsScene() {
@@ -332,7 +331,6 @@ public:
 
     // For serialization
     ofxXmlSettings settings;
-    int maxGenomeId;
     int maxTrackId;
 
     // Events
@@ -343,6 +341,5 @@ public:
     ofEvent<int> onSceneUpdate;
 
 protected:
-    int nextGenomeId() { return ++maxGenomeId; };
     int nextTrackId() { return ++maxTrackId; };
 };

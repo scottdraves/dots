@@ -136,7 +136,8 @@ void StateManager::setup() {
     for (int cpIdx = 0; cpIdx < ncps; ++cpIdx) {
         DotsScene *scene = new DotsScene;
         scene->setupParams();
-        scene->setupGenome(cpIdx, &cps[cpIdx]);
+        scene->motionId = cpIdx;
+        scene->setupGenome(&cps[cpIdx]);
 
         defaultTrack.scenes.push_back(scene);
     }
@@ -145,7 +146,6 @@ void StateManager::setup() {
 
     tracks.push_back(std::move(defaultTrack));
 
-    maxGenomeId = ncps-1;
     maxTrackId = 0;
 
     // Now load tracks from file
@@ -258,7 +258,6 @@ void StateManager::killCurrent() {
     }
 
     flam3_copy(getScene().genome, &result);
-    getScene().genomeId = nextGenomeId();
 
     getTrack().setGenomesFromScenes();
     ofNotifyEvent(onTrackUpdate, trackIdx);
@@ -271,7 +270,6 @@ void StateManager::mateCurrent() {
     int parent1 = random()%ncps;
     flam3_cross(getScene().genome, &cps[parent1], &result, CROSS_NOT_SPECIFIED, &rc, NULL);
     flam3_copy(getScene().genome, &result);
-    getScene().genomeId = nextGenomeId();
 
     getTrack().setGenomesFromScenes();
     ofNotifyEvent(onTrackUpdate, trackIdx);
@@ -286,7 +284,6 @@ void StateManager::mutateCurrent() {
         ivars[i] = i;
 
     flam3_mutate(getScene().genome, MUTATE_NOT_SPECIFIED, ivars, flam3_nvariations, 0, 0.2, &rc, NULL);
-    getScene().genomeId = nextGenomeId();
 
     getTrack().setGenomesFromScenes();
     ofNotifyEvent(onTrackUpdate, trackIdx);
@@ -530,7 +527,6 @@ void StateManager::serializeCurrentTrackToFile() {
         DotsScene *scene = getTrack().scenes[i];
         settings.addTag("scene");
         settings.pushTag("scene", i);
-        settings.addValue("genomeId", scene->genomeId);
         settings.serialize(scene->displayParameters);
         settings.popTag();
 
@@ -579,15 +575,8 @@ void StateManager::loadAllParamsFromFile() {
             scene->setupParams();
 
             settings.pushTag("scene", i);
-            scene->genomeId = settings.getValue("genomeId", -1);
-
-            if (scene->genomeId < 0) continue;
-
             settings.deserialize(scene->displayParameters);
             settings.popTag();
-
-            if (scene->genomeId > maxGenomeId)
-                maxGenomeId = scene->genomeId;
 
             track.scenes.push_back(scene);
         }

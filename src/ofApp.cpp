@@ -219,99 +219,99 @@ void ofApp::handleWanderingChanged(bool & wandering) {
 }
 
 void ofApp::setFlameParameters() {
-    switch (stateManager->activeScene.genomeId) {
+    switch (stateManager->activeScene.motionId) {
         case 0:
-            renderCp.xform[4].var[5] = mpx;
-            renderCp.xform[3].var[8] = mpy;
-            renderCp.xform[5].var[1] = mpx;
+            if (renderCp.num_xforms > 4) renderCp.xform[4].var[5] = mpx;
+            if (renderCp.num_xforms > 3) renderCp.xform[3].var[8] = mpy;
+            if (renderCp.num_xforms > 5) renderCp.xform[5].var[1] = mpx;
             break;
         case 1:
-            renderCp.xform[5].var[1] = mpx;
-            renderCp.xform[12].c[2][0] = mpy;
+            if (renderCp.num_xforms > 5) renderCp.xform[5].var[1] = mpx;
+            if (renderCp.num_xforms > 12) renderCp.xform[12].c[2][0] = mpy;
             break;
         case 2:
-            renderCp.xform[8].var[1] = mpx;
-            renderCp.xform[8].julian_power = mpy + 0.5;
+            if (renderCp.num_xforms > 8) renderCp.xform[8].var[1] = mpx;
+            if (renderCp.num_xforms > 8) renderCp.xform[8].julian_power = mpy + 0.5;
             break;
         case 3:
-            renderCp.xform[0].c[0][0] = -mpx+0.5;
-            renderCp.xform[0].c[1][1] = -mpy+0.5;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].c[0][0] = -mpx+0.5;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].c[1][1] = -mpy+0.5;
             break;
         case 4:
-            renderCp.xform[2].color = 0.2;
-            renderCp.xform[2].c[2][0] = mpy;
-            renderCp.xform[3].var[1] = -mpx;
-            renderCp.xform[2].c[1][0] = 1/(mpx+0.1);
+            if (renderCp.num_xforms > 2) renderCp.xform[2].color = 0.2;
+            if (renderCp.num_xforms > 2) renderCp.xform[2].c[2][0] = mpy;
+            if (renderCp.num_xforms > 3) renderCp.xform[3].var[1] = -mpx;
+            if (renderCp.num_xforms > 2) renderCp.xform[2].c[1][0] = 1/(mpx+0.1);
             break;
         case 5:
-            renderCp.xform[0].var[VAR_DISC] = mpx;
-            renderCp.xform[1].c[2][0] = 2*(mpx-0.5);
-            renderCp.xform[1].c[2][1] = 2*(mpy-0.5);
+            if (renderCp.num_xforms > 0) renderCp.xform[0].var[VAR_DISC] = mpx;
+            if (renderCp.num_xforms > 1) renderCp.xform[1].c[2][0] = 2*(mpx-0.5);
+            if (renderCp.num_xforms > 1) renderCp.xform[1].c[2][1] = 2*(mpy-0.5);
             break;
         case 6:
-            renderCp.xform[0].rectangles_x = mpx;
-            renderCp.xform[0].rectangles_y = mpy;
-            renderCp.xform[0].c[0][0] = mpx + 0.5;
-            renderCp.xform[0].c[1][1] = mpy - 1.5;
-            renderCp.xform[10].c[0][0] = mpx/2 - 1.0;
-            renderCp.xform[10].c[1][1] = mpy/2 - 1.0;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].rectangles_x = mpx;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].rectangles_y = mpy;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].c[0][0] = mpx + 0.5;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].c[1][1] = mpy - 1.5;
+            if (renderCp.num_xforms > 10) renderCp.xform[10].c[0][0] = mpx/2 - 1.0;
+            if (renderCp.num_xforms > 10) renderCp.xform[10].c[1][1] = mpy/2 - 1.0;
             break;
         case 7:
-            renderCp.xform[3].c[2][0] = mpx;
-            renderCp.xform[3].c[2][1] = mpy;
-            renderCp.xform[3].c[0][0] = mpx - 1.5;
-            renderCp.xform[3].c[1][1] = mpy;
-            renderCp.xform[3].var[0] = mpx;
-            renderCp.xform[3].var[1] = mpy;
+            if (renderCp.num_xforms > 3) renderCp.xform[3].c[2][0] = mpx;
+            if (renderCp.num_xforms > 3) renderCp.xform[3].c[2][1] = mpy;
+            if (renderCp.num_xforms > 3) renderCp.xform[3].c[0][0] = mpx - 1.5;
+            if (renderCp.num_xforms > 3) renderCp.xform[3].c[1][1] = mpy;
+            if (renderCp.num_xforms > 3) renderCp.xform[3].var[0] = mpx;
+            if (renderCp.num_xforms > 3) renderCp.xform[3].var[1] = mpy;
             break;
         case 8:
-            renderCp.xform[0].c[2][0] = mpx - 0.5;
-            renderCp.xform[0].c[2][1] = mpy - 0.5;
-            renderCp.xform[1].c[0][0] = mpx - 0.5;
-            renderCp.xform[1].c[1][1] = mpy - 0.5;
-            renderCp.xform[2].c[2][0] = mpx - 0.5;
-            renderCp.xform[2].c[2][1] = mpy - 0.5;
-            renderCp.xform[4].julian_dist = 1 - mpx;
-            renderCp.xform[5].julian_dist = 1 - mpy;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].c[2][0] = mpx - 0.5;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].c[2][1] = mpy - 0.5;
+            if (renderCp.num_xforms > 1) renderCp.xform[1].c[0][0] = mpx - 0.5;
+            if (renderCp.num_xforms > 1) renderCp.xform[1].c[1][1] = mpy - 0.5;
+            if (renderCp.num_xforms > 2) renderCp.xform[2].c[2][0] = mpx - 0.5;
+            if (renderCp.num_xforms > 2) renderCp.xform[2].c[2][1] = mpy - 0.5;
+            if (renderCp.num_xforms > 4) renderCp.xform[4].julian_dist = 1 - mpx;
+            if (renderCp.num_xforms > 5) renderCp.xform[5].julian_dist = 1 - mpy;
             break;
         case 9:
-            renderCp.xform[0].var[VAR_WAVES] = mpx*2 + 0.2;
-            renderCp.xform[1].var[VAR_DISC] = mpy*2 + 0.1;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].var[VAR_WAVES] = mpx*2 + 0.2;
+            if (renderCp.num_xforms > 1) renderCp.xform[1].var[VAR_DISC] = mpy*2 + 0.1;
             break;
         case 10:
-            renderCp.xform[1].juliascope_power = 1/(mpx + 0.1);
-            renderCp.xform[1].julian_power = 1/(mpy + 0.1);
+            if (renderCp.num_xforms > 1) renderCp.xform[1].juliascope_power = 1/(mpx + 0.1);
+            if (renderCp.num_xforms > 1) renderCp.xform[1].julian_power = 1/(mpy + 0.1);
             break;
         case 11:
-            renderCp.xform[0].rectangles_x = mpx;
-            renderCp.xform[0].rectangles_y = mpy;
-            renderCp.xform[1].var[VAR_SPHERICAL] = 0.02 + mpx / 10;
-            renderCp.xform[2].var[VAR_SPHERICAL] = 0.02 + mpy / 10;
-            renderCp.xform[4].c[0][0] = 1.5 + mpx;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].rectangles_x = mpx;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].rectangles_y = mpy;
+            if (renderCp.num_xforms > 1) renderCp.xform[1].var[VAR_SPHERICAL] = 0.02 + mpx / 10;
+            if (renderCp.num_xforms > 2) renderCp.xform[2].var[VAR_SPHERICAL] = 0.02 + mpy / 10;
+            if (renderCp.num_xforms > 4) renderCp.xform[4].c[0][0] = 1.5 + mpx;
             break;
         case 12:
-            renderCp.xform[0].c[0][0] = 1.5 + mpx;
-            renderCp.xform[1].var[VAR_DISC] = 0.5 + mpy/3.0;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].c[0][0] = 1.5 + mpx;
+            if (renderCp.num_xforms > 1) renderCp.xform[1].var[VAR_DISC] = 0.5 + mpy/3.0;
             break;
         case 13:
-            renderCp.xform[0].c[0][0] = 0.4 + mpy;
-            renderCp.xform[0].var[VAR_GAUSSIAN_BLUR] = 0.1 + mpx/2;
-            renderCp.xform[1].rectangles_x = mpx;
-            renderCp.xform[1].rectangles_y = mpy;
-            renderCp.xform[4].curl_c2 = mpx;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].c[0][0] = 0.4 + mpy;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].var[VAR_GAUSSIAN_BLUR] = 0.1 + mpx/2;
+            if (renderCp.num_xforms > 1) renderCp.xform[1].rectangles_x = mpx;
+            if (renderCp.num_xforms > 1) renderCp.xform[1].rectangles_y = mpy;
+            if (renderCp.num_xforms > 4) renderCp.xform[4].curl_c2 = mpx;
             break;
         case 14:
-            renderCp.xform[0].julian_power = 8.5 + mpx;
-            renderCp.xform[1].c[1][1] = mpy;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].julian_power = 8.5 + mpx;
+            if (renderCp.num_xforms > 1) renderCp.xform[1].c[1][1] = mpy;
             break;
         case 15:
-            renderCp.xform[0].c[0][0] = -0.6 + mpx;
-            renderCp.xform[0].c[1][1] = -0.5 + mpy;
-            renderCp.xform[1].var[VAR_SINUSOIDAL] = 0.05 + mpx / 4;
-            renderCp.xform[1].c[2][0] = - mpx;
-            renderCp.xform[1].c[2][1] = mpy;
-            renderCp.xform[2].julian_power = 2 * mpx + 0.5;
-            renderCp.xform[2].julian_dist = mpy + 0.5;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].c[0][0] = -0.6 + mpx;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].c[1][1] = -0.5 + mpy;
+            if (renderCp.num_xforms > 1) renderCp.xform[1].var[VAR_SINUSOIDAL] = 0.05 + mpx / 4;
+            if (renderCp.num_xforms > 1) renderCp.xform[1].c[2][0] = - mpx;
+            if (renderCp.num_xforms > 1) renderCp.xform[1].c[2][1] = mpy;
+            if (renderCp.num_xforms > 2) renderCp.xform[2].julian_power = 2 * mpx + 0.5;
+            if (renderCp.num_xforms > 2) renderCp.xform[2].julian_dist = mpy + 0.5;
             break;
         case 16:
         {
@@ -331,28 +331,28 @@ void ofApp::setFlameParameters() {
             break;
         }
         case 21:
-            renderCp.xform[0].julian_power = 10*mpy;
-            renderCp.xform[1].radial_blur_angle = mpx;
-            renderCp.xform[2].julian_power = 10+10*mpx;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].julian_power = 10*mpy;
+            if (renderCp.num_xforms > 1) renderCp.xform[1].radial_blur_angle = mpx;
+            if (renderCp.num_xforms > 2) renderCp.xform[2].julian_power = 10+10*mpx;
             break;
         case 22:
-            renderCp.xform[0].var[VAR_SPHERICAL] = mpy;
-            renderCp.xform[2].var[VAR_JULIAN] = mpx;
-            renderCp.xform[0].c[0][0] = mpy/10;
-            renderCp.xform[3].c[0][0] = 0.5+mpx/3;
-            renderCp.xform[7].c[2][0] = mpx*3;
-            renderCp.xform[7].c[2][1] = mpy*3;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].var[VAR_SPHERICAL] = mpy;
+            if (renderCp.num_xforms > 2) renderCp.xform[2].var[VAR_JULIAN] = mpx;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].c[0][0] = mpy/10;
+            if (renderCp.num_xforms > 3) renderCp.xform[3].c[0][0] = 0.5+mpx/3;
+            if (renderCp.num_xforms > 7) renderCp.xform[7].c[2][0] = mpx*3;
+            if (renderCp.num_xforms > 7) renderCp.xform[7].c[2][1] = mpy*3;
             break;
         case 23:
-            renderCp.xform[0].var[VAR_SPHERICAL] = mpy;
-            renderCp.xform[0].var[VAR_DISC] = mpx + 1;
-            renderCp.xform[1].var[VAR_SPHERICAL] = mpx/2;
-            renderCp.xform[1].var[VAR_DISC] = mpy/2;
-            renderCp.xform[2].var[VAR_RECTANGLES] = mpy/2;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].var[VAR_SPHERICAL] = mpy;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].var[VAR_DISC] = mpx + 1;
+            if (renderCp.num_xforms > 1) renderCp.xform[1].var[VAR_SPHERICAL] = mpx/2;
+            if (renderCp.num_xforms > 1) renderCp.xform[1].var[VAR_DISC] = mpy/2;
+            if (renderCp.num_xforms > 2) renderCp.xform[2].var[VAR_RECTANGLES] = mpy/2;
             break;
         case 24:
-            renderCp.xform[0].c[0][0] = -2*mpx;
-            renderCp.xform[1].c[1][1] = -2*mpy;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].c[0][0] = -2*mpx;
+            if (renderCp.num_xforms > 1) renderCp.xform[1].c[1][1] = -2*mpy;
             break;
         case 25:
             for (int i = 0; i < renderCp.num_xforms; i++) {
@@ -363,8 +363,8 @@ void ofApp::setFlameParameters() {
             }
             break;
         case 26:
-            renderCp.xform[2].julian_power = cp.xform[2].julian_power + audioEffectSize3 * mpy * 10;
-            renderCp.xform[2].julian_dist = cp.xform[2].julian_dist + audioEffectSize4 * mpx * 3;
+            if (renderCp.num_xforms > 2) renderCp.xform[2].julian_power = cp.xform[2].julian_power + audioEffectSize3 * mpy * 10;
+            if (renderCp.num_xforms > 2) renderCp.xform[2].julian_dist = cp.xform[2].julian_dist + audioEffectSize4 * mpx * 3;
             for (int i = 0; i < renderCp.num_xforms; i++) {
                 renderCp.xform[i].c[0][0] = cp.xform[i].c[0][0] + audioEffectSize1 * mpy;
                 renderCp.xform[i].c[1][1] = cp.xform[i].c[1][1] + audioEffectSize2 * mpx;
@@ -388,7 +388,7 @@ void ofApp::setFlameParameters() {
             }
             break;
         case 29:
-            renderCp.xform[1].ngon_power = cp.xform[1].ngon_power + audioEffectSize1 * mpy;
+            if (renderCp.num_xforms > 1) renderCp.xform[1].ngon_power = cp.xform[1].ngon_power + audioEffectSize1 * mpy;
             for (int i = 0; i < renderCp.num_xforms; i++) {
                 renderCp.xform[i].c[0][0] = cp.xform[i].c[0][0] + audioEffectSize1 * mpy;
                 renderCp.xform[i].c[1][1] = cp.xform[i].c[1][1] + audioEffectSize2 * mpx;
@@ -397,11 +397,11 @@ void ofApp::setFlameParameters() {
             }
             break;
         case 30:
-            renderCp.xform[0].var[VAR_DISC] = cp.xform[0].var[VAR_DISC] + audioEffectSize3 * mpy;
-            renderCp.xform[0].rectangles_x = cp.xform[0].rectangles_x + audioEffectSize1 * mpy;
-            renderCp.xform[0].rectangles_y = cp.xform[0].rectangles_y + audioEffectSize2 * mpx;
-            renderCp.xform[4].c[0][0] = cp.xform[4].c[0][0] + audioEffectSize4 * mpy;
-            renderCp.xform[4].c[1][1] = cp.xform[0].c[1][1] + audioEffectSize3 * mpx;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].var[VAR_DISC] = cp.xform[0].var[VAR_DISC] + audioEffectSize3 * mpy;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].rectangles_x = cp.xform[0].rectangles_x + audioEffectSize1 * mpy;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].rectangles_y = cp.xform[0].rectangles_y + audioEffectSize2 * mpx;
+            if (renderCp.num_xforms > 4) renderCp.xform[4].c[0][0] = cp.xform[4].c[0][0] + audioEffectSize4 * mpy;
+            if (renderCp.num_xforms > 4) renderCp.xform[4].c[1][1] = cp.xform[0].c[1][1] + audioEffectSize3 * mpx;
             break;
         case 31:
             for (int i = 0; i < renderCp.num_xforms; i++) {
@@ -412,40 +412,41 @@ void ofApp::setFlameParameters() {
             }
             break;
         case 32:
-            renderCp.xform[0].c[0][0] = cp.xform[0].c[0][0] + audioEffectSize1 * mpy;
-            renderCp.xform[0].c[1][1] = cp.xform[0].c[1][1] + audioEffectSize2 * mpx;
-            renderCp.xform[3].c[1][0] = cp.xform[3].c[1][0] + audioEffectSize1 * mpy;
-            renderCp.xform[3].c[0][1] = cp.xform[3].c[0][1] + audioEffectSize2 * mpx;
-            renderCp.xform[10].c[2][1] = cp.xform[10].c[2][1] + audioEffectSize3 * mpy;
-            renderCp.xform[10].c[2][0] = cp.xform[10].c[2][0] + audioEffectSize4 * mpx;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].c[0][0] = cp.xform[0].c[0][0] + audioEffectSize1 * mpy;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].c[1][1] = cp.xform[0].c[1][1] + audioEffectSize2 * mpx;
+            if (renderCp.num_xforms > 3) renderCp.xform[3].c[1][0] = cp.xform[3].c[1][0] + audioEffectSize1 * mpy;
+            if (renderCp.num_xforms > 3) renderCp.xform[3].c[0][1] = cp.xform[3].c[0][1] + audioEffectSize2 * mpx;
+            if (renderCp.num_xforms > 10) renderCp.xform[10].c[2][1] = cp.xform[10].c[2][1] + audioEffectSize3 * mpy;
+            if (renderCp.num_xforms > 10) renderCp.xform[10].c[2][0] = cp.xform[10].c[2][0] + audioEffectSize4 * mpx;
             break;
         case 33:
-            renderCp.xform[0].c[0][0] = cp.xform[0].c[0][0] + audioEffectSize1 * mpy;
-            renderCp.xform[0].c[1][1] = cp.xform[0].c[1][1] + audioEffectSize2 * mpx;
-            renderCp.xform[1].c[2][0] = cp.xform[1].c[2][0] + audioEffectSize3 * mpy;
-            renderCp.xform[1].c[2][1] = cp.xform[1].c[2][1] + audioEffectSize4 * mpx;
-            renderCp.xform[2].c[1][0] = cp.xform[2].c[1][0] + audioEffectSize3 * mpy;
-            renderCp.xform[2].c[0][1] = cp.xform[2].c[0][1] + audioEffectSize4 * mpx;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].c[0][0] = cp.xform[0].c[0][0] + audioEffectSize1 * mpy;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].c[1][1] = cp.xform[0].c[1][1] + audioEffectSize2 * mpx;
+            if (renderCp.num_xforms > 1) renderCp.xform[1].c[2][0] = cp.xform[1].c[2][0] + audioEffectSize3 * mpy;
+            if (renderCp.num_xforms > 1) renderCp.xform[1].c[2][1] = cp.xform[1].c[2][1] + audioEffectSize4 * mpx;
+            if (renderCp.num_xforms > 2) renderCp.xform[2].c[1][0] = cp.xform[2].c[1][0] + audioEffectSize3 * mpy;
+            if (renderCp.num_xforms > 2) renderCp.xform[2].c[0][1] = cp.xform[2].c[0][1] + audioEffectSize4 * mpx;
             break;
         case 34:
-            renderCp.xform[1].var[VAR_JULIA] = cp.xform[1].var[VAR_JULIA] + audioEffectSize1 * mpx;
-            renderCp.xform[3].c[0][0] = cp.xform[3].c[0][0] + audioEffectSize2 * mpy;
-            renderCp.xform[3].c[1][1] = cp.xform[3].c[1][1] + audioEffectSize3 * mpx;
+            if (renderCp.num_xforms > 1) renderCp.xform[1].var[VAR_JULIA] = cp.xform[1].var[VAR_JULIA] + audioEffectSize1 * mpx;
+            if (renderCp.num_xforms > 3) renderCp.xform[3].c[0][0] = cp.xform[3].c[0][0] + audioEffectSize2 * mpy;
+            if (renderCp.num_xforms > 3) renderCp.xform[3].c[1][1] = cp.xform[3].c[1][1] + audioEffectSize3 * mpx;
             break;
         case 35:
-            renderCp.xform[0].c[2][0] = cp.xform[0].c[2][0] + audioEffectSize1 * mpx;
-            renderCp.xform[0].c[2][1] = cp.xform[0].c[2][1] + audioEffectSize1 * mpy;
-            renderCp.xform[1].c[2][0] = cp.xform[1].c[2][0] + audioEffectSize2 * mpx;
-            renderCp.xform[1].c[2][1] = cp.xform[1].c[2][1] + audioEffectSize2 * mpy;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].c[2][0] = cp.xform[0].c[2][0] + audioEffectSize1 * mpx;
+            if (renderCp.num_xforms > 0) renderCp.xform[0].c[2][1] = cp.xform[0].c[2][1] + audioEffectSize1 * mpy;
+            if (renderCp.num_xforms > 1) renderCp.xform[1].c[2][0] = cp.xform[1].c[2][0] + audioEffectSize2 * mpx;
+            if (renderCp.num_xforms > 1) renderCp.xform[1].c[2][1] = cp.xform[1].c[2][1] + audioEffectSize2 * mpy;
 
-            renderCp.xform[4].post[2][0] = cp.xform[4].post[2][0] + audioEffectSize3 * mpx;
-            renderCp.xform[4].post[2][1] = cp.xform[4].post[2][1] + audioEffectSize3 * mpy;
+            if (renderCp.num_xforms > 4) renderCp.xform[4].post[2][0] = cp.xform[4].post[2][0] + audioEffectSize3 * mpx;
+            if (renderCp.num_xforms > 4) renderCp.xform[4].post[2][1] = cp.xform[4].post[2][1] + audioEffectSize3 * mpy;
 
-            renderCp.xform[6].c[2][0] = cp.xform[4].c[2][0] + audioEffectSize4 * mpx;
-            renderCp.xform[6].c[2][1] = cp.xform[4].c[2][1] + audioEffectSize4 * mpy;
+            if (renderCp.num_xforms > 6) renderCp.xform[6].c[2][0] = cp.xform[4].c[2][0] + audioEffectSize4 * mpx;
+            if (renderCp.num_xforms > 6) renderCp.xform[6].c[2][1] = cp.xform[4].c[2][1] + audioEffectSize4 * mpy;
             break;
+
+        // REMEMBER TO UPDATE NUM_MOTION_IDS IN appConstants.h IF YOU ADD ANOTHER MOTION
     }
-    
 }
 
 void ofApp::flameUpdate() {

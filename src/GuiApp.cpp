@@ -69,7 +69,7 @@ void GuiApp::setup() {
     inputGui.setPosition(10, 450);
     debugGui.setPosition(inputGui.getPosition().x + inputGui.getWidth() + 10, inputGui.getPosition().y);
     metaGui.setPosition(debugGui.getPosition().x, debugGui.getPosition().y + debugGui.getHeight() + 10);
-    trackParamsGui.setPosition(510, 95);
+    trackParamsGui.setPosition(510, 75);
     trackControlGui.setPosition(trackParamsGui.getPosition().x, trackParamsGui.getPosition().y + trackParamsGui.getHeight() + 10);
     displayGui.setPosition(trackControlGui.getPosition().x + trackControlGui.getWidth() + 10, 15);
 
@@ -133,16 +133,14 @@ void GuiApp::draw() {
         ofDrawBitmapString(s, 510, 25);
         sprintf(s, "scene: %d / %lu", stateManager->sceneIdx, stateManager->getTrack().scenes.size()-1);
         ofDrawBitmapString(s, 510, 40);
-        sprintf(s, "genome: %d", stateManager->getScene().genomeId);
-        ofDrawBitmapString(s, 510, 55);
 
         if (wandering) {
             ofNoFill();
-            ofDrawRectangle(510, 65, 100, 15);
+            ofDrawRectangle(510, 50, 100, 15);
             ofFill();
-            ofDrawRectangle(510, 65, 100 * stateManager->activeTrack.interpAmt, 15);
+            ofDrawRectangle(510, 50, 100 * stateManager->activeTrack.interpAmt, 15);
         } else {
-            ofDrawBitmapString("Not wandering", 510, 75);
+            ofDrawBitmapString("Not wandering", 510, 60);
         }
     }
 
