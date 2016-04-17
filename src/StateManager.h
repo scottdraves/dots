@@ -172,7 +172,7 @@ typedef struct DotsScene {
 
         // Rotation / Interpolation speed
         speedParams.setName("Speed");
-        speedParams.add(baseSpeed.set("baseSpeed", 0, 0, 10));
+        speedParams.add(baseSpeed.set("baseSpeed", 0, -5, 10));
         speedParams.add(rmsSpeedMult.set("rmsSpeedMult", 30, 0, 100));
         displayParameters.add(speedParams);
 
