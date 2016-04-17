@@ -707,10 +707,9 @@ void ofApp::draw(){
 
     syphonServer.publishFBO(&visualsFbo);
 
-    // TODO: disable later
-    char str[25];
-    sprintf(str, "%.2f fps", ofGetFrameRate());
-    ofDrawBitmapString(str, 10, 15);
+//    char str[25];
+//    sprintf(str, "%.2f fps", ofGetFrameRate());
+//    ofDrawBitmapString(str, 10, 15);
 }
 
 void ofApp::handleKey(int key) {
