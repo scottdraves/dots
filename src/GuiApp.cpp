@@ -34,11 +34,9 @@ void GuiApp::setup() {
     // Meta
     metaParams.setName("Meta");
     metaParams.add(wandering.set("wandering", false));
-    metaParams.add(wanderSpeed.set("wanderSpeed", 0.007, 0, 0.12));
-    metaParams.add(genomeInterpolationAmt.set("interpolate", 0, 0, 1));
     metaGui.setup(metaParams);
 
-    trackGui.setup("Tracks");
+    trackControlGui.setup("Tracks");
 
     trackControls.setup();
     trackControls.setName("< >");
@@ -46,7 +44,7 @@ void GuiApp::setup() {
     trackControls.add(nextTrackBtn.setup("Next track"));
     trackControls.add(saveTrackBtn.setup("Save track"));
     trackControls.add(newTrackBtn.setup("New track"));
-    trackGui.add(&trackControls);
+    trackControlGui.add(&trackControls);
 
     prevTrackBtn.addListener(stateManager.get(), &StateManager::regressTrack);
     nextTrackBtn.addListener(stateManager.get(), &StateManager::advanceTrack);
@@ -58,7 +56,7 @@ void GuiApp::setup() {
     sceneControls.add(duplicateSceneBtn.setup("Duplicate scene"));
     sceneControls.add(reloadSceneBtn.setup("Reload scene"));
     sceneControls.add(deleteSceneBtn.setup("Remove scene"));
-    trackGui.add(&sceneControls);
+    trackControlGui.add(&sceneControls);
 
     duplicateSceneBtn.addListener(stateManager.get(), &StateManager::duplicateScene);
     reloadSceneBtn.addListener(stateManager.get(), &StateManager::reloadScene);
@@ -66,19 +64,21 @@ void GuiApp::setup() {
 
     // State manager must be set up first
     displayGui.setup(stateManager->activeScene.displayParameters);
+    trackParamsGui.setup(stateManager->activeTrack.displayParameters);
 
     inputGui.setPosition(10, 450);
     debugGui.setPosition(inputGui.getPosition().x + inputGui.getWidth() + 10, inputGui.getPosition().y);
     metaGui.setPosition(debugGui.getPosition().x, debugGui.getPosition().y + debugGui.getHeight() + 10);
-    trackGui.setPosition(510, 65);
-    displayGui.setPosition(trackGui.getPosition().x + trackGui.getWidth() + 10, 15);
+    trackParamsGui.setPosition(510, 95);
+    trackControlGui.setPosition(trackParamsGui.getPosition().x, trackParamsGui.getPosition().y + trackParamsGui.getHeight() + 10);
+    displayGui.setPosition(trackControlGui.getPosition().x + trackControlGui.getWidth() + 10, 15);
 
 
     float height = MAX(MAX(MAX(MAX(inputGui.getPosition().y + inputGui.getHeight(),
                        debugGui.getPosition().y + inputGui.getHeight()),
                        metaGui.getPosition().y + metaGui.getHeight()),
                        displayGui.getPosition().y + displayGui.getHeight()),
-                       trackGui.getPosition().y + trackGui.getHeight());
+                       trackControlGui.getPosition().y + trackControlGui.getHeight());
 
     ofSetWindowShape(displayGui.getPosition().x + displayGui.getWidth() + 10,
                      height + 10);
@@ -110,13 +110,6 @@ void GuiApp::update(){
     }
 
     stateManager->wandering = wandering.get();
-    stateManager->wanderSpeed = wanderSpeed.get();
-
-    if (wandering) {
-        genomeInterpolationAmt = stateManager->interpAmt;
-    } else {
-        stateManager->interpAmt = genomeInterpolationAmt;
-    }
 }
 
 void GuiApp::draw() {
@@ -142,7 +135,18 @@ void GuiApp::draw() {
         ofDrawBitmapString(s, 510, 40);
         sprintf(s, "genome: %d", stateManager->getScene().genomeId);
         ofDrawBitmapString(s, 510, 55);
+
+        if (wandering) {
+            ofNoFill();
+            ofDrawRectangle(510, 65, 100, 15);
+            ofFill();
+            ofDrawRectangle(510, 65, 100 * stateManager->activeTrack.interpAmt, 15);
+        } else {
+            ofDrawBitmapString("Not wandering", 510, 75);
+        }
     }
+
+
 
     ofTranslate(0, 17);
 
@@ -233,7 +237,8 @@ void GuiApp::draw() {
     debugGui.draw();
     displayGui.draw();
     metaGui.draw();
-    trackGui.draw();
+    trackParamsGui.draw();
+    trackControlGui.draw();
 }
 
 void GuiApp::handleKey(int key) {

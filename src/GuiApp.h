@@ -39,17 +39,16 @@ public:
 
     ofParameterGroup metaParams;
     ofParameter<bool> wandering;
-    ofParameter<float> wanderSpeed;
-    ofParameter<float> genomeInterpolationAmt;
 
-    ofxPanel trackGui;
+    ofxPanel trackControlGui;
     ofxGuiGroup trackControls;
     ofxButton prevTrackBtn, nextTrackBtn;
     ofxButton newTrackBtn, saveTrackBtn;
     ofxGuiGroup sceneControls;
     ofxButton deleteSceneBtn, reloadSceneBtn, duplicateSceneBtn;
 
-    ofxPanel analysisGui, inputGui, debugGui, metaGui, displayGui;
+    ofxPanel analysisGui, inputGui, debugGui, metaGui;
+    ofxPanel trackParamsGui, displayGui;
 
     // To mirror from ofApp
     float frameRate, pctParticles;

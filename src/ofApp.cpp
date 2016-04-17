@@ -26,7 +26,6 @@ void ofApp::setup(){
 
     // GUI-controlled
     baseSpeed = 0.25;
-    wanderSpeed = 0;
     rmsSpeedMult = 0;
     mpxSmoothingFactor = 0.4;
     mpySmoothingFactor = 0.1;
@@ -149,7 +148,6 @@ void ofApp::guiUpdate() {
     gui->audioCentroid = audioCentroid;
     gui->audioRMS = audioRMS;
 
-    wanderSpeed = gui->wanderSpeed;
     pointRadiusAudioScaleAmt = stateManager->activeScene.pointRadiusAudioScaleAmt;
     pointRadiusAudioScale = stateManager->activeScene.pointRadiusAudioScale;
     fftDecayRate = stateManager->activeScene.fftDecayRate;

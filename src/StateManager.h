@@ -214,10 +214,36 @@ typedef struct DotsScene {
 
 typedef struct DotsTrack {
     int trackId;
+
+    float wanderPos = 0;
+    float interpAmt;
+
     vector<DotsScene *> scenes;
+
+    ofParameterGroup displayParameters;
+    ofParameterGroup wanderParameters;
+    ofParameter<float> wanderSpeed;
 
     int nGenomes;
     flam3_genome *genomes = NULL;
+
+    void setupParams() {
+        displayParameters.clear();
+        wanderParameters.clear();
+
+        displayParameters.setName("Track");
+        wanderParameters.setName("Wander");
+        wanderParameters.add(wanderSpeed.set("speed", 0.1, 0, 1));
+        displayParameters.add(wanderParameters);
+    };
+
+    void copyParamsTo(DotsTrack &dest) {
+        copyParameters(this->displayParameters, dest.displayParameters);
+    }
+
+    float getWanderSpeed() {
+        return (exp(wanderSpeed) - 1.0f) / 100.0f;
+    }
 
     void setGenomesFromScenes() {
         nGenomes = scenes.size();
@@ -277,6 +303,8 @@ public:
     void duplicateScene();
     DotsScene& getScene();
 
+    DotsTrack activeTrack;
+
     DotsScene defaultScene;
     DotsScene activeScene;
     DotsScene *currScene;
@@ -284,10 +312,7 @@ public:
 
     // Are we wandering or standing still
     ofParameter<bool> wandering;
-    float wanderSpeed;
     int lastCP;
-    float wanderElapsed;
-    float interpAmt;
 
     // Where are we
     int trackIdx, sceneIdx;

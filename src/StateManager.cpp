@@ -126,6 +126,7 @@ void StateManager::setup() {
 
     // No genome in activeScene yet
     activeScene.setupParams();
+    activeTrack.setupParams();
 
     // Build default scene
     DotsTrack defaultTrack;
@@ -139,6 +140,7 @@ void StateManager::setup() {
         defaultTrack.scenes.push_back(scene);
     }
     defaultTrack.setGenomesFromScenes();
+    defaultTrack.copyParamsTo(activeTrack);
 
     tracks.push_back(std::move(defaultTrack));
 
@@ -191,7 +193,7 @@ void StateManager::genomeModified(int & newGenomeIdx) {
 
 void StateManager::update() {
     if (wandering && currScene && nextScene) {
-        applyParameterInterpolation(interpAmt);
+        applyParameterInterpolation(activeTrack.interpAmt);
     }
 
 //    if (!wandering) {
@@ -203,23 +205,24 @@ void StateManager::update() {
 
 void StateManager::flameUpdate(flam3_genome *dest, float audioRMS) {
     if (wandering) {
-        wanderElapsed += wanderSpeed;
+        DotsTrack &t = getTrack();
 
-        if (wanderElapsed >= getTrack().nGenomes)
-            wanderElapsed = 0;
+        activeTrack.wanderPos += activeTrack.getWanderSpeed();
 
-        int currCP = (int)wanderElapsed;
+        if (activeTrack.wanderPos >= t.nGenomes)
+            activeTrack.wanderPos = 0;
+
+        int currCP = (int)activeTrack.wanderPos;
 
         if (lastCP != currCP) {
             advanceScene();
-
             lastCP = currCP;
-        } else {
-            interpAmt = wanderElapsed - currCP;
-
-            // cpTrackOrder has n+1 - last is a copy of first
-            flam3_interpolate(getTrack().genomes, getTrack().nGenomes + 1, wanderElapsed, 0, dest);
         }
+
+        activeTrack.interpAmt = activeTrack.wanderPos - currCP;
+
+        // cpTrackOrder has n+1 - last is a copy of first
+        flam3_interpolate(t.genomes, t.nGenomes + 1, activeTrack.wanderPos, 0, dest);
     } else {
         float speed = activeScene.baseSpeed + audioRMS * activeScene.rmsSpeedMult;
         flam3_rotate(dest, speed, flam3_inttype_log);
