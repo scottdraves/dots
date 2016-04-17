@@ -15,4 +15,7 @@
 #define AUDIO_MODE_NOISE    3
 #define N_AUDIO_MODES       4
 
+// Try not to conflict with other keys
+#define DOTS_KEY_COMMAND_UP 55555
+
 #endif /* appConstants_h */

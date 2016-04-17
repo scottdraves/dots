@@ -18,6 +18,7 @@ void ofApp::setup(){
 
     nsamples = 25000;
     fullscreen = 1;
+    cmdKeyDown = false;
 
     // GUI-displayed
     mpx = mpy = 0.0;
@@ -714,6 +715,12 @@ void ofApp::draw(){
 }
 
 void ofApp::handleKey(int key) {
+    if (key == OF_KEY_COMMAND) {
+        cmdKeyDown = true;
+    } else if (key == DOTS_KEY_COMMAND_UP) {
+        cmdKeyDown = false;
+    }
+
     if (key == ' ') {
         swapFrame = frame;
         gui->wandering.set(!gui->wandering.get());
@@ -738,9 +745,9 @@ void ofApp::handleKey(int key) {
         ofToggleFullscreen();
         ofHideCursor();
         fullscreen = !fullscreen;
-    } else if (key == OF_KEY_UP) {
+    } else if (cmdKeyDown && key == OF_KEY_UP) {
         stateManager->mutateCurrent();
-    } else if (key == OF_KEY_DOWN) {
+    } else if (cmdKeyDown && key == OF_KEY_DOWN) {
         stateManager->killCurrent();
     } else if (key == ',') {
         stateManager->regressTrack();
@@ -777,13 +784,15 @@ void ofApp::handleKey(int key) {
 }
 
 //--------------------------------------------------------------
-void ofApp::keyPressed(int key){
+void ofApp::keyPressed(int key) {
     keyPresses.push(key);
 }
 
 //--------------------------------------------------------------
-void ofApp::keyReleased  (int key){
-    
+void ofApp::keyReleased(int key) {
+    if (key == OF_KEY_COMMAND) {
+        keyPresses.push(DOTS_KEY_COMMAND_UP);
+    }
 }
 
 //--------------------------------------------------------------

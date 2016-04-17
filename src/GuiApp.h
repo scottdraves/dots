@@ -21,6 +21,7 @@ public:
     void update();
     void draw();
     void keyPressed(int key);
+    void keyReleased(int key);
     void handleKey(int key);
     void buttonPressed(const void * sender);
 

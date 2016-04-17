@@ -107,5 +107,6 @@ public:
     shared_ptr<StateManager> stateManager;
 
     queue<int> keyPresses;
+    bool cmdKeyDown;
 };
 

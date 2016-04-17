@@ -243,3 +243,9 @@ void GuiApp::handleKey(int key) {
 void GuiApp::keyPressed(int key) {
     keyPresses.push(key);
 }
+
+void GuiApp::keyReleased(int key) {
+    if (key == OF_KEY_COMMAND) {
+        keyPresses.push(DOTS_KEY_COMMAND_UP);
+    }
+}
