@@ -131,6 +131,7 @@ void StateManager::setup() {
     // Build default scene
     DotsTrack defaultTrack;
     defaultTrack.trackId = 0;
+    defaultTrack.setupParams();
 
     for (int cpIdx = 0; cpIdx < ncps; ++cpIdx) {
         DotsScene *scene = new DotsScene;
@@ -321,10 +322,14 @@ void StateManager::regressTrack() {
     cout << "Regress track" << endl;
     if (trackIdx < 0) return;
 
+    activeTrack.copyParamsTo(getTrack());
+
     trackIdx--;
     if (trackIdx < 0) {
         trackIdx = tracks.size() - 1;
     }
+
+    getTrack().copyParamsTo(activeTrack);
 
     sceneIdx = -1;
     advanceScene();
@@ -336,10 +341,14 @@ void StateManager::advanceTrack() {
     cout << "Advance track" << endl;
     if (trackIdx < 0) return;
 
+    activeTrack.copyParamsTo(getTrack());
+
     trackIdx++;
     if (trackIdx >= tracks.size()) {
         trackIdx = 0;
     }
+
+    getTrack().copyParamsTo(activeTrack);
 
     sceneIdx = -1;
     advanceScene();
@@ -350,6 +359,7 @@ void StateManager::advanceTrack() {
 void StateManager::saveTrack() {
     cout << "Save track" << endl;
     activeScene.copyParamsTo(*currScene);
+    activeTrack.copyParamsTo(getTrack());
     getTrack().setGenomesFromScenes();
     serializeCurrentTrackToFile();
 }
@@ -458,6 +468,8 @@ void StateManager::duplicateScene() {
 void StateManager::createTrack() {
     DotsTrack track;
     track.trackId = nextTrackId();
+    track.setupParams();
+    activeTrack.copyParamsTo(getTrack());
 
     DotsScene *scene = new DotsScene;
     scene->setupParams();
@@ -550,6 +562,7 @@ void StateManager::loadAllParamsFromFile() {
 
         DotsTrack track;
         track.trackId = trackId;
+        track.setupParams();
 
         settings.clear();
         settings.loadFile(file.getAbsolutePath());
