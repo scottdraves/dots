@@ -45,7 +45,11 @@ void ofApp::setup(){
 
     memset(&cp, 0, sizeof(flam3_genome));
     memset(&renderCp, 0, sizeof(flam3_genome));
-    stateManager->loadGenome(&cp);
+    memset(&cp2, 0, sizeof(flam3_genome));
+    memset(&renderCp2, 0, sizeof(flam3_genome));
+
+    cp = stateManager->currScene->genome;
+    cp2 = stateManager->nextScene->genome;
 
     currFlameSamples = (double *)malloc(sizeof(double)*nsamples*4);
     prevFlameSamples = (double *)malloc(sizeof(double)*nsamples*4);
@@ -92,6 +96,8 @@ void ofApp::setup(){
     lines.setUsage(GL_STREAM_DRAW);
     pointRadii = (float *)malloc(sizeof(float) * nsamples * 2);
     lineWidths = (float *)malloc(sizeof(float) * nsamples * 2);
+    cpPixelsPerUnit = (float *)malloc(sizeof(float) * nsamples * 2);
+    cpCenter = (ofVec2f *)malloc(sizeof(ofVec2f) * nsamples * 2);
 
     pointPairs.resize(nsamples);
 
@@ -105,6 +111,11 @@ void ofApp::setup(){
         pointRadii[2*i+1] = 0;
         lineWidths[2*i] = 0;
         lineWidths[2*i+1] = 0;
+        cpPixelsPerUnit[2*i] = 0;
+        cpPixelsPerUnit[2*i+1] = 0;
+
+        cpCenter[2*i] = ofVec2f(0);
+        cpCenter[2*i+1] = ofVec2f(0);
 
         pointPairs[i].idx = i;
         pointPairs[i].pt1 = ofVec3f(0);
@@ -117,9 +128,13 @@ void ofApp::setup(){
     billboardShader.printActiveAttributes();
     billboardShader.begin();
         loc = billboardShader.getAttributeLocation("pointRadius");
-        lines.getVbo().setAttributeData(loc, pointRadii, 1, nsamples*2, GL_STREAM_DRAW);
+        lines.getVbo().setAttributeData(loc, pointRadii, 1, nsamples*2, GL_DYNAMIC_DRAW);
         loc = billboardShader.getAttributeLocation("lineWidth");
-        lines.getVbo().setAttributeData(loc, lineWidths, 1, nsamples*2, GL_STREAM_DRAW);
+        lines.getVbo().setAttributeData(loc, lineWidths, 1, nsamples*2, GL_DYNAMIC_DRAW);
+        loc = billboardShader.getAttributeLocation("cpPixelsPerUnit");
+        lines.getVbo().setAttributeData(loc, cpPixelsPerUnit, 1, nsamples*2, GL_DYNAMIC_DRAW);
+        loc = billboardShader.getAttributeLocation("cpCenter");
+        lines.getVbo().setAttributeData(loc, (float *)cpCenter, 2, nsamples*2, GL_DYNAMIC_DRAW, sizeof(ofVec2f));
     billboardShader.end();
 
     frame = 0;
@@ -205,21 +220,35 @@ void ofApp::guiUpdate() {
 
 void ofApp::handleTrackChanged(int & trackIdx) {
     swapFrame = frame;
-    stateManager->loadGenome(&cp);
+
+    if (!stateManager->wandering) {
+        cp = stateManager->currScene->genome;
+        cp2 = stateManager->nextScene->genome;
+    }
 }
 
 void ofApp::handleSceneChanged(int & sceneIdx){
     swapFrame = frame;
-    if (!stateManager->wandering)
-        stateManager->loadGenome(&cp);
+
+    if (!stateManager->wandering) {
+        cp = stateManager->currScene->genome;
+        cp2 = stateManager->nextScene->genome;
+    }
 }
 
 void ofApp::handleWanderingChanged(bool & wandering) {
     swapFrame = frame;
+
+    if (wandering) {
+        cp = &stateManager->wanderGenome;
+    } else {
+        cp = stateManager->currScene->genome;
+        cp2 = stateManager->nextScene->genome;
+    }
 }
 
-void ofApp::setFlameParameters() {
-    switch (stateManager->activeScene.motionId) {
+void ofApp::setFlameParameters(flam3_genome &renderCp, flam3_genome &cp, const int motionId) {
+    switch (motionId) {
         case 0:
             if (renderCp.num_xforms > 4) renderCp.xform[4].var[5] = mpx;
             if (renderCp.num_xforms > 3) renderCp.xform[3].var[8] = mpy;
@@ -449,19 +478,32 @@ void ofApp::setFlameParameters() {
     }
 }
 
-void ofApp::flameUpdate() {
-    stateManager->initrc(0);
-    randctx *rc = &stateManager->rc;
+void ofApp::renderFlame(flam3_genome *toRender, double *flameSamples, const int nSamples,
+                        randctx *rc, unsigned short *xform_distribution, const int fuse) {
+    flameSamples[0] = flam3_random_isaac_11(rc);
+    flameSamples[1] = flam3_random_isaac_11(rc);
+    flameSamples[2] = flam3_random_isaac_01(rc);
+    flameSamples[3] = flam3_random_isaac_01(rc);
 
+    flam3_iterate(toRender,
+                  nSamples,
+                  fuse,
+                  flameSamples,
+                  xform_distribution,
+                  rc);
+
+}
+
+void ofApp::flameWander() {
     // Update current genome
-    stateManager->flameUpdate(&cp, smoothedAudioRMS);
+    stateManager->flameWanderUpdate();
 
     // Copy the true cp to a renderable version we'll animate
-    flam3_copy(&renderCp, &cp);
+    flam3_copy(&renderCp, cp);
 
     // Update flam3 parameters to animate
-    setFlameParameters();
-
+    setFlameParameters(renderCp, *cp, stateManager->activeScene.motionId);
+    
     if (prepare_precalc_flags2(&renderCp)) {
         fprintf(stderr,"prepare xform pointers returned error: aborting.\n");
         return;
@@ -480,21 +522,77 @@ void ofApp::flameUpdate() {
     std::swap(prevFlameSamples, currFlameSamples);
     const int nFlameSeqs = MIN(flameSequences.size(), (frame-swapFrame)+1);
     const int nSamplesPerSeq = nsamples / nFlameSeqs;
+
+    stateManager->initrc(0);
     for (int i = nFlameSeqs-1; i >= 0 ; --i) {
-        double *flameSamples = currFlameSamples + nSamplesPerSeq * 4 * i;
+        double *flameSamples = currFlameSamples + nSamplesPerSeq * i * 4;
 
-        flameSamples[0] = flam3_random_isaac_11(rc);
-        flameSamples[1] = flam3_random_isaac_11(rc);
-        flameSamples[2] = flam3_random_isaac_01(rc);
-        flameSamples[3] = flam3_random_isaac_01(rc);
-
-        flam3_iterate(&renderCp,
-                      nSamplesPerSeq,
-                      20,
-                      flameSamples,
-                      flameSequences[i].xform_distribution,
-                      rc);
+        renderFlame(&renderCp,
+                    flameSamples,
+                    nSamplesPerSeq,
+                    &stateManager->rc,
+                    flameSequences[i].xform_distribution);
     }
+}
+
+void ofApp::flameRotate() {
+    // Update current genome
+    stateManager->flameUpdate(smoothedAudioRMS);
+
+    // Copy the true cp to a renderable version we'll animate
+    flam3_copy(&renderCp, cp);
+    flam3_copy(&renderCp2, cp2);
+
+    // Update flam3 parameters to animate
+    setFlameParameters(renderCp, *cp, stateManager->activeScene.motionId);
+    setFlameParameters(renderCp2, *cp2, stateManager->nextScene->motionId);
+
+    if (prepare_precalc_flags2(&renderCp)) {
+        fprintf(stderr,"prepare xform pointers returned error: aborting.\n");
+        return;
+    }
+
+    if (prepare_precalc_flags2(&renderCp2)) {
+        fprintf(stderr,"prepare xform pointers returned error: aborting.\n");
+        return;
+    }
+
+    // If > 0, we're fading
+    float t = stateManager->getGenomeInterpolation();
+
+    free(static_xform_distribution1);
+    static_xform_distribution1 = flam3_create_xform_distrib(&renderCp);
+    free(static_xform_distribution2);
+    static_xform_distribution2 = flam3_create_xform_distrib(&renderCp2);
+
+    // Render points
+    std::swap(prevFlameSamples, currFlameSamples);
+    const int nSamplesBeforeSwap = (1.0f - t) * nsamples;
+
+    stateManager->initrc(0);
+    renderFlame(&renderCp2,
+                currFlameSamples + nSamplesBeforeSwap * 4,
+                nsamples - nSamplesBeforeSwap,
+                &stateManager->rc,
+                static_xform_distribution2,
+                20 + nSamplesBeforeSwap);
+
+    stateManager->initrc(0);
+    renderFlame(&renderCp,
+                currFlameSamples,
+                nSamplesBeforeSwap,
+                &stateManager->rc,
+                static_xform_distribution1);
+
+
+}
+
+void ofApp::flameDraw() {
+    // TODO: move this somewhere more rational
+    const float t = stateManager->getGenomeInterpolation();
+
+    const int maxBucket = nFftBuckets * centroidMaxBucket;
+    const int nSamplesBeforeSwap = (1.0f - t) * nsamples;
 
     totDotPixels = 0;
     totLinePixels = 0;
@@ -502,18 +600,25 @@ void ofApp::flameUpdate() {
         // Radius depends on mpy
         const float baseRadius = basePointRadius * mpy;
 
-        const int bucket = ofMap(i, 0, nsamples-1, 0, nFftBuckets * centroidMaxBucket);
+        const int bucket = i % maxBucket;
         const float audioScale = pointRadiusAudioScale * fftOutput[bucket];
 
         float radius = ofLerp(baseRadius, baseRadius * audioScale, pointRadiusAudioScaleAmt);
         radius = ofClamp(radius, 0, 100);
 
+        // Color
         int palleteIdx = (int)(currFlameSamples[4*i+2] * CMAP_SIZE);
         palleteIdx = ofClamp(palleteIdx, 0, CMAP_SIZE-1);
-        double *cv = cp.palette[palleteIdx].color;
+        double *cv;
+        if (i < nSamplesBeforeSwap) {
+            cv = cp->palette[palleteIdx].color;
+        } else {
+            cv = cp2->palette[palleteIdx].color;
+        }
         ofColor color(255*cv[0],255*cv[1],255*cv[2], particleAlpha);
         color.setSaturation(saturationPct * color.getSaturation());
 
+        // Positions
         pointPairs[i].pt1.x = currFlameSamples[4*i];
         pointPairs[i].pt1.y = currFlameSamples[4*i+1];
         pointPairs[i].pt2.x = prevFlameSamples[4*i];
@@ -522,6 +627,18 @@ void ofApp::flameUpdate() {
         pointPairs[i].color = color;
         pointPairs[i].ptSize = radius;
         pointPairs[i].lineWidth = ofClamp(radius/4, 0, 6);
+
+        if (i < nSamplesBeforeSwap) {
+            pointPairs[i].cpCenter = ofVec2f(cp->center[0], cp->center[1]);
+        } else {
+            pointPairs[i].cpCenter = ofVec2f(cp2->center[0], cp2->center[1]);
+        }
+
+        if (i < nSamplesBeforeSwap) {
+            pointPairs[i].cpPixelsPerUnit = cp->pixels_per_unit;
+        } else {
+            pointPairs[i].cpPixelsPerUnit = cp2->pixels_per_unit;
+        }
 
         totDotPixels += (radius * 2) * (radius * 2);
         totLinePixels +=  pointPairs[i].lineWidth;
@@ -575,7 +692,13 @@ void ofApp::update(){
 
     stateManager->update();
     guiUpdate();
-    flameUpdate();
+
+    if (stateManager->wandering) {
+        flameWander();
+    } else {
+        flameRotate();
+    }
+    flameDraw();
 }
 
 //--------------------------------------------------------------
@@ -655,6 +778,9 @@ void ofApp::draw(){
             lines.setColor(2*i+1, pointPairs[i].color);
             lineWidths[2*i] = lineWidths[2*i+1] = pointPairs[i].lineWidth;
             pointRadii[2*i] = pointRadii[2*i+1] = pointPairs[i].ptSize;
+            cpPixelsPerUnit[2*i] = cpPixelsPerUnit[2*i+1] = pointPairs[i].cpPixelsPerUnit;
+
+            cpCenter[2*i] = cpCenter[2*i+1] = pointPairs[i].cpCenter;
         } else {
             if (tippingPt < 0) tippingPt = i;
             pointRadii[2*i] = pointRadii[2*i+1] = pointPairs[i].ptSize = 0;
@@ -669,15 +795,17 @@ void ofApp::draw(){
             const float screenScale = ofGetWidth() / 1024.0 * overallScale;
 
             billboardShader.setUniform2f("screen", ofGetWidth(), ofGetHeight());
-            billboardShader.setUniform2f("cpCenter", cp.center[0], cp.center[1]);
             billboardShader.setUniform1f("screenScale", screenScale);
-            billboardShader.setUniform1f("cpPixelsPerUnit", cp.pixels_per_unit);
             billboardShader.setUniform1f("maxLineLength", maxLineLength);
 
             loc = billboardShader.getAttributeLocation("pointRadius");
             lines.getVbo().updateAttributeData(loc, pointRadii, nsamples*2);
             loc = billboardShader.getAttributeLocation("lineWidth");
             lines.getVbo().updateAttributeData(loc, lineWidths, nsamples*2);
+            loc = billboardShader.getAttributeLocation("cpPixelsPerUnit");
+            lines.getVbo().updateAttributeData(loc, cpPixelsPerUnit, nsamples*2);
+            loc = billboardShader.getAttributeLocation("cpCenter");
+            lines.getVbo().updateAttributeData(loc, (float *)cpCenter, nsamples*2);
 
             lines.draw();
         billboardShader.end();
@@ -725,10 +853,10 @@ void ofApp::handleKey(int key) {
         gui->wandering.set(!gui->wandering.get());
     } else if (key == OF_KEY_LEFT) {
         swapFrame = frame;
-        stateManager->regressScene();
+        stateManager->fadeSceneRev();
     } else if (key == OF_KEY_RIGHT) {
         swapFrame = frame;
-        stateManager->advanceScene();
+        stateManager->fadeSceneFwd();
     } else if (key == 'd') {
         if (stateManager->activeScene.pointRadiusAudioScaleAmt > 0)
             stateManager->activeScene.pointRadiusAudioScaleAmt.set(0);

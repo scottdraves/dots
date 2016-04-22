@@ -34,6 +34,7 @@ void GuiApp::setup() {
     // Meta
     metaParams.setName("Meta");
     metaParams.add(wandering.set("wandering", false));
+    metaParams.add(fadeFrames.set("fadeFrames", 100, 0, 200));
     metaGui.setup(metaParams);
 
     trackControlGui.setup("Tracks");
@@ -110,6 +111,7 @@ void GuiApp::update(){
     }
 
     stateManager->wandering = wandering.get();
+    stateManager->fadeFrames = fadeFrames.get();
 }
 
 void GuiApp::draw() {
@@ -139,8 +141,13 @@ void GuiApp::draw() {
             ofDrawRectangle(510, 50, 100, 15);
             ofFill();
             ofDrawRectangle(510, 50, 100 * stateManager->activeTrack.interpAmt, 15);
+        } else if (stateManager->getGenomeInterpolation() > 0.001) {
+            ofNoFill();
+            ofDrawRectangle(510, 50, 100, 15);
+            ofFill();
+            ofDrawRectangle(510, 50, 100 * stateManager->getGenomeInterpolation(), 15);
         } else {
-            ofDrawBitmapString("Not wandering", 510, 60);
+            ofDrawBitmapString("Not wandering or fading", 510, 60);
         }
     }
 

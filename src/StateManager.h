@@ -269,13 +269,18 @@ public:
     void setup();
     void update();
 
-    void flameUpdate(flam3_genome *dest, float audioRMS);
+    void setAudioRMS(float audioRMS);
+
+    void flameWanderUpdate();
+    void flameUpdate(float audioRMS);
 
     void loadGenebanks();
     void initrc(long sed);
     int randomi(int n);
 
     void loadGenome(flam3_genome *dest);
+    void getGenomes(flam3_genome **d1, flam3_genome **d2, float &t);
+
     void killCurrent();
     void mateCurrent();
     void mutateCurrent();
@@ -287,6 +292,7 @@ public:
     void loadAllParamsFromFile();
     void serializeCurrentTrackToFile();
 
+    float getGenomeInterpolation();
     void applyParameterInterpolation(float t);
 
     void advanceTrack();
@@ -295,6 +301,8 @@ public:
     void createTrack();
     DotsTrack& getTrack();
 
+    void fadeSceneFwd();
+    void fadeSceneRev();
     void regressScene();
     void advanceScene();
     void reloadScene();
@@ -302,16 +310,23 @@ public:
     void duplicateScene();
     DotsScene& getScene();
 
-    DotsTrack activeTrack;
-
     DotsScene defaultScene;
     DotsScene activeScene;
     DotsScene *currScene;
     DotsScene *nextScene;
 
+    DotsTrack activeTrack;
+
     // Are we wandering or standing still
     ofParameter<bool> wandering;
     int lastCP;
+    flam3_genome wanderGenome;
+
+    // Fading
+    bool fading, wasFading;
+    bool fadeForward;
+    long fadeStartFrame;
+    int fadeFrames;
 
     // Where are we
     int trackIdx, sceneIdx;

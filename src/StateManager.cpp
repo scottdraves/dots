@@ -123,6 +123,9 @@ void StateManager::setup() {
 
     seed = 0;
     initrc(seed);
+    fading = false;
+    wasFading = false;
+    fadeFrames = 100;
 
     // No genome in activeScene yet
     activeScene.setupParams();
@@ -143,6 +146,8 @@ void StateManager::setup() {
     }
     defaultTrack.setGenomesFromScenes();
     defaultTrack.copyParamsTo(activeTrack);
+
+    memset(&wanderGenome, 0, sizeof(flam3_genome));
 
     tracks.push_back(std::move(defaultTrack));
 
@@ -193,8 +198,21 @@ void StateManager::genomeModified(int & newGenomeIdx) {
 }
 
 void StateManager::update() {
-    if (wandering && currScene && nextScene) {
-        applyParameterInterpolation(activeTrack.interpAmt);
+    if (currScene && nextScene) {
+        if (wandering) {
+            applyParameterInterpolation(activeTrack.interpAmt);
+        } else {
+            float t = getGenomeInterpolation();
+
+            if (fading && fadeForward && t > 0.999) {
+                advanceScene();
+                fading = false;
+            } else if (fading && !fadeForward && t < 0.001) {
+                fading = false;
+            } else if (t > 0.001) {
+                applyParameterInterpolation(t);
+            }
+        }
     }
 
 //    if (!wandering) {
@@ -204,35 +222,56 @@ void StateManager::update() {
 //    }
 }
 
-void StateManager::flameUpdate(flam3_genome *dest, float audioRMS) {
-    if (wandering) {
-        DotsTrack &t = getTrack();
+void StateManager::flameWanderUpdate() {
+    DotsTrack &t = getTrack();
 
-        activeTrack.wanderPos += activeTrack.getWanderSpeed();
+    activeTrack.wanderPos += activeTrack.getWanderSpeed();
 
-        if (activeTrack.wanderPos >= t.nGenomes)
-            activeTrack.wanderPos = 0;
+    if (activeTrack.wanderPos >= t.nGenomes)
+        activeTrack.wanderPos = 0;
 
-        int currCP = (int)activeTrack.wanderPos;
+    int currCP = (int)activeTrack.wanderPos;
 
-        if (lastCP != currCP) {
-            advanceScene();
-            lastCP = currCP;
-        }
-
-        activeTrack.interpAmt = activeTrack.wanderPos - currCP;
-
-        // cpTrackOrder has n+1 - last is a copy of first
-        flam3_interpolate(t.genomes, t.nGenomes + 1, activeTrack.wanderPos, 0, dest);
-    } else {
-        float speed = activeScene.baseSpeed + audioRMS * activeScene.rmsSpeedMult;
-        flam3_rotate(dest, speed, flam3_inttype_log);
+    if (lastCP != currCP) {
+        advanceScene();
+        lastCP = currCP;
     }
+
+    activeTrack.interpAmt = activeTrack.wanderPos - currCP;
+
+    // cpTrackOrder has n+1 - last is a copy of first
+    flam3_interpolate(t.genomes, t.nGenomes + 1, activeTrack.wanderPos, 0, &wanderGenome);
+}
+
+void StateManager::flameUpdate(float audioRMS) {
+    // Rotate both the same amount
+    float speed = activeScene.baseSpeed + audioRMS * activeScene.rmsSpeedMult;
+    flam3_rotate(currScene->genome, speed, flam3_inttype_log);
+    flam3_rotate(nextScene->genome, speed, flam3_inttype_log);
 }
 
 int StateManager::randomi(int n) {
     int i = flam3_random_isaac_01(&rc) * ncps;
     return i % n;
+}
+
+float StateManager::getGenomeInterpolation() {
+//    return activeTrack.wanderSpeed;
+
+    if (!fading) return 0;
+
+    long currFrame = ofGetFrameNum();
+    long delta = currFrame - fadeStartFrame;
+
+    // TODO: make this a param
+    float split = (float)delta / fadeFrames;
+
+    // We might be fading backwards
+    if (fadeForward) {
+        return ofClamp(split, 0, 1);
+    } else {
+        return ofClamp(1.0f - split, 0, 1);
+    }
 }
 
 void StateManager::loadGenome(flam3_genome *dest) {
@@ -361,6 +400,36 @@ void StateManager::saveTrack() {
     serializeCurrentTrackToFile();
 }
 
+void StateManager::fadeSceneFwd() {
+    if (wandering) return;
+
+    if (!fading) {
+        activeScene.copyParamsTo(*currScene);
+
+        fading = true;
+        fadeStartFrame = ofGetFrameNum();
+        fadeForward = true;
+    } else {
+        advanceScene();
+        fading = false;
+    }
+}
+
+void StateManager::fadeSceneRev() {
+    if (wandering) return;
+
+    if (!fading) {
+        regressScene();
+
+        fading = true;
+        fadeStartFrame = ofGetFrameNum();
+        fadeForward = false;
+    } else {
+        currScene->copyParamsTo(activeScene);
+        fading = false;
+    }
+}
+
 void StateManager::regressScene() {
     if (trackIdx < 0) return;
 
@@ -378,7 +447,7 @@ void StateManager::regressScene() {
     }
 
     // Save what we're coming from
-    if (currScene && !wandering) {
+    if (currScene && !wandering && !fading) {
         activeScene.copyParamsTo(*currScene);
     }
 
@@ -408,7 +477,7 @@ void StateManager::advanceScene() {
     }
 
     // Save what we're coming from
-    if (currScene && !wandering) {
+    if (currScene && !wandering && !fading) {
         activeScene.copyParamsTo(*currScene);
     }
 
@@ -481,6 +550,8 @@ void StateManager::createTrack() {
 
 // TODO: clean up if possible
 void StateManager::applyParameterInterpolation(float t) {
+    if (t < 0.001) return;
+    
     activeScene.pointRadiusAudioScaleAmt.set(ofLerp(currScene->pointRadiusAudioScaleAmt.get(), nextScene->pointRadiusAudioScaleAmt.get(), t));
     activeScene.pointRadiusAudioScale.set(ofLerp(currScene->pointRadiusAudioScale.get(), nextScene->pointRadiusAudioScale.get(), t));
     activeScene.fftDecayRate.set(ofLerp(currScene->fftDecayRate.get(), nextScene->fftDecayRate.get(), t));

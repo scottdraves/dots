@@ -39,6 +39,7 @@ public:
 
     ofParameterGroup metaParams;
     ofParameter<bool> wandering;
+    ofParameter<int> fadeFrames;
 
     ofxPanel trackControlGui;
     ofxGuiGroup trackControls;

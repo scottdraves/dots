@@ -2,15 +2,15 @@
 
 uniform mat4 modelViewProjectionMatrix;
 uniform vec2 screen;
-uniform vec2 cpCenter;
 uniform float screenScale;
-uniform float cpPixelsPerUnit;
 uniform float maxLineLength;
 
 in vec4 position;
 in vec4 normal;
 in vec4 color;
 in vec2 texcoord;
+in float cpPixelsPerUnit;
+in vec2 cpCenter;
 
 in float pointRadius;
 in float lineWidth;

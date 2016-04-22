@@ -17,6 +17,8 @@ typedef struct pointPair {
     ofVec3f pt1, pt2;
     float ptSize, lineWidth;
     ofFloatColor color;
+    float cpPixelsPerUnit;
+    ofVec2f cpCenter;
 } pointPair;
 
 typedef struct flameSeq {
@@ -42,8 +44,15 @@ public:
     void audioIn(float * input, int bufferSize, int nChannels);
 
     void guiUpdate();
-    void setFlameParameters();
-    void flameUpdate();
+
+    void setFlameParameters(flam3_genome &renderCp, flam3_genome &cp, const int motionId);
+    void renderFlame(flam3_genome *toRender, double *flameSamples, const int nSamples,
+                     randctx *rc, unsigned short *xform_distribution, const int fuse = 20);
+
+    void flameDraw();
+    void flameWander();
+    void flameRotate();
+
     void handleKey(int key);
 
     void handleTrackChanged(int & trackIdx);
@@ -51,13 +60,17 @@ public:
     void handleWanderingChanged(bool & wandering);
 
     // After interpolation and to render
-    flam3_genome cp, renderCp;
+    flam3_genome *cp, renderCp;
     int nsamples;
     double *prevFlameSamples, *currFlameSamples;
 
-    // Interpolate between flam3 cps smoothly
+    // Interpolate between flam3 cps smoothly during wander
     int frame, swapFrame;
     vector<flameSeq> flameSequences;
+
+    // Transition between non-wander cps
+    flam3_genome *cp2, renderCp2;
+    unsigned short *static_xform_distribution1, *static_xform_distribution2;
 
     // Dot shader
     ofShader billboardShader;
@@ -65,7 +78,8 @@ public:
     // To draw
     ofVboMesh lines;
     vector<pointPair> pointPairs;
-    float *pointRadii, *lineWidths;
+    float *pointRadii, *lineWidths, *cpPixelsPerUnit;
+    ofVec2f *cpCenter;
     double totDotPixels, totLinePixels;
 
     // Display Paremters
